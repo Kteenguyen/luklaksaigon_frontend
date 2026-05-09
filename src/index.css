@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base Reset ────────────────────────────────── */
+html {
+  scroll-behavior: auto; /* Let Lenis handle scroll behavior */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: #F9F8F5;
+}
+
+::selection {
+  background-color: #B06B3E;
+  color: #FFFFFF;
+}
+
+/* ── Section Cohesion ──────────────────────────── */
+/* Prevents flash/gap between sections during sticky transitions */
+section {
+  position: relative;
+}
+
+/* Seamless dark-to-light bleed: sections with dark bg bleed into next */
+.section-dark-bleed {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+/* ── Smooth Image Reveal ───────────────────────── */
+img {
+  will-change: transform;
+}
+
+/* Remove gap from sticky children collapsing */
+.sticky-track > * {
+  flex-shrink: 0;
+}
+
+/* ── Typography Scale (Luxury) ─────────────────── */
+@layer base {
+  h1, h2, h3 {
+    letter-spacing: -0.01em;
+    font-weight: 300;
+  }
+
+  /* Prevent layout shift from font loading */
+  body {
+    font-display: swap;
+  }
+}
+
+/* ── Scroll Momentum Hint ──────────────────────── */
+/* Subtle separator between sections — a 1px line that dissolves */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #2D2C2A20, transparent);
+  width: 100%;
+}
