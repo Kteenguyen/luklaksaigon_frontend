@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+﻿import { useEffect } from 'react';
 import Lenis from '@studio-freight/lenis';
 import { useMotionValue } from 'framer-motion';
 

@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+﻿import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import RevealText from './RevealText';
 import ParallaxImage from './ParallaxImage';
