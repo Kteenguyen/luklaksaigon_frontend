@@ -1,41 +1,33 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import SmoothScrollProvider from './components/SmoothScrollProvider'
 import Header from './components/Header'
-import Hero from './components/Hero'
-import ProjectShowcase from './components/ProjectShowcase'
-import StickyRevealSection from './components/StickyRevealSection'
-import ProjectGallery from './components/ProjectGallery'
-import About from './components/About'
-import Contact from './components/Contact'
+
+import Home from './pages/Home'
+import AboutPage from './pages/AboutPage'
+import ProjectsPage from './pages/ProjectsPage'
+import ServicesPage from './pages/ServicesPage'
+import FactoryPage from './pages/FactoryPage'
+import JournalPage from './pages/JournalPage'
+import ContactPage from './pages/ContactPage'
 
 function App() {
   return (
-    <SmoothScrollProvider>
-      <div className="min-h-screen font-sans bg-secondary text-text-main">
-        <Header />
-        <main>
-          {/* ── Hero: dark bg ── */}
-          <Hero />
-
-          {/* ── Project Showcase: dark sticky curtain ── */}
-          <ProjectShowcase />
-
-          {/* ── Sticky Reveal: light bg (transition from dark) ── */}
-          <div className="section-divider" />
-          <StickyRevealSection />
-
-          {/* ── Project Gallery: light bg ── */}
-          <div className="section-divider" />
-          <ProjectGallery />
-
-          {/* ── About: light bg ── */}
-          <div className="section-divider" />
-          <About />
-
-          {/* ── Contact / Footer: dark bg ── */}
-          <Contact />
-        </main>
-      </div>
-    </SmoothScrollProvider>
+    <Router>
+      <SmoothScrollProvider>
+        <div className="min-h-screen font-sans bg-secondary text-text-main">
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/factory" element={<FactoryPage />} />
+            <Route path="/journal" element={<JournalPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+          </Routes>
+        </div>
+      </SmoothScrollProvider>
+    </Router>
   )
 }
 

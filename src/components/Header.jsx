@@ -6,8 +6,8 @@ import logoSrc from '../../LOGO/PNG/Logo_Light_1 copy.png';
 const navItems = [
   { name: 'Trang chủ', path: '/' },
   { name: 'Về chúng tôi', path: '/about' },
-  { 
-    name: 'Dự án', 
+  {
+    name: 'Dự án',
     path: '/projects',
     dropdown: ['Biệt thự', 'Căn hộ', 'Nhà phố', 'Thương mại']
   },
@@ -40,19 +40,18 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between transition-all duration-700 w-full ${
-          isAtTop || menuOpen ? 'h-28 px-8 md:px-16' : 'h-20 px-6 md:px-12'
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between transition-all duration-700 w-full ${isAtTop || menuOpen ? 'h-28 px-8 md:px-16' : 'h-20 px-6 md:px-12'
+          }`}
       >
         {/* LOGO */}
         <a href="/" className="cursor-pointer z-50 flex-shrink-0">
           <img src={logoSrc} alt="LukLak Design & Build" className="h-10 md:h-14 w-auto object-contain drop-shadow-lg" />
         </a>
-        
+
         {/* DESKTOP NAVIGATION (Center) */}
         <AnimatePresence>
           {isAtTop && (
-            <motion.nav 
+            <motion.nav
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
@@ -60,8 +59,8 @@ export default function Header() {
               className="hidden md:flex items-center justify-center gap-x-7 lg:gap-x-9 flex-1 px-4 relative"
             >
               {navItems.map((item) => (
-                <div 
-                  key={item.name} 
+                <div
+                  key={item.name}
                   className="relative group py-6"
                   onMouseEnter={() => setHoveredNav(item.name)}
                   onMouseLeave={() => setHoveredNav(null)}
@@ -77,7 +76,7 @@ export default function Header() {
                   {/* Desktop Dropdown - Premium Panel */}
                   <AnimatePresence>
                     {item.dropdown && hoveredNav === item.name && (
-                      <motion.div 
+                      <motion.div
                         initial={{ opacity: 0, y: 15, scale: 0.98 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.98 }}
@@ -85,8 +84,8 @@ export default function Header() {
                         className="absolute top-full left-1/2 -translate-x-1/2 mt-2 py-8 px-10 flex flex-col items-center gap-6 min-w-[280px] bg-secondary border border-surface/10 rounded-sm shadow-2xl"
                       >
                         {item.dropdown.map((sub, idx) => (
-                          <motion.a 
-                            key={idx} 
+                          <motion.a
+                            key={idx}
                             href="#"
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -108,18 +107,18 @@ export default function Header() {
 
         {/* RIGHT ACTION: MENU text + Search */}
         <div className="flex items-center justify-end flex-shrink-0 gap-8 z-50 mix-blend-difference">
-          <div 
+          <div
             className="flex items-center cursor-pointer"
             onClick={() => setMenuOpen(!menuOpen)}
           >
-            <motion.span 
+            <motion.span
               animate={{ opacity: (!isAtTop || menuOpen) ? 1 : 0 }}
               style={{ pointerEvents: (!isAtTop || menuOpen) ? 'auto' : 'none' }}
               className="text-[10px] tracking-[0.15em] font-medium text-white uppercase hidden md:block hover:text-gray-300 transition-colors"
             >
               Menu
             </motion.span>
-            <motion.span 
+            <motion.span
               className="text-[10px] tracking-[0.15em] font-medium text-white uppercase md:hidden hover:text-gray-300 transition-colors"
             >
               Menu
@@ -161,7 +160,7 @@ export default function Header() {
                   </div>
                   {/* Mobile Dropdown items shown directly but smaller */}
                   {item.dropdown && (
-                    <motion.div 
+                    <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.5 + (i * 0.05) }}
@@ -177,8 +176,8 @@ export default function Header() {
                 </div>
               ))}
             </nav>
-            
-            <motion.div 
+
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8, duration: 1 }}
