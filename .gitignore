@@ -2,6 +2,7 @@
 node_modules/
 .pnp
 .pnp.js
+.pnp.cjs
 
 # Build output
 dist/
@@ -15,6 +16,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+lerna-debug.log*
 
 # Environment variables
 .env
@@ -22,6 +24,26 @@ pnpm-debug.log*
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Testing / Coverage
+coverage/
+*.lcov
+.nyc_output/
+
+# Caches
+.npm
+.eslintcache
+.stylelintcache
+.cache/
+.parcel-cache/
+
+# Misc
+*.pid
+*.seed
+*.pid.lock
+.node_repl_history
+*.tgz
+*.tsbuildinfo
 
 # Editor / IDE
 .vscode/
@@ -31,8 +53,16 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# OS
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+Desktop.ini
 
 # Vite cache
 .vite/
@@ -52,6 +82,4 @@ Thumbs.db
 *.m4v
 *.M4V
 
-# Folders containing videos
-src/video/
-Video dự án/
+
