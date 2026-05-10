@@ -1,5 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import img1 from '../assets/hr/Khúc Văn Hiển_Giám đốc Luklak Sài Gòn.webp';
+import img2 from '../assets/hr/NGuyễn Thế Toàn_Chủ trì dự án.png';
 
 const ScrollReveal = ({ children, className }) => {
   return (
@@ -41,8 +43,8 @@ export default function AboutPage() {
           <ScrollReveal>
             <div className="overflow-hidden w-full h-[60vh] relative mt-16">
               <motion.img 
-                src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop" 
-                alt="Minimalist Architecture" 
+                src={img1} 
+                alt="Khúc Văn Hiển - Giám đốc" 
                 className="w-full h-full object-cover origin-center"
                 initial={{ scale: 1.1 }}
                 whileInView={{ scale: 1 }}
@@ -63,8 +65,8 @@ export default function AboutPage() {
           <ScrollReveal>
             <div className="overflow-hidden w-full h-[60vh] relative mt-16 flex justify-end">
                <motion.img 
-                src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2000&auto=format&fit=crop" 
-                alt="Minimalist Interior" 
+                src={img2} 
+                alt="Nguyễn Thế Toàn - Chủ trì dự án" 
                 className="w-full h-full object-cover origin-center md:w-[85%]"
                 initial={{ scale: 1.1 }}
                 whileInView={{ scale: 1 }}

@@ -1,12 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import p1 from '../../Dự án/Dự án thực tế/KC Villa/z7450164007725_487732fcdca5ccf6a4189f90c0c957fa.jpg';
-import p2 from '../../Dự án/Dự án thực tế/KC Villa/z7450164022155_66f13bcfae7d52a8681c0232feeb187f.jpg';
-import p3 from '../../Dự án/Dự án thực tế/KC Villa/z7450164022156_566f910387ff97df3b8de8afff823dab.jpg';
-import p4 from '../../Dự án/Dự án thực tế/KC Villa/z7450164022157_9985b14bc96b0721c6f25d1c6bf3e6a0.jpg';
-import p5 from '../../Dự án/Dự án thực tế/KC Villa/z7450164022158_478bff7e126689859a32fa842add2090.jpg';
-import p6 from '../../Dự án/Dự án thực tế/KC Villa/z7450164022159_6f0a4c16bb9d235da2b9575e1cc7db4a.jpg';
+import p1 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450164007725_487732fcdca5ccf6a4189f90c0c957fa.jpg';
+import p2 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450164022155_66f13bcfae7d52a8681c0232feeb187f.jpg';
+import p3 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450164022156_566f910387ff97df3b8de8afff823dab.jpg';
+import p4 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450164022157_9985b14bc96b0721c6f25d1c6bf3e6a0.jpg';
+import p5 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450164022158_478bff7e126689859a32fa842add2090.jpg';
+import p6 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450164022159_6f0a4c16bb9d235da2b9575e1cc7db4a.jpg';
 
 const projects = [
   {
