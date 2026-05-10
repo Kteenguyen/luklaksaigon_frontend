@@ -2,11 +2,15 @@ import { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform, animate } from 'framer-motion';
 import Contact from '../components/Contact';
 import Services from '../components/Services';
+import DesignProjects from '../components/DesignProjects';
+import { ShieldCheck, HeartHandshake, Award, Lightbulb, Zap, Users } from 'lucide-react';
 
 // Assets
 import imgKienTruc from '../assets/projectImage/Dự án thực tế/KC Villa/z7450164022320_7c5e9ff572be475288651b3a0f1be4a3.jpg';
 import imgHien from '../assets/hr/Khúc Văn Hiển_Giám đốc Luklak Sài Gòn.webp';
 import imgToan from '../assets/hr/NGuyễn Thế Toàn_Chủ trì dự án.png';
+import imgAddress from '../assets/systemImage/address-branch.JPG';
+import imgTeam from '../assets/systemImage/team.webp';
 
 /* =====================================================================
    1. HERO SECTION
@@ -87,36 +91,54 @@ function ScrubbingText({ text }) {
 
 function GroupSection() {
   return (
-    <section className="w-full bg-background text-secondary py-32 px-8 md:px-16">
-      <div className="max-w-7xl mx-auto">
-        <span className="text-primary text-[10px] md:text-xs tracking-[0.3em] uppercase border-b border-secondary/20 pb-2 mb-16 inline-block">
-          LUKLAK GROUP - KHẲNG ĐỊNH VỊ THẾ TIÊN PHONG
-        </span>
+    <section className="w-full bg-background text-secondary py-32 px-8 md:px-16 overflow-hidden">
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 lg:gap-24 items-center">
 
-        <div className="w-full lg:w-11/12 mb-24">
-          <ScrubbingText text="Ra đời vào 1/10/2020 cùng mong muốn lan tỏa giá trị bền vững tới cộng đồng, Luklak Group không ngừng nỗ lực, chuyển mình và khai phá những tiềm năng mới để mang tới dịch vụ chất lượng hàng đầu trong thị trường kiến trúc - xây dựng. Bằng chiến lược phát triển dám nghĩ dám làm, Luklak Group xác lập vị thế tiên phong hướng tới là một tập đoàn lấy ngành xây dựng làm cốt lõi, đồng thời phát triển hệ sinh thái đa ngành hàng đầu tại Việt Nam." />
-        </div>
+        {/* Left: Image Split */}
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1 }}
+          className="w-full lg:w-1/2"
+        >
+          <div className="relative aspect-[3/4] w-full overflow-hidden rounded-sm">
+            <img src={imgKienTruc} alt="Luklak Architecture Detail" className="w-full h-full object-cover filter brightness-90 hover:scale-105 transition-transform duration-[2s] ease-out" />
+          </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 pt-16 border-t border-secondary/10">
-          <div>
-            <h3 className="text-2xl font-serif mb-6">Hệ thống trụ sở</h3>
-            <p className="text-text-main font-light leading-relaxed mb-6">
-              Hiện nay, Luklak Group liên tục triển khai các dự án trải dài khắp cả nước và xây dựng trụ sở chính tại 04 thành phố lớn: TP. Hà Nội, TP. Đà Nẵng, TP. Huế và TP. Hồ Chí Minh.
-            </p>
-            <p className="text-text-main font-light leading-relaxed">
-              Để hoàn thành mục tiêu giai đoạn năm 2024-2026, Luklak Group định rõ nhiệm vụ: tiếp tục xây dựng hệ thống tại 3 thành phố lớn với quy mô 1000 nhân sự có tâm, có tầm nhằm phát triển hoàn thiện các thương hiệu trực thuộc hướng tới 03 nhóm trụ cột: thương mại, dịch vụ, bất động sản.
-            </p>
+        {/* Right: Content Split */}
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, delay: 0.2 }}
+          className="w-full lg:w-1/2 flex flex-col"
+        >
+          <span className="text-primary text-[10px] md:text-xs tracking-[0.3em] uppercase border-b border-secondary/20 pb-2 mb-12 inline-block self-start">
+            Luklak Group
+          </span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light leading-tight mb-8">
+            Kiến tạo giải pháp <br /><span className="italic text-secondary/70">không gian hoàn mỹ.</span>
+          </h2>
+          <p className="text-secondary/70 font-light leading-relaxed mb-12 text-lg">
+            Ra đời năm 2020, Luklak Group không ngừng nỗ lực kiến tạo các giải pháp không gian hoàn mỹ. Bằng tư duy tiên phong, chúng tôi lấy kiến trúc và xây dựng làm cốt lõi để phát triển một hệ sinh thái đa ngành bền vững tại Việt Nam.
+          </p>
+
+          <div className="grid grid-cols-2 gap-8 pt-8 border-t border-secondary/10">
+            <div>
+              <h4 className="text-4xl font-serif text-primary mb-2">04</h4>
+              <p className="text-xs uppercase tracking-widest text-secondary/50 mb-2">Trụ sở</p>
+              <p className="text-sm font-light text-secondary/70">Hà Nội, Đà Nẵng, Huế, TP.HCM</p>
+            </div>
+            <div>
+              <h4 className="text-4xl font-serif text-primary mb-2">1000+</h4>
+              <p className="text-xs uppercase tracking-widest text-secondary/50 mb-2">Nhân sự</p>
+              <p className="text-sm font-light text-secondary/70">Chuyên môn cao, tận tâm</p>
+            </div>
           </div>
-          <div>
-            <h3 className="text-2xl font-serif mb-6">Tầm nhìn vươn xa</h3>
-            <p className="text-text-main font-light leading-relaxed mb-6">
-              Mặc dù vẫn còn tồn tại những trở ngại, nhưng Luklak Group còn đó sự nhiệt huyết, bản lĩnh và tiên phong để hoàn thành tất cả nhiệm vụ đặt ra.
-            </p>
-            <p className="text-text-main font-light leading-relaxed">
-              Hy vọng Luklak Group không chỉ nhận được sự ủng hộ từ quý khách hàng, quý đối tác mà còn được tin tưởng với vai trò tiên phong kiến tạo thêm nhiều thành tựu và đem lại nhiều hơn những giá trị cho cộng đồng và xã hội.
-            </p>
-          </div>
-        </div>
+        </motion.div>
+
       </div>
     </section>
   );
@@ -154,65 +176,97 @@ function AnimatedCounter({ from, to, duration = 2 }) {
 
 function VisionMissionSection() {
   return (
-    <section className="w-full bg-secondary text-surface py-32 px-8 md:px-16">
+    <section className="w-full bg-background text-secondary py-32 px-8 md:px-16 border-t border-secondary/10">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-          {/* Sứ mệnh */}
-          <div className="lg:col-span-5 bg-surface/5 p-12 rounded-sm border border-surface/10 hover:border-surface/30 transition-colors">
-            <span className="text-primary text-[10px] uppercase tracking-[0.3em] mb-12 block">Sứ Mệnh</span>
-            <ul className="flex flex-col gap-8 text-xl md:text-2xl font-serif font-light">
-              <li className="flex items-start gap-4">
-                <span className="text-primary mt-1">01.</span> Phụng sự khách hàng
-              </li>
-              <li className="flex items-start gap-4">
-                <span className="text-primary mt-1">02.</span> Tư duy đổi mới,<br />Sáng tạo không ngừng
-              </li>
-              <li className="flex items-start gap-4">
-                <span className="text-primary mt-1">03.</span> Hệ sinh thái Tinh gọn<br />& Kết nối sâu
-              </li>
-              <li className="flex items-start gap-4">
-                <span className="text-primary mt-1">04.</span> Tầm nhìn cộng đồng<br />& Bền vững
-              </li>
-            </ul>
+        {/* TOP: Sticky Split Layout for Mission & Vision */}
+        <div className="flex flex-col md:flex-row items-start gap-16 lg:gap-24 mb-32">
+
+          {/* Sticky Title */}
+          <div className="w-full md:w-1/3 sticky top-32">
+            <span className="text-primary text-[10px] uppercase tracking-[0.3em] mb-4 block">Triết lý doanh nghiệp</span>
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif font-light leading-tight">Sứ Mệnh <br />& Tầm Nhìn</h2>
           </div>
 
-          {/* Tầm nhìn Bento */}
-          <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="md:col-span-2 bg-surface/5 p-12 rounded-sm border border-surface/10 hover:border-surface/30 transition-colors flex flex-col justify-center">
-              <span className="text-primary text-[10px] uppercase tracking-[0.3em] mb-4 block">Tầm Nhìn 04 Trụ Cột</span>
-              <h3 className="text-3xl md:text-4xl font-serif font-light mb-4">
-                Thương mại – Dịch vụ<br />Sản xuất – Bất động sản
-              </h3>
-              <p className="text-surface/60 font-light">1 Phát triển vững chắc trên 4 trụ cột chiến lược.</p>
+          {/* Scrollable Content */}
+          <div className="w-full md:w-2/3 flex flex-col gap-32">
+            {/* Mission */}
+            <div>
+              <h3 className="text-2xl font-serif mb-12 text-primary border-b border-secondary/10 pb-4">04 Sứ Mệnh</h3>
+              <div className="flex flex-col gap-12">
+                {[
+                  "Phụng sự khách hàng",
+                  "Tư duy đổi mới, Sáng tạo không ngừng",
+                  "Hệ sinh thái Tinh gọn & Kết nối sâu",
+                  "Tầm nhìn cộng đồng & Bền vững"
+                ].map((text, idx) => (
+                  <div key={idx} className="flex items-start gap-8 group">
+                    <span className="text-4xl md:text-5xl font-serif text-secondary/20 group-hover:text-primary transition-colors duration-500">
+                      0{idx + 1}
+                    </span>
+                    <p className="text-2xl md:text-3xl font-light leading-snug pt-2 text-secondary/80 group-hover:text-secondary transition-colors duration-500">
+                      {text}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className="bg-surface/5 p-12 rounded-sm border border-surface/10 hover:border-surface/30 transition-colors flex flex-col justify-center items-center text-center">
-              <h3 className="text-5xl md:text-7xl font-serif text-primary mb-4">
-                <AnimatedCounter from={0} to={500} />+
-              </h3>
-              <span className="text-[10px] uppercase tracking-[0.3em] text-surface/50 mb-2">Nhân sự</span>
-              <p className="text-surface/60 font-light text-sm">Chuyên môn vững vàng, sáng tạo và trách nhiệm.</p>
+            {/* Vision */}
+            <div>
+              <h3 className="text-2xl font-serif mb-12 text-primary border-b border-secondary/10 pb-4">Tầm Nhìn 04 Trụ Cột</h3>
+              <div className="flex flex-col md:flex-row gap-8 items-center border border-secondary/10 p-12 rounded-sm bg-secondary/5 hover:border-secondary/30 transition-colors">
+                <div className="flex-1">
+                  <h4 className="text-3xl md:text-4xl font-serif font-light mb-6 leading-snug">Thương mại – Dịch vụ <br /> Sản xuất – Bất động sản</h4>
+                  <p className="text-secondary/70 font-light leading-relaxed text-lg">
+                    Phát triển vững chắc trên 4 trụ cột chiến lược. Xây dựng hệ sinh thái khép kín và bền vững, tối ưu hóa chuỗi giá trị cho khách hàng và cộng đồng.
+                  </p>
+                </div>
+              </div>
             </div>
-
-            <div className="bg-surface/5 p-12 rounded-sm border border-surface/10 hover:border-surface/30 transition-colors flex flex-col justify-center items-center text-center">
-              <h3 className="text-5xl md:text-7xl font-serif text-primary mb-4">
-                <AnimatedCounter from={0} to={1000} />+
-              </h3>
-              <span className="text-[10px] uppercase tracking-[0.3em] text-surface/50 mb-2">Công trình</span>
-              <p className="text-surface/60 font-light text-sm">Được hoàn thiện chỉn chu – bài bản – không lặp lại.</p>
-            </div>
-
-            {/* 5 Trụ sở */}
-            <div className="md:col-span-2 bg-surface/5 p-8 rounded-sm border border-surface/10 hover:border-surface/30 transition-colors flex flex-col md:flex-row items-center justify-between">
-              <h3 className="text-4xl font-serif text-primary">
-                0<AnimatedCounter from={0} to={5} /> Trụ sở
-              </h3>
-              <p className="text-surface/60 font-light text-right mt-4 md:mt-0">Hà Nội, Hải Phòng, Đà Nẵng, Huế, TP. HCM</p>
-            </div>
-
           </div>
         </div>
+
+        {/* BOTTOM: Full Width Stats Layout */}
+        <div className="flex flex-col gap-16 w-full">
+
+          {/* Team Block (Horizontal panoramic) */}
+          <div className="relative w-full aspect-[16/9] md:aspect-[21/9] overflow-hidden rounded-sm group bg-secondary">
+            <img src={imgTeam} alt="Đội ngũ Luklak Sài Gòn" className="w-full h-full object-cover object-top filter grayscale opacity-40 group-hover:opacity-80 transition-all duration-1000" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+            <div className="absolute bottom-0 left-0 p-8 md:p-16 w-full flex flex-col justify-end">
+              <h3 className="text-7xl md:text-9xl font-serif text-primary mb-2">1000+</h3>
+              <p className="text-sm md:text-lg uppercase tracking-widest text-surface/90 font-medium mb-4">Nhân sự & Công trình</p>
+              <p className="text-sm md:text-base font-light text-surface/60 max-w-2xl leading-relaxed">
+                Chuyên môn vững vàng, sáng tạo và trách nhiệm. Được hoàn thiện chỉn chu, bài bản, không lặp lại. Đội ngũ nhân sự là tài sản quý giá nhất tạo nên thương hiệu Luklak.
+              </p>
+            </div>
+          </div>
+
+          {/* Map Block (Split 50/50 for tall map) */}
+          <div className="w-full bg-secondary/5 rounded-sm border border-secondary/10 flex flex-col md:flex-row overflow-hidden group">
+            <div className="w-full md:w-1/2 p-8 md:p-16 flex flex-col justify-center bg-background z-10 shadow-[20px_0_30px_rgba(0,0,0,0.02)]">
+              <h3 className="text-7xl md:text-9xl font-serif text-primary mb-2">05</h3>
+              <p className="text-sm md:text-lg uppercase tracking-widest text-secondary/90 font-medium mb-8">Trụ sở chiến lược</p>
+              <p className="text-base md:text-lg font-light text-secondary/70 leading-relaxed mb-10">
+                Hệ thống trụ sở được đặt tại các thành phố trọng điểm, đánh dấu sự vươn mình mạnh mẽ của Luklak Group trên toàn quốc:
+              </p>
+              <ul className="flex flex-col gap-6 text-secondary/80 font-serif text-xl md:text-2xl">
+                <li className="flex items-center gap-6"><span className="w-3 h-3 rounded-full bg-primary/40 border border-primary" /> Hà Nội</li>
+                <li className="flex items-center gap-6"><span className="w-3 h-3 rounded-full bg-primary/40 border border-primary" /> Hải Phòng</li>
+                <li className="flex items-center gap-6"><span className="w-3 h-3 rounded-full bg-primary/40 border border-primary" /> Đà Nẵng</li>
+                <li className="flex items-center gap-6"><span className="w-3 h-3 rounded-full bg-primary/40 border border-primary" /> Huế</li>
+                <li className="flex items-center gap-6"><span className="w-3 h-3 rounded-full bg-primary/40 border border-primary" /> TP. Hồ Chí Minh</li>
+              </ul>
+            </div>
+
+            <div className="w-full md:w-1/2 relative min-h-[500px] md:min-h-[800px] bg-surface flex items-center justify-center p-8">
+              <img src={imgAddress} alt="Bản đồ các chi nhánh Luklak" className="w-full h-full object-contain object-center opacity-80 group-hover:scale-[1.02] transition-transform duration-1000 mix-blend-multiply" />
+            </div>
+          </div>
+
+        </div>
+
       </div>
     </section>
   );
@@ -221,34 +275,50 @@ function VisionMissionSection() {
 /* =====================================================================
    4. GIÁ TRỊ CỐT LÕI (Hover List)
    ===================================================================== */
-const values = ["Uy tín", "Tôn trọng", "Chất lượng", "Sáng tạo", "Tốc độ", "Đoàn kết"];
+const values = [
+  { title: "Uy tín", icon: ShieldCheck, desc: "Giữ vững cam kết với khách hàng" },
+  { title: "Tôn trọng", icon: HeartHandshake, desc: "Trân trọng đối tác và nhân sự" },
+  { title: "Chất lượng", icon: Award, desc: "Đỉnh cao trong từng chi tiết" },
+  { title: "Sáng tạo", icon: Lightbulb, desc: "Liên tục đổi mới tư duy thiết kế" },
+  { title: "Tốc độ", icon: Zap, desc: "Hiệu quả và đúng tiến độ" },
+  { title: "Đoàn kết", icon: Users, desc: "Sức mạnh từ sự thấu hiểu tập thể" }
+];
 
 function CoreValuesSection() {
   return (
-    <section className="w-full bg-background text-secondary py-32 px-8 md:px-16 overflow-hidden">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-16">
-        <div className="w-full md:w-1/3 sticky top-32">
+    <section className="relative w-full bg-background text-secondary py-32 px-8 md:px-16 overflow-hidden">
+      {/* Subtle Background Image */}
+      <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none">
+        <img src={imgKienTruc} alt="Background" className="w-full h-full object-cover grayscale mix-blend-multiply" />
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="text-center mb-24">
           <span className="text-primary text-[10px] tracking-[0.3em] uppercase border-b border-secondary/20 pb-2 mb-8 inline-block">
             Bản sắc doanh nghiệp
           </span>
-          <h2 className="text-5xl md:text-7xl font-serif font-light">Giá trị<br />Cốt lõi</h2>
+          <h2 className="text-4xl md:text-6xl font-serif font-light">Giá trị Cốt lõi</h2>
         </div>
-        <div className="w-full md:w-2/3 flex flex-col gap-4">
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {values.map((v, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: idx * 0.1 }}
-              className="group cursor-pointer border-b border-secondary/10 pb-8 pt-4 relative"
+              className="group bg-secondary/5 border border-secondary/10 p-10 hover:bg-secondary/10 hover:border-primary/50 transition-all duration-500 rounded-sm flex flex-col items-start"
             >
-              <h3 className="text-4xl md:text-6xl font-serif font-light text-secondary/40 group-hover:text-secondary group-hover:pl-8 transition-all duration-500">
-                {v}
-              </h3>
-              <div className="absolute left-0 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-primary">
-                &mdash;
+              <div className="mb-8 text-primary group-hover:scale-110 transition-transform duration-500">
+                <v.icon size={40} strokeWidth={1} />
               </div>
+              <h3 className="text-3xl font-serif font-light text-secondary mb-4">
+                {v.title}
+              </h3>
+              <p className="text-secondary/60 font-light text-sm tracking-wide">
+                {v.desc}
+              </p>
             </motion.div>
           ))}
         </div>
@@ -262,24 +332,24 @@ function CoreValuesSection() {
    ===================================================================== */
 function LeadershipSection() {
   return (
-    <section className="w-full bg-secondary text-surface py-32 px-8 md:px-16 border-t border-surface/10">
+    <section className="w-full bg-background text-secondary py-32 px-8 md:px-16 border-t border-secondary/10">
       <div className="max-w-7xl mx-auto">
-        <span className="text-primary text-[10px] tracking-[0.3em] uppercase border-b border-surface/20 pb-2 mb-16 inline-block">
+        <span className="text-primary text-[10px] tracking-[0.3em] uppercase border-b border-secondary/20 pb-2 mb-16 inline-block">
           Nhân sự & Quy trình
         </span>
 
         {/* Intro */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mb-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mb-32 border-b border-secondary/10 pb-16">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
-            <h3 className="text-2xl font-serif mb-6 text-primary">Project Leadership</h3>
-            <p className="text-surface/70 font-light leading-relaxed">
-              Tại Luklak, chúng tôi luôn đề cao việc thấu hiểu giá trị, mục tiêu và tiềm năng sáng tạo mà mỗi dự án mang lại. Giao tiếp rõ ràng và sự đồng hành xuyên suốt là nền tảng trong quy trình làm việc của chúng tôi, nhằm tạo nên sự kết nối chặt chẽ giữa đội ngũ thiết kế với khách hàng, văn hoá, bối cảnh và môi trường mà công trình hiện diện.
+            <h3 className="text-2xl font-serif mb-6 text-primary">Triết lý thiết kế</h3>
+            <p className="text-secondary/70 font-light leading-relaxed text-lg">
+              Đề cao sự thấu hiểu mục tiêu và tiềm năng của từng không gian. Chúng tôi kết nối chặt chẽ giữa thiết kế, khách hàng và bối cảnh tự nhiên.
             </p>
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2 }}>
-            <h3 className="text-2xl font-serif mb-6 text-primary">Design Leadership</h3>
-            <p className="text-surface/70 font-light leading-relaxed">
-              Mỗi thành viên trong đội ngũ thiết kế đều được định hướng rõ ràng để hiểu sâu về tinh thần và cơ hội của từng dự án. Chúng tôi không chỉ thiết kế để hoàn thiện một không gian, mà còn liên tục nghiên cứu, đề xuất, phản biện và phát triển những giải pháp phù hợp nhất nhằm tạo ra giá trị bền vững cho khách hàng.
+            <h3 className="text-2xl font-serif mb-6 text-primary">Tư duy lãnh đạo</h3>
+            <p className="text-secondary/70 font-light leading-relaxed text-lg">
+              Liên tục nghiên cứu, phản biện và đổi mới. Mỗi giải pháp đưa ra không chỉ để hoàn thiện không gian, mà còn kiến tạo giá trị bền vững.
             </p>
           </motion.div>
         </div>
@@ -303,16 +373,19 @@ function LeadershipSection() {
                 alt="Khúc Văn Hiển - Director"
                 className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-secondary via-transparent to-transparent opacity-80" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90" />
               <div className="absolute bottom-0 left-0 p-8">
-                <h3 className="text-4xl font-serif">Khúc Văn Hiển</h3>
+                <h3 className="text-4xl font-serif text-surface">Khúc Văn Hiển</h3>
                 <p className="text-primary tracking-widest uppercase text-xs mt-2">Director - Luklak Sài Gòn</p>
               </div>
             </motion.div>
-            <p className="text-surface/70 font-light leading-relaxed mb-6">
-              Khúc Văn Hiển là Director tại Luklak Sài Gòn, người định hướng đội ngũ bằng tư duy thiết kế gắn liền với chiều sâu của kiến trúc và trải nghiệm sống. Với quan điểm <strong className="text-surface">“Với kiến trúc, mọi thứ đều có liên quan. Không có gì là ngẫu nhiên. Tất cả bắt đầu từ một lựa chọn”</strong>, anh luôn đề cao sự kết nối giữa công năng, thẩm mỹ và cảm xúc trong từng không gian.
+            <p className="text-secondary/70 font-light leading-relaxed mb-6 text-lg italic border-l-2 border-primary pl-6">
+              “Với kiến trúc, không có gì là ngẫu nhiên. Tất cả bắt đầu từ một lựa chọn.”
             </p>
-            <div className="flex gap-8 text-sm font-light text-surface/50">
+            <p className="text-secondary/70 font-light leading-relaxed mb-6">
+              Khúc Văn Hiển định hướng đội ngũ bằng tư duy thiết kế tinh gọn, luôn đề cao sự kết nối hoàn hảo giữa công năng thực tế và chiều sâu cảm xúc.
+            </p>
+            <div className="flex gap-8 text-sm font-light text-secondary/50">
               <a href="mailto:info@luklaksg.vn" className="hover:text-primary transition-colors">info@luklaksg.vn</a>
               <a href="tel:0931258xxx" className="hover:text-primary transition-colors">0931 258 xxx</a>
             </div>
@@ -334,13 +407,13 @@ function LeadershipSection() {
                 alt="Nguyễn Thế Toàn"
                 className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-secondary via-transparent to-transparent opacity-80" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90" />
               <div className="absolute bottom-0 left-0 p-8">
-                <h3 className="text-3xl font-serif">Nguyễn Thế Toàn</h3>
+                <h3 className="text-3xl font-serif text-surface">Nguyễn Thế Toàn</h3>
                 <p className="text-primary tracking-widest uppercase text-xs mt-2">Chủ trì dự án</p>
               </div>
             </motion.div>
-            <p className="text-surface/70 font-light leading-relaxed italic opacity-50">
+            <p className="text-secondary/70 font-light leading-relaxed italic opacity-50">
               (Thông tin tiểu sử sẽ được cập nhật sau...)
             </p>
           </div>
@@ -360,6 +433,7 @@ export default function AboutPage() {
       <AboutHero />
       <GroupSection />
       <VisionMissionSection />
+      <DesignProjects />
       <Services />
       <CoreValuesSection />
       <LeadershipSection />
