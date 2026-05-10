@@ -11,15 +11,21 @@ const navItems = [
     path: '/projects',
     dropdown: ['Biệt thự', 'Căn hộ', 'Nhà phố', 'Thương mại']
   },
+  { name: 'Thi công', path: '/construction' },
+  { name: 'Đăng ký tư vấn', path: '/consultation' },
   { 
-    name: 'Dịch vụ', 
-    path: '/services',
-    dropdown: ['Thiết kế kiến trúc', 'Thiết kế nội thất', 'Thi công trọn gói']
+    name: 'Phong cách thiết kế', 
+    path: '/design-styles',
+    dropdown: ['Hiện đại', 'Tân cổ điển', 'Tropical', 'Indochine', 'Japandi']
   },
-  { name: 'Xưởng sản xuất', path: '/factory' },
-  { name: 'Tin tức & Cảm hứng', path: '/journal' },
-  { name: 'Liên hệ', path: '/contact' }
+  { name: 'FAQs', path: '/faqs' },
+  { 
+    name: 'Tin tức', 
+    path: '/news',
+    dropdown: ['Tin tức nội thất', 'Xu hướng thiết kế', 'Kiến thức xây dựng']
+  },
 ];
+
 
 export default function Header() {
   const { scrollY } = useScroll();
@@ -51,7 +57,7 @@ export default function Header() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="hidden md:flex items-center justify-center space-x-16 flex-1 px-8 relative"
+              className="hidden md:flex items-center justify-center gap-x-7 lg:gap-x-9 flex-1 px-4 relative"
             >
               {navItems.map((item) => (
                 <div 
@@ -95,6 +101,7 @@ export default function Header() {
                   </AnimatePresence>
                 </div>
               ))}
+
             </motion.nav>
           )}
         </AnimatePresence>
