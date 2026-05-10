@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import videoBanner from '../video/banner.mp4';
+import videoBanner from '../assets/video/banner.mp4';
 
 export default function Hero() {
   const videoRef = useRef(null);

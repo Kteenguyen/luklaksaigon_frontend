@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { Search, ChevronDown } from 'lucide-react';
-import logoSrc from '../../LOGO/PNG/Logo_Light_1 copy.png';
+import logoSrc from '../assets/logo/PNG/Logo_Light_1 copy.png';
 
 const navItems = [
   { name: 'Trang chủ', path: '/' },

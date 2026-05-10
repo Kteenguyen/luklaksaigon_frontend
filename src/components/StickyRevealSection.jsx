@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import s1 from '../../Dự án/Dự án thực tế/KC Villa/z7450164022320_7c5e9ff572be475288651b3a0f1be4a3.jpg';
-import s2 from '../../Dự án/Dự án thực tế/KC Villa/z7450164022321_03054fbc155e2451385f87aba8e4e079.jpg';
-import s3 from '../../Dự án/Dự án thực tế/KC Villa/z7450164022324_62d51436e112decb402e58b78e9fee45.jpg';
+import s1 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450164022320_7c5e9ff572be475288651b3a0f1be4a3.jpg';
+import s2 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450164022321_03054fbc155e2451385f87aba8e4e079.jpg';
+import s3 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450164022324_62d51436e112decb402e58b78e9fee45.jpg';
 
 function FadeDownImage({ src, alt }) {
   const containerRef = useRef(null);
