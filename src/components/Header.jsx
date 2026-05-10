@@ -9,21 +9,32 @@ const navItems = [
   {
     name: 'Dự án',
     path: '/projects',
-    dropdown: ['Biệt thự', 'Căn hộ', 'Nhà phố', 'Thương mại']
+    dropdown: [
+      { label: 'Biệt thự', path: '/projects?category=Biệt thự' },
+      { label: 'Căn hộ', path: '/projects?category=Căn hộ' },
+      { label: 'Nhà phố', path: '/projects?category=Nhà phố' },
+      { label: 'Thương mại', path: '/projects?category=Thương mại' }
+    ]
   },
   { name: 'Thi công', path: '/construction' },
-  { name: 'Đăng ký tư vấn', path: '/consultation' },
   {
-    name: 'Phong cách thiết kế',
-    path: '/design-styles',
-    dropdown: ['Hiện đại', 'Tân cổ điển', 'Tropical', 'Indochine', 'Japandi']
+    name: 'Dịch vụ',
+    path: '/services',
+    dropdown: [
+      { label: 'Tư vấn Thiết kế', path: '/services' },
+      { label: 'Thi công Nội thất', path: '/services' },
+      { label: 'Xưởng sản xuất', path: '/factory' }
+    ]
   },
-  { name: 'FAQs', path: '/faqs' },
   {
     name: 'Tin tức',
-    path: '/news',
-    dropdown: ['Tin tức nội thất', 'Xu hướng thiết kế', 'Kiến thức xây dựng']
+    path: '/journal',
+    dropdown: [
+      { label: 'Tạp chí', path: '/journal' },
+      { label: 'Cảm hứng', path: '/journal' }
+    ]
   },
+  { name: 'Liên hệ', path: '/contact' },
 ];
 
 
@@ -84,18 +95,21 @@ export default function Header() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.98 }}
                         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                        className="absolute top-full left-1/2 -translate-x-1/2 mt-2 py-8 px-10 flex flex-col items-center gap-6 min-w-[280px] bg-secondary border border-surface/10 rounded-sm shadow-2xl"
+                        className="absolute top-full left-1/2 -translate-x-1/2 mt-4 py-8 px-10 flex flex-col items-start gap-5 min-w-[260px] bg-secondary/95 backdrop-blur-xl border border-surface/10 rounded-sm shadow-2xl"
                       >
                         {item.dropdown.map((sub, idx) => (
                           <motion.a
                             key={idx}
-                            href="#"
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
+                            href={sub.path}
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: idx * 0.05, duration: 0.4 }}
-                            className="text-[10px] lg:text-[11px] font-sans tracking-[0.2em] text-text-muted hover:text-primary uppercase transition-colors whitespace-nowrap"
+                            className="group flex items-center gap-3 w-full"
                           >
-                            {sub}
+                            <span className="w-0 h-[1px] bg-primary transition-all duration-300 group-hover:w-4" />
+                            <span className="text-[10px] lg:text-[11px] font-sans tracking-[0.2em] text-surface/70 group-hover:text-primary uppercase transition-colors whitespace-nowrap">
+                              {sub.label}
+                            </span>
                           </motion.a>
                         ))}
                       </motion.div>
@@ -190,8 +204,8 @@ export default function Header() {
                       >
                         <div className="flex flex-col gap-4 pt-6 pb-2 text-center">
                           {item.dropdown.map((sub, idx) => (
-                            <a key={idx} href="#" onClick={() => setMenuOpen(false)} className="text-[10px] tracking-[0.2em] uppercase text-surface/60 hover:text-primary transition-colors">
-                              {sub}
+                            <a key={idx} href={sub.path} onClick={() => setMenuOpen(false)} className="text-[10px] tracking-[0.2em] uppercase text-surface/60 hover:text-primary transition-colors">
+                              {sub.label}
                             </a>
                           ))}
                         </div>

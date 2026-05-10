@@ -5,6 +5,7 @@ import Header from './components/Header'
 import Home from './pages/Home'
 import AboutPage from './pages/AboutPage'
 import ProjectsPage from './pages/ProjectsPage'
+import ConstructionPage from './pages/ConstructionPage'
 import ServicesPage from './pages/ServicesPage'
 import FactoryPage from './pages/FactoryPage'
 import JournalPage from './pages/JournalPage'
@@ -20,6 +21,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/construction" element={<ConstructionPage />} />
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/factory" element={<FactoryPage />} />
             <Route path="/journal" element={<JournalPage />} />

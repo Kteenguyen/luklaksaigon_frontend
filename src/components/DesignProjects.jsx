@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 // Mock Data
 import img1 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450163862634_83a0f94c7430897270c93b1b0a7bcfd6.jpg';
@@ -11,19 +11,49 @@ import img4 from '../assets/projectImage/Dự án thực tế/KC Villa/z74501640
 const categories = ['Tất cả', 'Biệt thự', 'Căn hộ', 'Nhà phố', 'Thương mại'];
 
 const projectsData = [
-  { id: 1, title: 'The Landmark', category: 'Căn hộ', img: img1, span: 'col-span-12 md:col-span-8 row-span-2' },
-  { id: 2, title: 'Ocean Villa', category: 'Biệt thự', img: img2, span: 'col-span-12 md:col-span-4 row-span-1' },
-  { id: 3, title: 'Minimalist Townhouse', category: 'Nhà phố', img: img3, span: 'col-span-12 md:col-span-4 row-span-1' },
-  { id: 4, title: 'Zen Cafe', category: 'Thương mại', img: img4, span: 'col-span-12 md:col-span-6 row-span-1' },
-  { id: 5, title: 'Sky Penthouse', category: 'Căn hộ', img: img1, span: 'col-span-12 md:col-span-6 row-span-1' },
+  { id: 1, title: 'The Landmark', category: 'Căn hộ', img: img1 },
+  { id: 2, title: 'Ocean Villa', category: 'Biệt thự', img: img2 },
+  { id: 3, title: 'Minimalist Townhouse', category: 'Nhà phố', img: img3 },
+  { id: 4, title: 'Zen Cafe', category: 'Thương mại', img: img4 },
+  { id: 5, title: 'Sky Penthouse', category: 'Căn hộ', img: img1 },
+  { id: 6, title: 'Riverside Mansion', category: 'Biệt thự', img: img2 },
+  { id: 7, title: 'Urban Loft', category: 'Căn hộ', img: img3 },
+  { id: 8, title: 'Boutique Hotel', category: 'Thương mại', img: img4 },
+  { id: 9, title: 'Green Oasis', category: 'Nhà phố', img: img1 },
+  { id: 10, title: 'Sunset Villa', category: 'Biệt thự', img: img2 },
+  { id: 11, title: 'Modern Studio', category: 'Căn hộ', img: img3 },
 ];
 
-export default function DesignProjects() {
+export default function DesignProjects({ hideViewAll = false }) {
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState('Tất cả');
+  const [visibleCount, setVisibleCount] = useState(9);
+
+  // Sync tab with URL parameters
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const categoryQuery = searchParams.get('category');
+    if (categoryQuery && categories.includes(categoryQuery)) {
+      setActiveTab(categoryQuery);
+    }
+  }, [location.search]);
 
   const filteredProjects = activeTab === 'Tất cả'
     ? projectsData
     : projectsData.filter(p => p.category === activeTab);
+
+  const displayedProjects = filteredProjects.slice(0, visibleCount);
+
+  const handleLoadMore = () => {
+    setVisibleCount(prev => prev + 9);
+  };
+
+  const handleTabChange = (cat) => {
+    setActiveTab(cat);
+    setVisibleCount(9);
+    // Optionally update URL when clicking tab (without refreshing)
+    window.history.pushState(null, '', cat === 'Tất cả' ? '/projects' : `/projects?category=${cat}`);
+  };
 
   return (
     <section className="w-full bg-background text-secondary py-24 md:py-32">
@@ -45,7 +75,7 @@ export default function DesignProjects() {
             {categories.map(cat => (
               <button
                 key={cat}
-                onClick={() => setActiveTab(cat)}
+                onClick={() => handleTabChange(cat)}
                 className={`relative text-xs md:text-sm uppercase tracking-widest pb-2 transition-colors duration-300 ${activeTab === cat ? 'text-secondary font-medium' : 'text-secondary/40 hover:text-secondary/70'
                   }`}
               >
@@ -61,18 +91,18 @@ export default function DesignProjects() {
           </div>
         </div>
 
-        {/* Masonry Grid with Magic Layout Sort */}
-        <motion.div layout className="grid grid-cols-12 gap-4 md:gap-8 auto-rows-[300px]">
+        {/* 3 Equal Columns Grid */}
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
           <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project) => (
+            {displayedProjects.map((project) => (
               <motion.div
-                layout // Kích hoạt di chuyển mượt mà khi đổi vị trí
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
+                layout
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 key={project.id}
-                className={`group relative overflow-hidden rounded-sm cursor-pointer ${project.span}`}
+                className="group relative overflow-hidden rounded-sm cursor-pointer aspect-[4/5]"
               >
                 {/* Ảnh có hiệu ứng zoom khi hover */}
                 <motion.div
@@ -88,12 +118,12 @@ export default function DesignProjects() {
                 </motion.div>
 
                 {/* Overlay thông tin */}
-                <div className="absolute inset-0 bg-gradient-to-t from-secondary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-secondary/90 via-secondary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="absolute bottom-0 left-0 w-full p-8 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
-                  <span className="text-surface/70 text-[10px] uppercase tracking-widest mb-2 block">
+                  <span className="text-primary/90 text-[10px] uppercase tracking-widest mb-3 block">
                     {project.category}
                   </span>
-                  <h3 className="text-surface text-2xl font-serif font-light">
+                  <h3 className="text-surface text-2xl md:text-3xl font-serif font-light">
                     {project.title}
                   </h3>
                 </div>
@@ -103,16 +133,29 @@ export default function DesignProjects() {
           </AnimatePresence>
         </motion.div>
 
-        {/* Nút Xem Tất Cả */}
-        <div className="mt-16 md:mt-24 flex justify-center">
-          <Link
-            to="/projects"
-            className="group relative inline-flex items-center gap-4 text-xs tracking-[0.2em] uppercase py-4 px-10 border border-secondary/30 overflow-hidden"
-          >
-            <div className="absolute inset-0 bg-secondary translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
-            <span className="relative z-10 text-secondary group-hover:text-surface transition-colors duration-500">Xem Tất Cả Dự Án</span>
-            <span className="relative z-10 text-secondary group-hover:text-surface transition-colors duration-500">&rarr;</span>
-          </Link>
+        {/* Nút Xem Thêm / Xem Tất Cả */}
+        <div className="mt-16 md:mt-24 flex flex-col sm:flex-row justify-center gap-6 items-center">
+          {filteredProjects.length > visibleCount && (
+            <button
+              onClick={handleLoadMore}
+              className="group relative inline-flex items-center gap-4 text-xs tracking-[0.2em] uppercase py-4 px-10 border border-secondary/30 overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-secondary/5 translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+              <span className="relative z-10 text-secondary transition-colors duration-500">Xem Thêm</span>
+              <span className="relative z-10 text-secondary transition-colors duration-500">&darr;</span>
+            </button>
+          )}
+
+          {!hideViewAll && (
+            <Link
+              to="/projects"
+              className="group relative inline-flex items-center gap-4 text-xs tracking-[0.2em] uppercase py-4 px-10 border border-secondary overflow-hidden bg-secondary text-surface"
+            >
+              <div className="absolute inset-0 bg-primary translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+              <span className="relative z-10 transition-colors duration-500 group-hover:text-secondary">Xem Tất Cả Dự Án</span>
+              <span className="relative z-10 transition-colors duration-500 group-hover:text-secondary">&rarr;</span>
+            </Link>
+          )}
         </div>
 
       </div>
