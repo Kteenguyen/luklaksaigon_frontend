@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { Search, ChevronDown } from 'lucide-react';
 import logoSrc from '../assets/logo/PNG/Logo_Light_1 copy.png';
@@ -13,14 +13,14 @@ const navItems = [
   },
   { name: 'Thi công', path: '/construction' },
   { name: 'Đăng ký tư vấn', path: '/consultation' },
-  { 
-    name: 'Phong cách thiết kế', 
+  {
+    name: 'Phong cách thiết kế',
     path: '/design-styles',
     dropdown: ['Hiện đại', 'Tân cổ điển', 'Tropical', 'Indochine', 'Japandi']
   },
   { name: 'FAQs', path: '/faqs' },
-  { 
-    name: 'Tin tức', 
+  {
+    name: 'Tin tức',
     path: '/news',
     dropdown: ['Tin tức nội thất', 'Xu hướng thiết kế', 'Kiến thức xây dựng']
   },
@@ -32,6 +32,7 @@ export default function Header() {
   const [isAtTop, setIsAtTop] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [hoveredNav, setHoveredNav] = useState(null);
+  const [activeMenuAccordion, setActiveMenuAccordion] = useState(null);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsAtTop(latest <= 50);
@@ -40,7 +41,9 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between transition-all duration-700 w-full ${isAtTop || menuOpen ? 'h-28 px-8 md:px-16' : 'h-20 px-6 md:px-12'
+        className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between transition-all duration-700 w-full ${isAtTop || menuOpen
+          ? 'h-28 px-8 md:px-16 bg-gradient-to-b from-secondary/80 via-secondary/40 to-transparent'
+          : 'h-20 px-6 md:px-12 bg-secondary/95 backdrop-blur-md shadow-xl border-b border-surface/10'
           }`}
       >
         {/* LOGO */}
@@ -50,13 +53,13 @@ export default function Header() {
 
         {/* DESKTOP NAVIGATION (Center) */}
         <AnimatePresence>
-          {isAtTop && (
+          {(isAtTop || menuOpen) && (
             <motion.nav
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="hidden md:flex items-center justify-center gap-x-7 lg:gap-x-9 flex-1 px-4 relative"
+              className="hidden lg:flex items-center justify-center gap-x-7 lg:gap-x-9 flex-1 px-4 relative"
             >
               {navItems.map((item) => (
                 <div
@@ -67,7 +70,7 @@ export default function Header() {
                 >
                   <a
                     href={item.path}
-                    className="flex items-center gap-2 text-[11px] lg:text-[12px] font-sans tracking-[0.2em] font-medium text-white transition-colors uppercase mix-blend-difference"
+                    className="flex items-center gap-2 text-[11px] lg:text-[12px] font-sans tracking-[0.2em] font-medium text-surface hover:text-primary transition-colors uppercase"
                   >
                     {item.name}
                     {item.dropdown && <ChevronDown size={12} className="opacity-100" />}
@@ -106,7 +109,7 @@ export default function Header() {
         </AnimatePresence>
 
         {/* RIGHT ACTION: MENU text + Search */}
-        <div className="flex items-center justify-end flex-shrink-0 gap-8 z-50 mix-blend-difference">
+        <div className="flex items-center justify-end flex-shrink-0 gap-8 z-50 text-surface">
           <div
             className="flex items-center cursor-pointer"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -114,78 +117,99 @@ export default function Header() {
             <motion.span
               animate={{ opacity: (!isAtTop || menuOpen) ? 1 : 0 }}
               style={{ pointerEvents: (!isAtTop || menuOpen) ? 'auto' : 'none' }}
-              className="text-[10px] tracking-[0.15em] font-medium text-white uppercase hidden md:block hover:text-gray-300 transition-colors"
+              className={`text-[10px] tracking-[0.15em] font-medium uppercase hidden lg:block transition-colors ${menuOpen && isAtTop ? 'text-surface hover:text-primary' : 'text-surface hover:text-primary'}`}
             >
-              Menu
+              {menuOpen ? 'Đóng' : 'Menu'}
             </motion.span>
             <motion.span
-              className="text-[10px] tracking-[0.15em] font-medium text-white uppercase md:hidden hover:text-gray-300 transition-colors"
+              className={`text-[10px] tracking-[0.15em] font-medium uppercase lg:hidden transition-colors text-surface hover:text-primary`}
             >
-              Menu
+              {menuOpen ? 'Đóng' : 'Menu'}
             </motion.span>
           </div>
 
-          <button className="text-white hover:text-gray-300 transition-colors">
+          <button className={`transition-colors text-surface hover:text-primary`}>
             <Search size={22} strokeWidth={1.2} />
           </button>
         </div>
       </header>
 
-      {/* Cinematic Slide-Down Overlay Menu */}
+      {/* Global Dark Overlay when Menu is Open */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ y: '-100%' }}
-            animate={{ y: 0 }}
-            exit={{ y: '-100%' }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-40 bg-secondary flex flex-col justify-center items-center overflow-hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6 }}
+            onClick={() => setMenuOpen(false)}
+            className="fixed inset-0 z-30 bg-secondary/80 backdrop-blur-md"
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Mobile Only Overlay Menu */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-x-0 top-20 z-40 lg:hidden flex flex-col items-center pt-8 pb-12 overflow-y-auto max-h-[calc(100vh-5rem)] [&::-webkit-scrollbar]:hidden"
           >
-            {/* The overlay is full screen so mix-blend-difference from header text works, but wait. If overlay is bg-secondary (dark), text inside overlay should just be normal. */}
-            <nav className="flex flex-col items-center justify-center h-full space-y-6 md:space-y-8 text-center mt-12 overflow-y-auto max-h-screen py-24">
+            <nav className="flex flex-col gap-8 w-full px-8">
               {navItems.map((item, i) => (
-                <div key={item.name} className="flex flex-col items-center gap-4">
-                  <div className="overflow-hidden">
+                <div key={item.name} className="flex flex-col items-center">
+                  <div className="flex items-center cursor-pointer group" onClick={() => {
+                    if (item.dropdown) {
+                      setActiveMenuAccordion(activeMenuAccordion === item.name ? null : item.name);
+                    } else {
+                      setMenuOpen(false);
+                    }
+                  }}>
                     <motion.a
-                      href={item.path}
-                      initial={{ y: '100%' }}
-                      animate={{ y: 0 }}
-                      exit={{ y: '-100%', opacity: 0 }}
-                      transition={{ duration: 0.8, delay: 0.2 + (i * 0.05), ease: [0.16, 1, 0.3, 1] }}
-                      onClick={() => setMenuOpen(false)}
-                      className="block text-3xl md:text-5xl font-serif text-background hover:text-primary transition-colors duration-500 font-light"
+                      href={item.dropdown ? '#' : item.path}
+                      className="text-xl font-serif font-light text-surface group-hover:text-primary transition-colors duration-300 uppercase tracking-widest text-center"
+                      onClick={(e) => {
+                        if (item.dropdown) e.preventDefault();
+                      }}
                     >
                       {item.name}
                     </motion.a>
                   </div>
-                  {/* Mobile Dropdown items shown directly but smaller */}
-                  {item.dropdown && (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.5 + (i * 0.05) }}
-                      className="flex flex-col gap-2 items-center"
-                    >
-                      {item.dropdown.map((sub, idx) => (
-                        <a key={idx} href="#" onClick={() => setMenuOpen(false)} className="text-[10px] tracking-[0.2em] uppercase text-text-muted hover:text-white transition-colors">
-                          {sub}
-                        </a>
-                      ))}
-                    </motion.div>
-                  )}
+
+                  {/* Accordion Sub-items for Mobile */}
+                  <AnimatePresence>
+                    {item.dropdown && activeMenuAccordion === item.name && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className="overflow-hidden w-full flex flex-col items-center"
+                      >
+                        <div className="flex flex-col gap-4 pt-6 pb-2 text-center">
+                          {item.dropdown.map((sub, idx) => (
+                            <a key={idx} href="#" onClick={() => setMenuOpen(false)} className="text-[10px] tracking-[0.2em] uppercase text-surface/60 hover:text-primary transition-colors">
+                              {sub}
+                            </a>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               ))}
             </nav>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8, duration: 1 }}
-              className="absolute bottom-8 flex space-x-8 text-[10px] tracking-[0.3em] uppercase text-text-muted"
-            >
-              <a href="#" className="hover:text-primary transition-colors">Instagram</a>
-              <a href="#" className="hover:text-primary transition-colors">Facebook</a>
-            </motion.div>
+            {/* Mobile Contact Footer inside Menu */}
+            <div className="mt-12 pt-8 border-t border-surface/10 flex flex-col gap-4 text-center text-[9px] tracking-[0.2em] uppercase text-surface/50 w-3/4">
+              <a href="mailto:info@luklaksg.vn" className="hover:text-primary transition-colors">info@luklaksg.vn</a>
+              <div className="flex justify-center gap-6 mt-2">
+                <a href="#" className="hover:text-primary transition-colors">Instagram</a>
+                <a href="#" className="hover:text-primary transition-colors">Facebook</a>
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

@@ -1,5 +1,6 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 // Mock Data
 import img1 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450163862634_83a0f94c7430897270c93b1b0a7bcfd6.jpg';
@@ -101,6 +102,18 @@ export default function DesignProjects() {
             ))}
           </AnimatePresence>
         </motion.div>
+
+        {/* Nút Xem Tất Cả */}
+        <div className="mt-16 md:mt-24 flex justify-center">
+          <Link
+            to="/projects"
+            className="group relative inline-flex items-center gap-4 text-xs tracking-[0.2em] uppercase py-4 px-10 border border-secondary/30 overflow-hidden"
+          >
+            <div className="absolute inset-0 bg-secondary translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+            <span className="relative z-10 text-secondary group-hover:text-surface transition-colors duration-500">Xem Tất Cả Dự Án</span>
+            <span className="relative z-10 text-secondary group-hover:text-surface transition-colors duration-500">&rarr;</span>
+          </Link>
+        </div>
 
       </div>
     </section>

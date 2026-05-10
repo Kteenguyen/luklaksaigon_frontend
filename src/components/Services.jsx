@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
-import { motion, useSpring } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // Sử dụng tạm ảnh từ thư mục dự án
 import img1 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450163862634_83a0f94c7430897270c93b1b0a7bcfd6.jpg';
@@ -20,32 +20,33 @@ const services = [
 
 export default function Services() {
   const [activeService, setActiveService] = useState(null);
-  const containerRef = useRef(null);
-
-  // Khai báo Spring physics cho ảnh bay theo chuột để chuyển động mượt mà như "nam châm"
-  const springConfig = { damping: 25, stiffness: 120, mass: 0.5 };
-  const mouseX = useSpring(0, springConfig);
-  const mouseY = useSpring(0, springConfig);
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      // Tính toán tọa độ chuột tương đối với Container
-      if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        // Căn giữa ảnh vào trỏ chuột (trừ đi nửa chiều rộng/cao của ảnh, giả sử ảnh cỡ 300x400)
-        mouseX.set(e.clientX - rect.left - 150);
-        mouseY.set(e.clientY - rect.top - 200);
-      }
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [mouseX, mouseY]);
 
   return (
-    <section ref={containerRef} className="relative w-full bg-secondary text-surface py-32 px-8 md:px-16 overflow-hidden">
+    <section className="relative w-full bg-secondary text-surface py-32 px-8 md:px-16 overflow-hidden min-h-screen flex items-center transition-colors duration-1000">
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      {/* Dynamic Background Images */}
+      <AnimatePresence>
+        {activeService && (
+          <motion.div
+            key={activeService}
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1, ease: "easeInOut" }}
+            className="absolute inset-0 z-0 pointer-events-none"
+          >
+            <img
+              src={services.find(s => s.id === activeService)?.img}
+              alt="Service Background"
+              className="w-full h-full object-cover"
+            />
+            {/* Dark overlay to ensure text readability against bright images */}
+            <div className="absolute inset-0 bg-secondary/60" />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className="max-w-7xl mx-auto w-full relative z-10">
         <div className="mb-16 md:mb-24 flex justify-between items-end">
           <span className="text-[10px] md:text-xs tracking-[0.3em] uppercase text-surface/50 border-b border-surface/20 pb-2">
             Lĩnh Vực Hoạt Động
@@ -84,26 +85,11 @@ export default function Services() {
               </div>
 
               {/* Line hover mở rộng từ trái sang phải */}
-              <div className="absolute bottom-0 left-0 h-[1px] bg-primary w-0 group-hover:w-full transition-all duration-700 ease-out" />
+              <div className="absolute bottom-0 left-0 h-[1px] bg-surface w-0 group-hover:w-full transition-all duration-700 ease-out" />
             </motion.div>
           ))}
         </div>
       </div>
-
-      {/* Floating Image Follows Mouse (Chỉ hiện trên Desktop) */}
-      <div className="hidden md:block absolute top-0 left-0 w-full h-full pointer-events-none z-0">
-        {services.map((svc) => (
-          <motion.img
-            key={svc.id}
-            src={svc.img}
-            alt={svc.title}
-            style={{ x: mouseX, y: mouseY }}
-            className={`absolute w-[300px] h-[400px] object-cover rounded-sm shadow-2xl transition-opacity duration-500 ${activeService === svc.id ? 'opacity-40' : 'opacity-0'
-              }`}
-          />
-        ))}
-      </div>
-
     </section>
   );
 }

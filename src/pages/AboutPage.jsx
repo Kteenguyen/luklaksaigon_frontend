@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform, animate } from 'framer-motion';
 import Contact from '../components/Contact';
+import Services from '../components/Services';
 
 // Assets
 import imgKienTruc from '../assets/projectImage/Dự án thực tế/KC Villa/z7450164022320_7c5e9ff572be475288651b3a0f1be4a3.jpg';
@@ -18,16 +19,16 @@ function AboutHero() {
   return (
     <section className="relative w-full h-screen overflow-hidden bg-secondary flex items-center justify-center">
       <motion.div style={{ y, opacity }} className="absolute inset-0 z-0">
-        <img 
-          src={imgKienTruc} 
-          alt="Luklak Architecture" 
+        <img
+          src={imgKienTruc}
+          alt="Luklak Architecture"
           className="w-full h-full object-cover opacity-40"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-secondary via-transparent to-transparent" />
       </motion.div>
 
       <div className="relative z-10 text-center px-4 flex flex-col items-center">
-        <motion.span 
+        <motion.span
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2 }}
@@ -35,19 +36,20 @@ function AboutHero() {
         >
           Về Chúng Tôi
         </motion.span>
-        <motion.h1 
+        <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4 }}
-          className="text-5xl md:text-7xl lg:text-[10vw] font-serif font-light text-surface uppercase leading-[0.9] tracking-tighter"
+          className="text-4xl md:text-6xl lg:text-8xl font-serif font-light text-surface leading-tight tracking-wide"
         >
-          LUKLAK<br/>ARCHITECTS<br/>SÀI GÒN
+          <span className="uppercase tracking-widest block mb-2">Luklak Architects</span>
+          <span className="italic font-normal text-surface/80">Sài Gòn</span>
         </motion.h1>
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.8 }}
-          className="mt-12 text-surface/70 font-light text-lg md:text-xl max-w-2xl mx-auto"
+          className="mt-8 text-surface/60 font-light text-base md:text-lg max-w-xl mx-auto tracking-wide"
         >
           "Thiết kế sáng tạo, kết hợp thẩm mỹ và tiện nghi hiện đại"
         </motion.p>
@@ -90,7 +92,7 @@ function GroupSection() {
         <span className="text-primary text-[10px] md:text-xs tracking-[0.3em] uppercase border-b border-secondary/20 pb-2 mb-16 inline-block">
           LUKLAK GROUP - KHẲNG ĐỊNH VỊ THẾ TIÊN PHONG
         </span>
-        
+
         <div className="w-full lg:w-11/12 mb-24">
           <ScrubbingText text="Ra đời vào 1/10/2020 cùng mong muốn lan tỏa giá trị bền vững tới cộng đồng, Luklak Group không ngừng nỗ lực, chuyển mình và khai phá những tiềm năng mới để mang tới dịch vụ chất lượng hàng đầu trong thị trường kiến trúc - xây dựng. Bằng chiến lược phát triển dám nghĩ dám làm, Luklak Group xác lập vị thế tiên phong hướng tới là một tập đoàn lấy ngành xây dựng làm cốt lõi, đồng thời phát triển hệ sinh thái đa ngành hàng đầu tại Việt Nam." />
         </div>
@@ -155,7 +157,7 @@ function VisionMissionSection() {
     <section className="w-full bg-secondary text-surface py-32 px-8 md:px-16">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
+
           {/* Sứ mệnh */}
           <div className="lg:col-span-5 bg-surface/5 p-12 rounded-sm border border-surface/10 hover:border-surface/30 transition-colors">
             <span className="text-primary text-[10px] uppercase tracking-[0.3em] mb-12 block">Sứ Mệnh</span>
@@ -164,13 +166,13 @@ function VisionMissionSection() {
                 <span className="text-primary mt-1">01.</span> Phụng sự khách hàng
               </li>
               <li className="flex items-start gap-4">
-                <span className="text-primary mt-1">02.</span> Tư duy đổi mới,<br/>Sáng tạo không ngừng
+                <span className="text-primary mt-1">02.</span> Tư duy đổi mới,<br />Sáng tạo không ngừng
               </li>
               <li className="flex items-start gap-4">
-                <span className="text-primary mt-1">03.</span> Hệ sinh thái Tinh gọn<br/>& Kết nối sâu
+                <span className="text-primary mt-1">03.</span> Hệ sinh thái Tinh gọn<br />& Kết nối sâu
               </li>
               <li className="flex items-start gap-4">
-                <span className="text-primary mt-1">04.</span> Tầm nhìn cộng đồng<br/>& Bền vững
+                <span className="text-primary mt-1">04.</span> Tầm nhìn cộng đồng<br />& Bền vững
               </li>
             </ul>
           </div>
@@ -180,7 +182,7 @@ function VisionMissionSection() {
             <div className="md:col-span-2 bg-surface/5 p-12 rounded-sm border border-surface/10 hover:border-surface/30 transition-colors flex flex-col justify-center">
               <span className="text-primary text-[10px] uppercase tracking-[0.3em] mb-4 block">Tầm Nhìn 04 Trụ Cột</span>
               <h3 className="text-3xl md:text-4xl font-serif font-light mb-4">
-                Thương mại – Dịch vụ<br/>Sản xuất – Bất động sản
+                Thương mại – Dịch vụ<br />Sản xuất – Bất động sản
               </h3>
               <p className="text-surface/60 font-light">1 Phát triển vững chắc trên 4 trụ cột chiến lược.</p>
             </div>
@@ -200,9 +202,9 @@ function VisionMissionSection() {
               <span className="text-[10px] uppercase tracking-[0.3em] text-surface/50 mb-2">Công trình</span>
               <p className="text-surface/60 font-light text-sm">Được hoàn thiện chỉn chu – bài bản – không lặp lại.</p>
             </div>
-            
+
             {/* 5 Trụ sở */}
-             <div className="md:col-span-2 bg-surface/5 p-8 rounded-sm border border-surface/10 hover:border-surface/30 transition-colors flex flex-col md:flex-row items-center justify-between">
+            <div className="md:col-span-2 bg-surface/5 p-8 rounded-sm border border-surface/10 hover:border-surface/30 transition-colors flex flex-col md:flex-row items-center justify-between">
               <h3 className="text-4xl font-serif text-primary">
                 0<AnimatedCounter from={0} to={5} /> Trụ sở
               </h3>
@@ -229,11 +231,11 @@ function CoreValuesSection() {
           <span className="text-primary text-[10px] tracking-[0.3em] uppercase border-b border-secondary/20 pb-2 mb-8 inline-block">
             Bản sắc doanh nghiệp
           </span>
-          <h2 className="text-5xl md:text-7xl font-serif font-light">Giá trị<br/>Cốt lõi</h2>
+          <h2 className="text-5xl md:text-7xl font-serif font-light">Giá trị<br />Cốt lõi</h2>
         </div>
         <div className="w-full md:w-2/3 flex flex-col gap-4">
           {values.map((v, idx) => (
-            <motion.div 
+            <motion.div
               key={idx}
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -284,21 +286,21 @@ function LeadershipSection() {
 
         {/* Directors Grid */}
         <div className="flex flex-col lg:flex-row items-start gap-16">
-          
+
           {/* Mr Hien */}
           <div className="w-full lg:w-7/12">
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }} 
-              whileInView={{ opacity: 1, scale: 1 }} 
-              viewport={{ once: true }} 
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
               transition={{ duration: 1 }}
               className="relative aspect-[4/5] overflow-hidden rounded-sm group mb-8"
             >
-              <motion.img 
-                whileHover={{ scale: 1.05 }} 
+              <motion.img
+                whileHover={{ scale: 1.05 }}
                 transition={{ duration: 1 }}
-                src={imgHien} 
-                alt="Khúc Văn Hiển - Director" 
+                src={imgHien}
+                alt="Khúc Văn Hiển - Director"
                 className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-secondary via-transparent to-transparent opacity-80" />
@@ -318,18 +320,18 @@ function LeadershipSection() {
 
           {/* Mr Toan - Khung chờ (So le) */}
           <div className="w-full lg:w-5/12 lg:mt-48">
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }} 
-              whileInView={{ opacity: 1, scale: 1 }} 
-              viewport={{ once: true }} 
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
               transition={{ duration: 1, delay: 0.2 }}
               className="relative aspect-square overflow-hidden rounded-sm group mb-8"
             >
-              <motion.img 
-                whileHover={{ scale: 1.05 }} 
+              <motion.img
+                whileHover={{ scale: 1.05 }}
                 transition={{ duration: 1 }}
-                src={imgToan} 
-                alt="Nguyễn Thế Toàn" 
+                src={imgToan}
+                alt="Nguyễn Thế Toàn"
                 className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-secondary via-transparent to-transparent opacity-80" />
@@ -358,6 +360,7 @@ export default function AboutPage() {
       <AboutHero />
       <GroupSection />
       <VisionMissionSection />
+      <Services />
       <CoreValuesSection />
       <LeadershipSection />
       <Contact />

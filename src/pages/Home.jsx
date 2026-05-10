@@ -1,7 +1,6 @@
-﻿import Hero from '../components/Hero'
+import Hero from '../components/Hero'
 import About from '../components/About'
 import DesignStyles from '../components/DesignStyles'
-import Services from '../components/Services'
 import ProjectShowcase from '../components/ProjectShowcase'
 import DesignProjects from '../components/DesignProjects'
 import ConstructionProjects from '../components/ConstructionProjects'
@@ -58,26 +57,23 @@ export default function Home() {
       {/* 3. Phong Cách Thiết Kế */}
       <DesignStyles />
 
-      {/* 4. Dịch Vụ */}
-      <Services />
-
-      {/* 5. Dự Án Thiết Kế Nổi Bật (3 lần duplicate) */}
+      {/* 4. Dự Án Thiết Kế Nổi Bật (3 lần duplicate) */}
       <div className="relative z-10 bg-secondary">
         {featuredProjects.map((proj, idx) => (
           <ProjectShowcase key={idx} project={proj} />
         ))}
       </div>
 
-      {/* 6. Bộ Lọc Dự án Thiết Kế */}
+      {/* 5. Bộ Lọc Dự án Thiết Kế */}
       <DesignProjects />
 
-      {/* 7. Thực Tế Thi Công */}
+      {/* 6. Thực Tế Thi Công */}
       <ConstructionProjects />
 
-      {/* 8. Tin Tức & Cảm Hứng */}
+      {/* 7. Tin Tức & Cảm Hứng */}
       <Journal />
 
-      {/* 9. Liên Hệ & Footer */}
+      {/* 8. Liên Hệ & Footer */}
       <Contact />
     </main>
   )
