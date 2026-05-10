@@ -4,7 +4,7 @@ import img1 from '../../Dự án/Dự án thực tế/KC Villa/z7450163862634_83
 import img2 from '../../Dự án/Dự án thực tế/KC Villa/z7450163989369_be1b80a76e84bb7dc5b88bc685725aee.jpg';
 import img3 from '../../Dự án/Dự án thực tế/KC Villa/z7450164007724_768e2f7d26c3ae5ab581260ed9f2a55b.jpg';
 
-const project = {
+const defaultProject = {
   title: 'Luk Lak <br/> Design & Build.',
   href: '#',
   studio: 'LUK LAK DA NANG',
@@ -27,7 +27,7 @@ const project = {
   ],
 };
 
-export default function ProjectShowcase() {
+export default function ProjectShowcase({ project = defaultProject }) {
   const containerRef = useRef(null);
 
   const { scrollYProgress } = useScroll({
@@ -44,7 +44,7 @@ export default function ProjectShowcase() {
   return (
     <section
       ref={containerRef}
-      className="relative w-full bg-[#091D1E]"
+      className="relative w-full bg-secondary"
       style={{ minHeight: '300vh' }}
     >
 

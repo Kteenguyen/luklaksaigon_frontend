@@ -93,7 +93,9 @@ export default function Hero() {
             Luk Lak Design &amp; Build
           </motion.span>
           
-          <motion.h1 
+          <h1 className="sr-only">Luklak Architects Sài Gòn - Thiết kế Kiến trúc và Thi công Nội thất cao cấp</h1>
+
+          <motion.h2 
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -104,7 +106,7 @@ export default function Hero() {
                 {word}
               </motion.span>
             ))}
-          </motion.h1>
+          </motion.h2>
         </motion.div>
       </div>
 

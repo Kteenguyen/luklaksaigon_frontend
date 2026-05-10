@@ -1,58 +1,141 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import RevealText from './RevealText';
-import ParallaxImage from './ParallaxImage';
+import img1 from '../../Dự án/Dự án thực tế/KC Villa/z7450164022320_7c5e9ff572be475288651b3a0f1be4a3.jpg';
+import img2 from '../../Dự án/Dự án thực tế/KC Villa/z7450164007724_768e2f7d26c3ae5ab581260ed9f2a55b.jpg';
+
+// Component Text Scrubbing: Mờ -> Sáng khi cuộn chuột
+function ScrubbingText({ text }) {
+  const container = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: container,
+    offset: ["start 80%", "end 50%"] // Bắt đầu sáng khi vào khung hình, sáng hết khi tới giữa màn
+  });
+
+  const words = text.split(" ");
+  return (
+    <p ref={container} className="flex flex-wrap text-3xl md:text-4xl lg:text-6xl font-serif font-light leading-snug text-secondary">
+      {words.map((word, i) => {
+        // Tính toán khoảng scroll cho từng từ
+        const start = i / words.length;
+        const end = start + (1 / words.length);
+        // Map scroll progress vào opacity
+        const opacity = useTransform(scrollYProgress, [start, end], [0.15, 1]);
+        return (
+          <motion.span key={i} style={{ opacity }} className="mr-[0.25em] mb-[0.1em]">
+            {word}
+          </motion.span>
+        );
+      })}
+    </p>
+  );
+}
 
 export default function About() {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
-  
-  const headingOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 0]);
-  const headingScale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
-
   return (
-    <section id="about" ref={containerRef} className="relative flex items-start w-full min-h-[200vh] bg-background text-secondary border-t border-secondary/10">
-      {/* Sticky Column */}
-      <div className="sticky top-0 h-screen flex flex-col justify-center w-full md:w-1/2 p-12 md:p-24 z-0 bg-background">
-        <motion.div style={{ opacity: headingOpacity, scale: headingScale }}>
-          <span className="text-xs tracking-[0.3em] uppercase text-primary block mb-6">Về chúng tôi</span>
-          <h2 className="text-5xl md:text-7xl lg:text-8xl font-serif font-light leading-tight text-secondary">
-            Triết lý <br/> & Tầm nhìn
-          </h2>
-        </motion.div>
-      </div>
-
-      {/* Scrolling Column */}
-      <div className="w-full md:w-1/2 flex flex-col justify-start relative z-10 p-12 md:p-24 pt-[50vh] md:pt-[100vh] gap-32 bg-background">
-        <RevealText className="flex flex-col gap-12 text-xl md:text-2xl text-text-main font-light leading-relaxed">
-          <p>
-            Luk Lak Design & Build đồng nghĩa với việc kiến tạo những không gian sống độc bản.
-            Là đơn vị thiết kế và thi công nội thất uy tín, chúng tôi mang đến những giải pháp 
-            thẩm mỹ và công năng vượt trội cho biệt thự cao cấp, căn hộ hạng sang và không gian thương mại.
-          </p>
-          <p>
-            Triết lý của chúng tôi là sự giao thoa giữa chuẩn mực kiến trúc và nét chấm phá 
-            nghệ thuật cá nhân hóa. Chúng tôi tin rằng sự sang trọng thực sự nằm ở cảm giác 
-            chân thực của vật liệu, sự tinh tế của ánh sáng và dòng chảy tự nhiên của không gian.
-          </p>
-        </RevealText>
-        
-        <div className="overflow-hidden">
-          <ParallaxImage 
-            src="/about.jpg" 
-            alt="Design Studio"
-            className="w-full aspect-[4/5] bg-surface"
-          />
+    <section id="about" className="relative w-full bg-background text-secondary py-32 md:py-48 px-8 md:px-16 overflow-hidden">
+      
+      <div className="max-w-7xl mx-auto">
+        {/* Tiêu đề góc nhỏ */}
+        <div className="mb-16 md:mb-32">
+          <span className="text-[10px] md:text-xs tracking-[0.3em] uppercase text-primary border-b border-secondary/20 pb-2">
+            Về chúng tôi
+          </span>
         </div>
 
-        <div className="pt-8 border-t border-secondary/10">
-           <a href="#services" className="group inline-flex items-center text-xs tracking-[0.2em] uppercase text-secondary hover:text-primary transition-colors duration-300">
-             <span className="mr-6">Khám phá dịch vụ</span>
-             <div className="w-16 h-[1px] bg-secondary group-hover:bg-primary transition-colors duration-300 relative"></div>
-           </a>
+        {/* Text Scrubbing (Nội dung chính) */}
+        <div className="w-full lg:w-10/12">
+          <ScrubbingText text="Luklak Architects Sài Gòn - Nâng tầm trải nghiệm sống qua những không gian mang dấu ấn cá nhân và giá trị lâu dài." />
+        </div>
+
+        {/* Cấu trúc chia cột bên dưới */}
+        <div className="mt-32 flex flex-col lg:flex-row gap-24 items-start">
+          
+          {/* Cột trái: Hình ảnh Asymmetric */}
+          <div className="w-full lg:w-5/12 flex flex-col gap-16">
+            <motion.div 
+              initial={{ opacity: 0, y: 100 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              className="aspect-[4/5] overflow-hidden rounded-sm"
+            >
+              <motion.img 
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                src={img1} 
+                alt="Architecture details" 
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 100 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="w-3/4 ml-auto aspect-square overflow-hidden rounded-sm -mt-24 relative z-10 shadow-2xl"
+            >
+              <motion.img 
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                src={img2} 
+                alt="Interior details" 
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
+          </div>
+
+          {/* Cột phải: Đoạn văn chi tiết */}
+          <div className="w-full lg:w-7/12 flex flex-col gap-12 pt-12 lg:pl-12">
+            <motion.p 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="text-lg md:text-xl font-light text-text-main leading-relaxed"
+            >
+              Với trụ sở đặt tại Thành phố Hồ Chí Minh – Việt Nam, chúng tôi là một phần của mạng lưới LukLak Architects Việt Nam, ra đời từ năm 2025. Tự hào về sự phát triển không ngừng và cam kết mang lại những giải pháp kiến trúc và dịch vụ chất lượng nhất.
+            </motion.p>
+            
+            <motion.p 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="text-lg md:text-xl font-light text-text-main leading-relaxed"
+            >
+              Luklak Architects Sài Gòn là thương hiệu thiết kế – thi công kiến trúc và nội thất với định vị <strong className="text-secondary font-normal">“Thiết kế sáng tạo, kết hợp thẩm mỹ và tiện nghi hiện đại”</strong>.
+            </motion.p>
+
+            {/* Core Values */}
+            <div className="flex flex-col gap-8 mt-8 border-t border-secondary/10 pt-12">
+              <motion.div 
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+              >
+                <h3 className="text-xl font-serif text-secondary mb-4">Giá trị</h3>
+                <p className="text-text-main font-light leading-relaxed">
+                  Mang đến không gian sống độc đáo và đẳng cấp, vừa đáp ứng tiện ích thực tế, vừa thể hiện phong cách cá nhân. Khách hàng được sở hữu thiết kế tùy chỉnh khác biệt và trải nghiệm dịch vụ trọn gói, từ ý tưởng đến hoàn thiện.
+                </p>
+              </motion.div>
+
+              <motion.div 
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.1 }}
+              >
+                <h3 className="text-xl font-serif text-secondary mb-4">Điểm độc đáo</h3>
+                <p className="text-text-main font-light leading-relaxed">
+                  Sản phẩm thiết kế có gu và định hình riêng. Là đơn vị thiết kế - thi công tiên phong trong việc nhân chuỗi và quy mô lớn trong ngành.
+                </p>
+              </motion.div>
+            </div>
+
+          </div>
+
         </div>
       </div>
     </section>

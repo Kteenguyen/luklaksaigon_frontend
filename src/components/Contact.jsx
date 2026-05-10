@@ -2,77 +2,73 @@ import { motion } from 'framer-motion';
 
 export default function Contact() {
   return (
-    <footer id="contact" className="bg-secondary pt-32 pb-12 px-6 md:px-16">
-      <div className="max-w-[1800px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-16 mb-32">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-2xl"
-        >
-          <h2 className="text-5xl md:text-8xl font-serif font-light text-surface mb-8">Khởi tạo <br/> tương lai.</h2>
-          <a href="mailto:hello@luklakdn.vn" className="text-lg md:text-2xl text-text-muted hover:text-surface transition-colors duration-300 font-light border-b border-text-main hover:border-surface pb-2 inline-block">
-            hello@luklakdn.vn
-          </a>
-        </motion.div>
+    <section className="relative w-full bg-secondary text-white overflow-hidden h-screen" style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}>
+      
+      {/* Cấu trúc Sticky Footer (Curtain Reveal) */}
+      <div className="fixed bottom-0 w-full h-screen flex flex-col justify-between pt-32 pb-8 px-8 md:px-16 pointer-events-none">
+        
+        {/* Nội dung Footer */}
+        <div className="flex flex-col md:flex-row justify-between items-start w-full pointer-events-auto">
+          
+          <div className="max-w-xl">
+            <h2 className="text-4xl md:text-6xl font-serif font-light mb-8">
+              Bắt đầu dự án <br/> của bạn.
+            </h2>
+            <p className="text-white/60 font-light mb-12">
+              Khách hàng được sở hữu thiết kế tùy chỉnh khác biệt và trải nghiệm dịch vụ trọn gói, từ ý tưởng đến hoàn thiện.
+            </p>
+            <a 
+              href="tel:0932478858" 
+              className="inline-block border border-white/30 rounded-full px-8 py-4 text-sm tracking-widest uppercase hover:bg-white hover:text-[#050f10] transition-colors duration-300"
+            >
+              Liên hệ ngay
+            </a>
+          </div>
 
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="grid grid-cols-2 gap-x-16 gap-y-8"
-        >
-          {['Đà Nẵng', 'Hội An'].map((city) => (
-            <div key={city}>
-              <h3 className="text-sm tracking-widest uppercase text-surface mb-2">{city}</h3>
-              <p className="text-xs text-text-muted font-light">Văn phòng / Xưởng</p>
+          <div className="flex flex-col gap-12 mt-16 md:mt-0">
+            <div>
+              <span className="text-[10px] uppercase tracking-[0.2em] text-white/50 mb-4 block">Văn phòng</span>
+              <p className="font-light text-white/80 leading-relaxed max-w-sm">
+                43R/10 - Hồ Văn Huê<br/>
+                Phường Đức Nhuận<br/>
+                TP Hồ Chí Minh, Vietnam
+              </p>
             </div>
-          ))}
+            
+            <div>
+              <span className="text-[10px] uppercase tracking-[0.2em] text-white/50 mb-4 block">Liên lạc</span>
+              <p className="font-light text-white/80">093 247 88 58</p>
+              <p className="font-light text-white/80 mt-2">info@luklak.vn</p>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Footer Bottom */}
+        <div className="w-full flex flex-col md:flex-row justify-between items-center text-[10px] uppercase tracking-widest text-white/40 mt-16 pointer-events-auto border-t border-white/10 pt-8 z-10 relative">
+          <span>&copy; {new Date().getFullYear()} Luklak Architects. All rights reserved.</span>
+          <div className="flex gap-8 mt-4 md:mt-0">
+            <a href="#" className="hover:text-white transition-colors">Facebook</a>
+            <a href="#" className="hover:text-white transition-colors">Instagram</a>
+            <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
+          </div>
+        </div>
+
+      </div>
+
+      {/* Infinite Text Marquee (LUK LAK DESIGN & BUILD) */}
+      <div className="absolute bottom-16 md:bottom-24 left-0 w-full overflow-hidden pointer-events-none opacity-5">
+        <motion.div
+          animate={{ x: [0, -2000] }}
+          transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
+          className="whitespace-nowrap"
+        >
+          <span className="text-[150px] md:text-[250px] font-serif font-bold tracking-tighter uppercase leading-none">
+            LUK LAK DESIGN & BUILD &mdash; LUK LAK DESIGN & BUILD &mdash; 
+          </span>
         </motion.div>
       </div>
 
-      <div className="max-w-[1800px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 pt-16 border-t border-surface/10 mb-16">
-        <div className="col-span-1 md:col-span-2">
-          <p className="text-[10px] tracking-widest text-text-muted uppercase mb-4">Sitemap</p>
-          <div className="grid grid-cols-2 gap-4 text-xs font-light tracking-wide text-surface">
-            <a href="/" className="hover:text-primary transition-colors">Trang chủ</a>
-            <a href="/factory" className="hover:text-primary transition-colors">Xưởng sản xuất</a>
-            <a href="/about" className="hover:text-primary transition-colors">Về chúng tôi</a>
-            <a href="/journal" className="hover:text-primary transition-colors">Tin tức & Cảm hứng</a>
-            <a href="/projects" className="hover:text-primary transition-colors">Dự án</a>
-            <a href="/contact" className="hover:text-primary transition-colors">Liên hệ</a>
-            <a href="/services" className="hover:text-primary transition-colors">Dịch vụ</a>
-          </div>
-        </div>
-        <div className="col-span-1">
-          <p className="text-[10px] tracking-widest text-text-muted uppercase mb-4">Dự án</p>
-          <div className="flex flex-col gap-4 text-xs font-light tracking-wide text-surface">
-            <a href="/projects" className="hover:text-primary transition-colors">Biệt thự</a>
-            <a href="/projects" className="hover:text-primary transition-colors">Căn hộ</a>
-            <a href="/projects" className="hover:text-primary transition-colors">Nhà phố</a>
-            <a href="/projects" className="hover:text-primary transition-colors">Thương mại</a>
-          </div>
-        </div>
-        <div className="col-span-1">
-          <p className="text-[10px] tracking-widest text-text-muted uppercase mb-4">Dịch vụ</p>
-          <div className="flex flex-col gap-4 text-xs font-light tracking-wide text-surface">
-            <a href="/services" className="hover:text-primary transition-colors">Thiết kế kiến trúc</a>
-            <a href="/services" className="hover:text-primary transition-colors">Thiết kế nội thất</a>
-            <a href="/services" className="hover:text-primary transition-colors">Thi công trọn gói</a>
-          </div>
-        </div>
-      </div>
-
-      <div className="max-w-[1800px] mx-auto flex flex-col md:flex-row justify-between items-center pt-8 border-t border-surface/10 text-[10px] tracking-widest text-text-muted uppercase">
-        <p>&copy; {new Date().getFullYear()} Luk Lak Design & Build. All rights reserved.</p>
-        <div className="flex space-x-8 mt-4 md:mt-0">
-          <a href="#" className="hover:text-surface transition-colors duration-300">Facebook</a>
-          <a href="#" className="hover:text-surface transition-colors duration-300">Instagram</a>
-          <a href="#" className="hover:text-surface transition-colors duration-300">Chính sách</a>
-        </div>
-      </div>
-    </footer>
+    </section>
   );
 }
