@@ -52,6 +52,19 @@ Thumbs.db
 *.m4v
 *.M4V
 
-# Folders containing videos
-src/video/
+# Ignore video FILES inside src/video/ but keep the folder (tracked via .gitkeep)
+src/video/*.mp4
+src/video/*.MP4
+src/video/*.mov
+src/video/*.MOV
+src/video/*.avi
+src/video/*.AVI
+src/video/*.mkv
+src/video/*.MKV
+src/video/*.webm
+src/video/*.WEBM
+src/video/*.m4v
+src/video/*.M4V
+
+# Other large video folders
 Video dự án/
