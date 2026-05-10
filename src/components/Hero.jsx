@@ -16,7 +16,7 @@ export default function Hero() {
   const videoY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
 
   // Text floats up and fades as user scrolls away
-  const textY   = useTransform(scrollYProgress, [0, 0.6], ['0%', '-20%']);
+  const textY = useTransform(scrollYProgress, [0, 0.6], ['0%', '-20%']);
   const textOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   // Overlay darkens slightly as user scrolls (adds drama)
