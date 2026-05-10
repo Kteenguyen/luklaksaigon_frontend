@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import videoLL13 from '../video/LL13.mp4';
+import videoBanner from '../video/banner.mp4';
 
 export default function Hero() {
   const videoRef = useRef(null);
@@ -41,7 +41,7 @@ export default function Hero() {
       >
         <video
           ref={videoRef}
-          src={videoLL13}
+          src={videoBanner}
           autoPlay loop muted playsInline
           className="w-full h-full object-cover"
         />
