@@ -1,3 +1,4 @@
+"use client";
 ﻿import { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
@@ -58,7 +59,7 @@ export default function Journal() {
                 <motion.img
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.8, ease: "easeOut" }}
-                  src={post.img}
+                  src={post.img.src || post.img}
                   alt={post.title}
                   className="w-full h-full object-cover pointer-events-none"
                 />

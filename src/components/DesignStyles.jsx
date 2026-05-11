@@ -1,3 +1,4 @@
+"use client";
 ﻿import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 // Tạm thời lấy các ảnh từ KC Villa để demo, sau này thay bằng ảnh đúng phong cách
@@ -59,7 +60,7 @@ export default function DesignStyles() {
                     className="absolute inset-0 z-0"
                   >
                     <img 
-                      src={style.image} 
+                      src={style.image.src || style.image} 
                       alt={style.title} 
                       className="w-full h-full object-cover"
                     />

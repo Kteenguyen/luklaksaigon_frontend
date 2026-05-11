@@ -1,3 +1,4 @@
+"use client";
 ﻿import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import s1 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450164022320_7c5e9ff572be475288651b3a0f1be4a3.jpg';
@@ -24,7 +25,7 @@ function FadeDownImage({ src, alt }) {
     >
       <motion.img
         style={{ y, scale: 1.2 }}
-        src={src}
+        src={src.src || src}
         alt={alt}
         className="absolute inset-0 w-full h-full object-cover origin-center"
       />

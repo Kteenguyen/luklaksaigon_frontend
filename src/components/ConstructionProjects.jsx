@@ -1,3 +1,4 @@
+"use client";
 ﻿import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -115,7 +116,7 @@ export default function ConstructionProjects() {
                     transition={{ duration: 1, ease: "easeOut" }}
                   >
                     <img 
-                      src={project.img} 
+                      src={project.img.src || project.img} 
                       alt={project.title} 
                       className="w-full h-[40vh] md:h-full object-cover"
                     />

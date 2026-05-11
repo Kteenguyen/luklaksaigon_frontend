@@ -1,3 +1,4 @@
+"use client";
 ﻿import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
@@ -64,7 +65,7 @@ function ProjectCard({ project }) {
     >
       <div className={`w-full ${project.aspectRatio}`}>
         <img 
-          src={project.image} 
+          src={project.image.src || project.image} 
           alt={project.title} 
           className="w-full h-full object-cover transition-transform duration-[800ms] ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-105"
         />

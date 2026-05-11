@@ -1,3 +1,4 @@
+"use client";
 import { useState } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { Search, ChevronDown } from 'lucide-react';
@@ -59,7 +60,7 @@ export default function Header() {
       >
         {/* LOGO */}
         <a href="/" className="cursor-pointer z-50 flex-shrink-0">
-          <img src={logoSrc} alt="LukLak Design & Build" className="h-10 md:h-14 w-auto object-contain drop-shadow-lg" />
+          <img src={logoSrc.src || logoSrc} alt="LukLak Design & Build" className="h-10 md:h-14 w-auto object-contain drop-shadow-lg" />
         </a>
 
         {/* DESKTOP NAVIGATION (Center) */}

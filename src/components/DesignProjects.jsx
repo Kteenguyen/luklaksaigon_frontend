@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react';
+"use client";
+import { useState, useEffect, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 // Mock Data
 import img1 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450163862634_83a0f94c7430897270c93b1b0a7bcfd6.jpg';
@@ -24,19 +26,25 @@ const projectsData = [
   { id: 11, title: 'Modern Studio', category: 'Căn hộ', img: img3 },
 ];
 
-export default function DesignProjects({ hideViewAll = false }) {
-  const location = useLocation();
-  const [activeTab, setActiveTab] = useState('Tất cả');
-  const [visibleCount, setVisibleCount] = useState(9);
+function ProjectFilter({ activeTab, setActiveTab }) {
+  const searchParams = useSearchParams();
 
-  // Sync tab with URL parameters
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
     const categoryQuery = searchParams.get('category');
     if (categoryQuery && categories.includes(categoryQuery)) {
       setActiveTab(categoryQuery);
     }
-  }, [location.search]);
+  }, [searchParams, setActiveTab]);
+
+  return null;
+}
+
+export default function DesignProjects({ hideViewAll = false }) {
+  const router = useRouter();
+  const [activeTab, setActiveTab] = useState('Tất cả');
+  const [visibleCount, setVisibleCount] = useState(9);
+
+  
 
   const filteredProjects = activeTab === 'Tất cả'
     ? projectsData
@@ -52,11 +60,14 @@ export default function DesignProjects({ hideViewAll = false }) {
     setActiveTab(cat);
     setVisibleCount(9);
     // Optionally update URL when clicking tab (without refreshing)
-    window.history.pushState(null, '', cat === 'Tất cả' ? '/projects' : `/projects?category=${cat}`);
+    router.push(cat === 'Tất cả' ? '/projects' : `/projects?category=${cat}`, { scroll: false });
   };
 
   return (
     <section className="w-full bg-background text-secondary py-24 md:py-32">
+      <Suspense fallback={null}>
+        <ProjectFilter activeTab={activeTab} setActiveTab={setActiveTab} />
+      </Suspense>
       <div className="max-w-[90rem] mx-auto px-8 md:px-16">
 
         {/* Header & Tabs */}
@@ -111,7 +122,7 @@ export default function DesignProjects({ hideViewAll = false }) {
                   transition={{ duration: 0.8, ease: "easeOut" }}
                 >
                   <img
-                    src={project.img}
+                    src={project.img.src || project.img}
                     alt={project.title}
                     className="w-full h-full object-cover"
                   />
@@ -147,8 +158,7 @@ export default function DesignProjects({ hideViewAll = false }) {
           )}
 
           {!hideViewAll && (
-            <Link
-              to="/projects"
+            <Link href="/projects"
               className="group relative inline-flex items-center gap-4 text-xs tracking-[0.2em] uppercase py-4 px-10 border border-secondary overflow-hidden bg-secondary text-surface"
             >
               <div className="absolute inset-0 bg-primary translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />

@@ -1,3 +1,4 @@
+"use client";
 ﻿import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
@@ -16,7 +17,7 @@ export default function ParallaxImage({ src, alt, className }) {
     <div ref={containerRef} className={`overflow-hidden relative ${className}`}>
       <motion.img
         style={{ y, scale }}
-        src={src}
+        src={src.src || src}
         alt={alt}
         className="w-full h-full object-cover origin-center"
       />

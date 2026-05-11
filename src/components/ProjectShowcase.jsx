@@ -1,4 +1,5 @@
-﻿import { useRef } from 'react';
+"use client";
+import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import img1 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450163862634_83a0f94c7430897270c93b1b0a7bcfd6.jpg';
 import img2 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450163989369_be1b80a76e84bb7dc5b88bc685725aee.jpg';
@@ -53,7 +54,7 @@ export default function ProjectShowcase({ project = defaultProject }) {
       <div className="sticky top-0 h-screen w-full overflow-hidden pointer-events-none z-0">
         <motion.img
           style={{ opacity: mainImageOpacity }}
-          src={project.mainImage.src}
+          src={project.mainImage.src.src || project.mainImage.src}
           alt={project.mainImage.alt}
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -68,7 +69,7 @@ export default function ProjectShowcase({ project = defaultProject }) {
             <div key={i} className="w-full">
               <figure className="relative w-full aspect-video overflow-hidden shadow-2xl rounded-sm">
                 <img
-                  src={slide.src}
+                  src={slide.src.src || slide.src}
                   alt={slide.alt}
                   className="w-full h-full object-cover"
                 />

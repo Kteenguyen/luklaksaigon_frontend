@@ -1,6 +1,7 @@
+"use client";
 ﻿import { useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import videoBanner from '../assets/video/banner.mp4';
+const videoBanner = '/video/banner.mp4';
 
 export default function Hero() {
   const videoRef = useRef(null);
@@ -66,7 +67,7 @@ export default function Hero() {
       >
         <video
           ref={videoRef}
-          src={videoBanner}
+          src={videoBanner.src || videoBanner}
           autoPlay loop muted playsInline
           className="w-full h-full object-cover"
         />

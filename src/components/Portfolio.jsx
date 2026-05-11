@@ -1,3 +1,4 @@
+"use client";
 ﻿import { motion } from 'framer-motion';
 
 const projects = [
@@ -69,7 +70,7 @@ export default function Portfolio() {
             whileInView={{ scale: 1 }}
             viewport={{ once: false, amount: 0.1 }}
             transition={{ duration: 6, ease: "easeOut" }}
-            src={project.image}
+            src={project.image.src || project.image}
             alt={project.title}
             className="absolute inset-0 w-full h-full object-cover z-0"
           />
