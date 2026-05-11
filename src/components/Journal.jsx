@@ -1,20 +1,8 @@
 "use client";
-﻿import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-
-// Mock Data
-import img1 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450163862634_83a0f94c7430897270c93b1b0a7bcfd6.jpg';
-import img2 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450163989369_be1b80a76e84bb7dc5b88bc685725aee.jpg';
-import img3 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450164007724_768e2f7d26c3ae5ab581260ed9f2a55b.jpg';
-import img4 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450164022320_7c5e9ff572be475288651b3a0f1be4a3.jpg';
-
-const posts = [
-  { id: 1, title: 'Xu hướng thiết kế Japandi lên ngôi 2025', date: '20 Thg 5, 2025', category: 'Xu hướng', img: img1 },
-  { id: 2, title: 'Bí quyết tối ưu ánh sáng tự nhiên cho nhà phố', date: '15 Thg 5, 2025', category: 'Kiến thức', img: img2 },
-  { id: 3, title: 'Cách chọn vật liệu Wabi-sabi chuẩn gu', date: '10 Thg 5, 2025', category: 'Vật liệu', img: img3 },
-  { id: 4, title: 'Biệt thự thông minh và những giải pháp IoT', date: '05 Thg 5, 2025', category: 'Công nghệ', img: img4 },
-  { id: 5, title: 'Nghệ thuật sắp đặt ánh sáng trong phòng ngủ', date: '01 Thg 5, 2025', category: 'Kiến thức', img: img1 },
-];
+import Link from 'next/link';
+import { blogData } from '../data/mockData';
 
 export default function Journal() {
   const [carouselWidth, setCarouselWidth] = useState(0);
@@ -25,6 +13,8 @@ export default function Journal() {
       setCarouselWidth(carouselRef.current.scrollWidth - carouselRef.current.offsetWidth);
     }
   }, []);
+
+  if (!blogData || blogData.length === 0) return null;
 
   return (
     <section className="w-full bg-background text-secondary py-24 md:py-32 overflow-hidden">
@@ -50,16 +40,13 @@ export default function Journal() {
           dragConstraints={{ right: 0, left: -carouselWidth - 100 }}
           className="flex gap-8"
         >
-          {posts.map((post) => (
-            <motion.div
-              key={post.id}
-              className="min-w-[300px] md:min-w-[450px] flex flex-col group"
-            >
+          {blogData.map((post) => (
+            <Link href={`/blog/${post.slug}`} key={post.id} className="min-w-[300px] md:min-w-[450px] flex flex-col group block">
               <div className="relative aspect-[4/3] overflow-hidden rounded-sm mb-6">
                 <motion.img
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.8, ease: "easeOut" }}
-                  src={post.img.src || post.img}
+                  src={post.coverImg?.src || post.coverImg}
                   alt={post.title}
                   className="w-full h-full object-cover pointer-events-none"
                 />
@@ -74,7 +61,7 @@ export default function Journal() {
               <h3 className="text-2xl md:text-3xl font-serif font-light text-secondary group-hover:text-primary transition-colors duration-300">
                 {post.title}
               </h3>
-            </motion.div>
+            </Link>
           ))}
         </motion.div>
       </motion.div>

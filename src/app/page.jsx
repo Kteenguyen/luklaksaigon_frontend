@@ -3,7 +3,8 @@ import About from '../components/About'
 import DesignStyles from '../components/DesignStyles'
 import ProjectShowcase from '../components/ProjectShowcase'
 import DesignProjects from '../components/DesignProjects'
-import ConstructionProjects from '../components/ConstructionProjects'
+import FeaturedHorizontalScroll from '../components/FeaturedHorizontalScroll'
+import { constructionProjectsData } from '../data/mockData'
 import Journal from '../components/Journal'
 import Contact from '../components/Contact'
 
@@ -67,8 +68,11 @@ export default function Home() {
       {/* 5. Bộ Lọc Dự án Thiết Kế */}
       <DesignProjects />
 
-      {/* 6. Thực Tế Thi Công */}
-      <ConstructionProjects />
+      {/* 6. Dự Án Thực Tế Nổi Bật (Horizontal Scrolling) */}
+      <FeaturedHorizontalScroll
+        projects={constructionProjectsData.slice(0, 4)}
+        title="Dự án Thực tế"
+      />
 
       {/* 7. Tin Tức & Cảm Hứng */}
       <Journal />

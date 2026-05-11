@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#B06B3E',
+        primary: '#D4AF37', // Vàng hoàng gia (Classic Gold) - Sáng hơn, nổi bật trên nền tối
+        'primary-dark': '#B06B3E', // Giữ lại màu cũ nếu cần dùng trên nền quá sáng
         secondary: '#2D2C2A',
         background: '#F9F8F5',
         surface: '#FFFFFF',

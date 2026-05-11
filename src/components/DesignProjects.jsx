@@ -60,7 +60,7 @@ export default function DesignProjects({ hideViewAll = false }) {
     setActiveTab(cat);
     setVisibleCount(9);
     // Optionally update URL when clicking tab (without refreshing)
-    router.push(cat === 'Tất cả' ? '/projects' : `/projects?category=${cat}`, { scroll: false });
+    router.push(cat === 'Tất cả' ? '/du-an' : `/du-an?category=${cat}`, { scroll: false });
   };
 
   return (
@@ -158,7 +158,7 @@ export default function DesignProjects({ hideViewAll = false }) {
           )}
 
           {!hideViewAll && (
-            <Link href="/projects"
+            <Link href="/du-an"
               className="group relative inline-flex items-center gap-4 text-xs tracking-[0.2em] uppercase py-4 px-10 border border-secondary overflow-hidden bg-secondary text-surface"
             >
               <div className="absolute inset-0 bg-primary translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />

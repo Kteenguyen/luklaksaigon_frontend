@@ -1,112 +1,103 @@
 "use client";
-﻿import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
-import p1 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450164007725_487732fcdca5ccf6a4189f90c0c957fa.jpg';
-import p2 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450164022155_66f13bcfae7d52a8681c0232feeb187f.jpg';
-import p3 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450164022156_566f910387ff97df3b8de8afff823dab.jpg';
-import p4 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450164022157_9985b14bc96b0721c6f25d1c6bf3e6a0.jpg';
-import p5 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450164022158_478bff7e126689859a32fa842add2090.jpg';
-import p6 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450164022159_6f0a4c16bb9d235da2b9575e1cc7db4a.jpg';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
+import { projectsData } from '../data/mockData';
 
-const projects = [
-  {
-    id: 1,
-    title: 'KC VILLA',
-    category: 'CôNG TRÌNH THỰC TẾA',
-    image: p1,
-    aspectRatio: 'aspect-[3/4]',
-  },
-  {
-    id: 2,
-    title: 'KC VILLA — PHÒNG KHÁCH',
-    category: 'NỘI THẤT',
-    image: p2,
-    aspectRatio: 'aspect-square',
-  },
-  {
-    id: 3,
-    title: 'KC VILLA — PHÒNG BẾP',
-    category: 'NỘI THẤT',
-    image: p3,
-    aspectRatio: 'aspect-[4/5]',
-  },
-  {
-    id: 4,
-    title: 'KC VILLA — NGỦ CẢNH',
-    category: 'KIẾN TRÚC',
-    image: p4,
-    aspectRatio: 'aspect-[3/4]',
-  },
-  {
-    id: 5,
-    title: 'KC VILLA — PHÒNG NGỦ',
-    category: 'NỘI THẤT',
-    image: p5,
-    aspectRatio: 'aspect-video',
-  },
-  {
-    id: 6,
-    title: 'KC VILLA — NHÀ TắM',
-    category: 'NỘI THẤT',
-    image: p6,
-    aspectRatio: 'aspect-[4/5]',
-  }
-];
-
-function ProjectCard({ project }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className="relative overflow-hidden cursor-pointer group break-inside-avoid rounded-sm w-full"
-    >
-      <div className={`w-full ${project.aspectRatio}`}>
-        <img 
-          src={project.image.src || project.image} 
-          alt={project.title} 
-          className="w-full h-full object-cover transition-transform duration-[800ms] ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-105"
-        />
-      </div>
-
-      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-500 ease-in-out z-10" />
-
-      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-white px-6 text-center pointer-events-none">
-        <span className="text-[10px] uppercase tracking-[0.2em] mb-2 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">
-          {project.category}
-        </span>
-        <h3 className="text-2xl font-serif tracking-wide opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-150">
-          {project.title}
-        </h3>
-        <div className="mt-6 opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-200">
-          <ArrowRight strokeWidth={1} size={20} />
-        </div>
-      </div>
-    </motion.div>
-  );
-}
+const CATEGORIES = ['Tất cả', ...Array.from(new Set(projectsData.map(p => p.category)))];
 
 export default function ProjectGallery() {
-  return (
-    <section className="w-full py-24 md:py-32 px-6 md:px-12 bg-background text-secondary">
-      <div className="max-w-[1800px] mx-auto">
-        
-        <div className="mb-20 text-center flex flex-col items-center">
-          <span className="text-[10px] uppercase tracking-[0.3em] text-primary mb-6">Khám Phá</span>
-          <h2 className="text-4xl md:text-6xl font-serif font-light tracking-wide text-secondary mb-6">
-            Bộ sưu tập thiết kế
-          </h2>
-          <div className="w-12 h-[1px] bg-primary/30"></div>
-        </div>
+  const [activeCategory, setActiveCategory] = useState('Tất cả');
+  const [filteredProjects, setFilteredProjects] = useState(projectsData);
 
-        <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-          {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+  useEffect(() => {
+    if (activeCategory === 'Tất cả') {
+      setFilteredProjects(projectsData);
+    } else {
+      setFilteredProjects(projectsData.filter(p => p.category === activeCategory));
+    }
+  }, [activeCategory]);
+
+  return (
+    <section className="w-full bg-background pt-8 pb-32">
+      <div className="max-w-[100rem] mx-auto px-8 md:px-16">
+
+        {/* Filter Bar */}
+        <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 mb-20 border-b border-secondary/10 pb-6">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`text-sm md:text-base tracking-widest uppercase transition-all duration-300 relative pb-2 ${activeCategory === cat ? 'text-primary' : 'text-secondary/50 hover:text-secondary'
+                }`}
+            >
+              {cat}
+              {activeCategory === cat && (
+                <motion.div
+                  layoutId="activeFilter"
+                  className="absolute bottom-0 left-0 w-full h-px bg-primary"
+                />
+              )}
+            </button>
           ))}
         </div>
-        
+
+        {/* Project Grid */}
+        <motion.div
+          layout
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          <AnimatePresence>
+            {filteredProjects.map((project, i) => (
+              <motion.div
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                key={project.id}
+                className="relative group cursor-pointer overflow-hidden rounded-sm bg-secondary/5"
+              >
+                <Link href={`/du-an/${project.slug}`} className="block relative w-full h-full">
+                  <div className="relative w-full overflow-hidden aspect-[4/5]">
+                    <motion.div
+                      variants={{
+                        hidden: { clipPath: "inset(100% 0 0 0)" },
+                        visible: {
+                          clipPath: "inset(0% 0 0 0)",
+                          transition: { duration: 1.2, delay: (i % 3) * 0.1, ease: [0.16, 1, 0.3, 1] }
+                        }
+                      }}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true, margin: "-50px" }}
+                      className="w-full h-full"
+                    >
+                      <img
+                        src={project.coverImg.src || project.coverImg}
+                        alt={project.title}
+                        className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out"
+                      />
+                    </motion.div>
+                  </div>
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
+                    <span className="text-primary text-xs uppercase tracking-widest mb-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                      {project.category}
+                    </span>
+                    <h3 className="text-white text-2xl md:text-3xl font-serif transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">
+                      {project.title}
+                    </h3>
+                    <p className="text-white/60 text-sm mt-2 font-light transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100">
+                      {project.location} • {project.year}
+                    </p>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+
       </div>
     </section>
   );

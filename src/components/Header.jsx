@@ -6,36 +6,39 @@ import logoSrc from '../assets/logo/PNG/Logo_Light_1 copy.png';
 
 const navItems = [
   { name: 'Trang chủ', path: '/' },
-  { name: 'Về chúng tôi', path: '/about' },
+  { name: 'Về chúng tôi', path: '/ve-chung-toi' },
   {
     name: 'Dự án',
-    path: '/projects',
+    path: '/du-an',
     dropdown: [
-      { label: 'Biệt thự', path: '/projects?category=Biệt thự' },
-      { label: 'Căn hộ', path: '/projects?category=Căn hộ' },
-      { label: 'Nhà phố', path: '/projects?category=Nhà phố' },
-      { label: 'Thương mại', path: '/projects?category=Thương mại' }
+      { label: 'Biệt thự', path: '/du-an?category=Biệt thự' },
+      { label: 'Căn hộ', path: '/du-an?category=Căn hộ' },
+      { label: 'Nhà phố', path: '/du-an?category=Nhà phố' },
+      { label: 'Thương mại', path: '/du-an?category=Thương mại' }
     ]
   },
-  { name: 'Thi công', path: '/construction' },
+  { name: 'Thi công', path: '/thi-cong' },
+  { name: 'Đăng ký tư vấn', path: '/dang-ky-tu-van' },
   {
-    name: 'Dịch vụ',
-    path: '/services',
+    name: 'Phong cách thiết kế',
+    path: '#',
     dropdown: [
-      { label: 'Tư vấn Thiết kế', path: '/services' },
-      { label: 'Thi công Nội thất', path: '/services' },
-      { label: 'Xưởng sản xuất', path: '/factory' }
+      { label: 'Japandi', path: '/japandi' },
+      { label: 'Mid-Century', path: '/mid-century' },
+      { label: 'Farmhouse', path: '/farmhouse' },
+      { label: 'Wabisabi', path: '/wabisabi' },
+      { label: 'Modern', path: '/modern' }
     ]
   },
+  { name: 'FAQs', path: '/faqs' },
   {
     name: 'Tin tức',
-    path: '/journal',
+    path: '#',
     dropdown: [
-      { label: 'Tạp chí', path: '/journal' },
-      { label: 'Cảm hứng', path: '/journal' }
+      { label: 'Blog', path: '/blog' },
+      { label: 'Hoạt động', path: '/hoat-dong' }
     ]
-  },
-  { name: 'Liên hệ', path: '/contact' },
+  }
 ];
 
 

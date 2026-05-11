@@ -36,11 +36,17 @@ export default function ProjectShowcase({ project = defaultProject }) {
     offset: ["start start", "end end"]
   });
 
-  // Fade out background image when scrolling
-  const mainImageOpacity = useTransform(scrollYProgress, [0, 0.66], [1, 0]);
+  // Background parallax and fade
+  const mainImageOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const mainImageScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
 
-  // Fade in dark gradient overlay so text remains readable
+  // Content readability overlay
   const contentBgOpacity = useTransform(scrollYProgress, [0, 0.8], [0, 1]);
+
+  // Slides parallax (each slide moves at a different speed for depth)
+  const y1 = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
+  const y2 = useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]);
+  const parallaxTransforms = [y1, y2];
 
   return (
     <section
@@ -50,67 +56,81 @@ export default function ProjectShowcase({ project = defaultProject }) {
     >
 
       {/* ── Layer 1: Ảnh Nền (Z-index 0) ── */}
-      {/* Nằm dưới cùng. Chiếm 100vh không gian thực trong flow. */}
       <div className="sticky top-0 h-screen w-full overflow-hidden pointer-events-none z-0">
         <motion.img
-          style={{ opacity: mainImageOpacity }}
+          style={{ opacity: mainImageOpacity, scale: mainImageScale }}
           src={project.mainImage.src.src || project.mainImage.src}
           alt={project.mainImage.alt}
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover transform-gpu"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/10 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10 z-10" />
       </div>
 
       {/* ── Layer 2: Slides Cuộn (Z-index 20) ── */}
-      {/* Tự động bắt đầu từ vị trí 100vh (ngay dưới Ảnh Nền). Trượt đè lên Ảnh Nền. */}
-      <div className="relative z-20 w-full px-4 md:px-8 lg:px-12 pb-[20vh] pointer-events-none">
-        <div className="flex flex-col gap-32 lg:gap-[25vh] w-full lg:w-[83.333333%] lg:ml-[8.333333%] pointer-events-auto pt-[20vh]">
+      <div className="relative z-20 w-full px-4 md:px-8 lg:px-16 pb-[20vh] pointer-events-none">
+        <div className="flex flex-col gap-32 md:gap-[30vh] w-full pointer-events-auto pt-[40vh]">
           {project.slides.map((slide, i) => (
-            <div key={i} className="w-full">
-              <figure className="relative w-full aspect-video overflow-hidden shadow-2xl rounded-sm">
+            <motion.div
+              key={i}
+              style={{ y: parallaxTransforms[i] }}
+              className={`w-full md:w-[75%] ${i % 2 === 0 ? 'ml-auto mr-0' : 'mr-auto ml-0'}`}
+            >
+              <figure className="relative w-full aspect-[4/3] md:aspect-video overflow-hidden shadow-2xl">
                 <img
                   src={slide.src.src || slide.src}
                   alt={slide.alt}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover filter brightness-[0.8] hover:brightness-100 hover:scale-105 transition-all duration-700"
                 />
               </figure>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
 
       {/* ── Layer 3: Cụm Nội Dung Chữ (Z-index 30) ── */}
-      {/* Bao phủ toàn bộ section bằng absolute, sau đó dùng sticky bên trong để luôn giữ chữ ở trên màn hình. */}
-      {/* Nằm trên cùng, không bao giờ bị Slides che khuất! */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-30">
-        <div className="sticky top-0 h-screen w-full flex flex-col md:flex-row items-start md:items-end justify-between px-8 md:px-16 pb-12 md:pb-16">
+        <div className="sticky top-0 h-screen w-full flex flex-col md:flex-row items-start md:items-end justify-between px-8 md:px-16 pb-12 md:pb-20">
 
-          {/* Lớp Gradient động lót dưới chữ */}
           <motion.div
             style={{ opacity: contentBgOpacity }}
-            className="absolute bottom-0 left-0 w-full h-[50%] bg-gradient-to-t from-black/90 via-black/40 to-transparent z-0"
+            className="absolute bottom-0 left-0 w-full h-[60%] bg-gradient-to-t from-black via-black/60 to-transparent z-0"
           />
 
-          {/* Trái: Tiêu đề và Nút */}
-          <div className="relative z-10 flex flex-col items-start mt-auto">
+          <div className="relative z-10 flex flex-col items-start mt-auto w-full md:w-[70%] lg:w-[80%] p-4">
+            <span className="text-[#D4AF37] text-xs md:text-sm tracking-[0.4em] uppercase mb-8 block font-medium">
+              Featured Design
+            </span>
             <h2
-              className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif text-white tracking-wide font-light leading-tight drop-shadow-lg"
+              className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif text-white uppercase tracking-wide font-light leading-tight drop-shadow-2xl"
               dangerouslySetInnerHTML={{ __html: project.title }}
             />
+
             <a
               href={project.href}
-              className="pointer-events-auto mt-6 md:mt-8 px-6 py-2 md:py-3 border border-white/50 rounded-full text-white text-[10px] md:text-sm tracking-widest hover:bg-white hover:text-[#091D1E] transition-colors duration-300"
+              className="group pointer-events-auto mt-12 flex items-center gap-6 text-white/80 hover:text-white transition-colors duration-300"
             >
-              VIEW PROJECTS
+              <span className="text-xs uppercase tracking-[0.3em] font-medium">Khám phá dự án</span>
+              <span className="w-16 h-px bg-white/30 group-hover:bg-white group-hover:w-24 transition-all duration-500" />
             </a>
           </div>
 
-          {/* Phải: Chữ chi tiết */}
-          <div className="relative z-10 flex flex-wrap gap-4 md:gap-8 text-[9px] md:text-[11px] text-white/70 uppercase tracking-[0.2em] mt-8 md:mt-0 pb-2">
-            <span>{project.studio}</span>
-            <span className="hidden md:inline">{project.type}</span>
-            <span className="hidden md:inline">{project.location}</span>
-            <span>{project.year}</span>
+          <div className="relative z-10 flex flex-col md:text-right gap-6 text-[10px] md:text-xs text-white/60 uppercase tracking-[0.2em] mt-16 md:mt-0 pb-2">
+            <div>
+              <span className="block text-white/30 mb-1 text-[9px]">Studio</span>
+              <span className="text-white/90">{project.studio}</span>
+            </div>
+            <div>
+              <span className="block text-white/30 mb-1 text-[9px]">Type</span>
+              <span className="text-white/90">{project.type}</span>
+            </div>
+            <div>
+              <span className="block text-white/30 mb-1 text-[9px]">Location</span>
+              <span className="text-white/90">{project.location}</span>
+            </div>
+            <div>
+              <span className="block text-white/30 mb-1 text-[9px]">Year</span>
+              <span className="text-white/90">{project.year}</span>
+            </div>
           </div>
 
         </div>

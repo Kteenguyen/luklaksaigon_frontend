@@ -1,36 +1,23 @@
 "use client";
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-// Mock Data
-import img1 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450163862634_83a0f94c7430897270c93b1b0a7bcfd6.jpg';
-import img2 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450163989369_be1b80a76e84bb7dc5b88bc685725aee.jpg';
-import img3 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450164007724_768e2f7d26c3ae5ab581260ed9f2a55b.jpg';
+import Link from 'next/link';
+import { constructionProjectsData } from '../data/mockData';
 
 const tabs = ['Đang thi công', 'Đã hoàn thiện'];
-
-const constructionData = {
-  'Đang thi công': [
-    { id: 'c1', title: 'The Landmark - Thô', location: 'Q.1, TP.HCM', img: img1 },
-    { id: 'c2', title: 'Ocean Villa - Cất nóc', location: 'Đà Nẵng', img: img2 },
-  ],
-  'Đã hoàn thiện': [
-    { id: 'c3', title: 'KC Villa - Hoàn thiện', location: 'Đồng Nai', img: img3 },
-    { id: 'c4', title: 'Zen Cafe - Bàn giao', location: 'Q.2, TP.HCM', img: img1 },
-  ]
-};
 
 export default function ConstructionProjects() {
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const [direction, setDirection] = useState(1);
+  const [visibleCount, setVisibleCount] = useState(4);
 
   const handleTabChange = (newTab) => {
     if (newTab === activeTab) return;
     setDirection(tabs.indexOf(newTab) > tabs.indexOf(activeTab) ? 1 : -1);
     setActiveTab(newTab);
+    setVisibleCount(4);
   };
 
-  // Variants cho hiệu ứng vuốt (Swipe/Slide) cực mạnh
   const slideVariants = {
     enter: (dir) => ({
       x: dir > 0 ? 1000 : -1000,
@@ -51,38 +38,33 @@ export default function ConstructionProjects() {
     })
   };
 
+  const filteredData = constructionProjectsData.filter(p => p.status === activeTab);
+  const visibleProjects = filteredData.slice(0, visibleCount);
+
   return (
     <section className="w-full bg-secondary text-surface py-24 md:py-32 overflow-hidden">
       <div className="max-w-[90rem] mx-auto px-8 md:px-16">
-        
+
         {/* Header & Tabs */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-24 gap-8 border-b border-white/10 pb-8">
           <div>
-            <span className="text-[10px] md:text-xs tracking-[0.3em] uppercase text-white/50 border-b border-white/20 pb-2">
-              Dự án Thực tế
-            </span>
-            <h2 className="text-4xl md:text-6xl font-serif font-light mt-8">
-              Thi Công
-            </h2>
+            <span className="text-primary text-[10px] tracking-[0.3em] uppercase mb-4 inline-block">Realities</span>
+            <h2 className="text-4xl md:text-5xl font-serif font-light text-white">Dự án <span className="text-primary italic">Thực tế</span></h2>
           </div>
 
-          {/* Large Interactive Tabs */}
-          <div className="flex gap-8 md:gap-16">
+          <div className="flex gap-8">
             {tabs.map((tab) => (
               <button
                 key={tab}
                 onClick={() => handleTabChange(tab)}
-                className="relative group"
+                className={`text-sm tracking-widest uppercase transition-all duration-300 relative pb-2 ${activeTab === tab ? 'text-primary' : 'text-white/40 hover:text-white'
+                  }`}
               >
-                <h3 className={`text-2xl md:text-4xl font-serif font-light transition-colors duration-500 ${
-                  activeTab === tab ? 'text-white' : 'text-white/30 group-hover:text-white/70'
-                }`}>
-                  {tab}
-                </h3>
+                {tab}
                 {activeTab === tab && (
                   <motion.div
-                    layoutId="constructionTab"
-                    className="absolute -bottom-8 left-0 right-0 h-[2px] bg-white"
+                    layoutId="activeConstructionTab"
+                    className="absolute bottom-0 left-0 w-full h-px bg-primary"
                   />
                 )}
               </button>
@@ -91,7 +73,7 @@ export default function ConstructionProjects() {
         </div>
 
         {/* Swipeable Grid */}
-        <div className="relative min-h-[60vh] md:min-h-[80vh]">
+        <div className="relative w-full">
           <AnimatePresence initial={false} custom={direction} mode="wait">
             <motion.div
               key={activeTab}
@@ -102,50 +84,54 @@ export default function ConstructionProjects() {
               exit="exit"
               transition={{
                 x: { type: "spring", stiffness: 300, damping: 30 },
-                opacity: { duration: 0.4 },
-                scale: { duration: 0.4 }
+                opacity: { duration: 0.2 }
               }}
-              className="absolute inset-0 w-full flex flex-col md:flex-row gap-8"
+              className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16"
             >
-              {constructionData[activeTab].map((project, index) => (
-                <div key={project.id} className="w-full md:w-1/2 h-full group relative overflow-hidden rounded-sm cursor-pointer">
-                  
-                  <motion.div
-                    className="w-full h-full"
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 1, ease: "easeOut" }}
-                  >
-                    <img 
-                      src={project.img.src || project.img} 
-                      alt={project.title} 
-                      className="w-full h-[40vh] md:h-full object-cover"
+              {visibleProjects.map((project, i) => (
+                <Link href={`/thi-cong/${project.slug}`} key={project.id} className="group cursor-pointer flex flex-col h-full">
+                  <div className="relative w-full aspect-[4/3] overflow-hidden mb-6">
+                    <img
+                      src={project.coverImg.src || project.coverImg}
+                      alt={project.title}
+                      className="w-full h-full object-cover filter grayscale-[50%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out"
                     />
-                  </motion.div>
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
-                  
-                  <div className="absolute bottom-0 left-0 w-full p-8 md:p-12">
-                    <div className="flex items-center gap-4 mb-4 overflow-hidden">
-                      <motion.div 
-                        initial={{ width: 0 }}
-                        whileInView={{ width: 40 }}
-                        transition={{ duration: 0.8, delay: 0.2 }}
-                        className="h-[1px] bg-white"
-                      />
-                      <span className="text-[10px] md:text-xs uppercase tracking-[0.2em] text-white/70">
-                        {project.location}
-                      </span>
+                    {/* View Details Overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      <div className="bg-primary/90 text-secondary text-xs uppercase tracking-widest px-6 py-3 rounded-sm transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100">
+                        Chi tiết thi công
+                      </div>
                     </div>
-                    <h3 className="text-3xl md:text-5xl font-serif font-light text-white translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                      {project.title}
-                    </h3>
                   </div>
 
-                </div>
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h3 className="text-2xl font-serif text-white mb-2 group-hover:text-primary transition-colors">{project.title}</h3>
+                      <p className="text-white/50 font-light text-sm">{project.location}</p>
+                    </div>
+                    <span className="text-primary text-xs uppercase tracking-widest border border-primary/30 px-3 py-1 rounded-sm">
+                      {project.timeline}
+                    </span>
+                  </div>
+                </Link>
               ))}
             </motion.div>
           </AnimatePresence>
         </div>
+
+        {/* Load More Button */}
+        {filteredData.length > visibleCount && (
+          <div className="flex justify-center mt-16 relative z-20">
+            <button
+              onClick={() => setVisibleCount(prev => prev + 4)}
+              className="text-xs uppercase tracking-[0.2em] transition-all border-b pb-1 inline-block text-white/50 border-white/20 hover:text-white hover:border-white/50"
+            >
+              Xem thêm dự án
+            </button>
+          </div>
+        )}
 
       </div>
     </section>
