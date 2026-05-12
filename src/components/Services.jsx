@@ -37,7 +37,7 @@ export default function Services() {
             className="absolute inset-0 z-0 pointer-events-none"
           >
             <img
-              src={services.find(s => s.id === activeService)?.img}
+              src={services.find(s => s.id === activeService)?.img.src || services.find(s => s.id === activeService)?.img}
               alt="Service Background"
               className="w-full h-full object-cover"
             />

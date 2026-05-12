@@ -100,7 +100,7 @@ export default function StyleTemplate({
                     {philosophyTitle}
                   </h2>
                 </div>
-                <div className="w-full md:w-1/2 flex flex-col gap-6 text-white/90 drop-shadow-md">
+                <div className="w-full md:w-1/2 flex flex-col gap-6 text-white/90 drop-shadow-md max-h-[60vh] overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-primary/20 hover:scrollbar-thumb-primary/40">
                   {philosophyText && philosophyText.map((p, i) => (
                     <p key={i} className={`text-base md:text-lg font-light leading-relaxed ${i === 0 ? 'italic text-xl md:text-2xl mb-4' : ''}`}>
                       {i === 0 ? `"${p}"` : p}
