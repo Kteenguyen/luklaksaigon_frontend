@@ -1,5 +1,6 @@
 "use client";
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { Search, ChevronDown } from 'lucide-react';
 import logoSrc from '../assets/logo/PNG/Logo_Light_1 copy.png';
@@ -43,6 +44,7 @@ const navItems = [
 
 
 export default function Header() {
+  const pathname = usePathname();
   const { scrollY } = useScroll();
   const [isAtTop, setIsAtTop] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -52,6 +54,8 @@ export default function Header() {
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsAtTop(latest <= 50);
   });
+
+  if (pathname === '/landing') return null;
 
   return (
     <>
