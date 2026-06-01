@@ -2,6 +2,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import { stripHtml } from '../utils/helpers';
 import { useSearchParams } from 'next/navigation';
 import { projectsData } from '../data/mockData';
 
@@ -41,7 +42,7 @@ export default function DesignProjects({ hideViewAll = false }) {
   };
 
   return (
-    <section className="w-full bg-[#FAF7F2] text-secondary py-24 md:py-32" data-theme="light">
+    <section className="w-full bg-cream text-secondary py-24 md:py-32" data-theme="light">
       <Suspense fallback={null}>
         <ProjectFilter activeTab={activeTab} setActiveTab={setActiveTab} />
       </Suspense>
@@ -80,7 +81,7 @@ export default function DesignProjects({ hideViewAll = false }) {
         </div>
 
         {/* 3 Equal Columns Grid */}
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
           <AnimatePresence mode="popLayout">
             {displayedProjects.map((project) => (
               <motion.div
@@ -90,18 +91,19 @@ export default function DesignProjects({ hideViewAll = false }) {
                 exit={{ opacity: 0, scale: 0.95, y: 20 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 key={project.id}
-                className="group relative overflow-hidden rounded-sm cursor-pointer aspect-[3/2]"
+                className="group relative overflow-hidden cursor-pointer aspect-[2/1]"
               >
                 <Link href={`/du-an/${project.slug}`} className="block w-full h-full relative">
                   {/* Photo container */}
                   <motion.div
                     className="w-full h-full"
                     whileHover={{ scale: 1.04 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                   >
                     <img
                       src={project.coverImg.src || project.coverImg}
-                      alt={project.title}
+                      alt={stripHtml(project.title)}
+                      title={stripHtml(project.title)}
                       className="w-full h-full object-cover transition-all duration-700"
                     />
                   </motion.div>

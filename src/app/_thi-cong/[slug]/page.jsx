@@ -3,7 +3,7 @@ import { useParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
-import HomeCTA from "../../../components/HomeCTA";
+import HomeContactForm from "../../../components/HomeContactForm";
 import Footer from "../../../components/Footer";
 import { constructionProjectsData } from "../../../data/mockData";
 
@@ -129,7 +129,7 @@ export default function ConstructionDetail() {
       </Link>
 
       <div className="relative z-40 bg-background">
-        <HomeCTA />
+        <HomeContactForm />
         <Footer />
       </div>
     </main>

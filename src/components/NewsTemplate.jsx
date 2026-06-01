@@ -2,7 +2,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
-import HomeCTA from "./HomeCTA";
+import HomeContactForm from "./HomeContactForm";
 import Footer from "./Footer";
 
 export default function NewsTemplate({
@@ -93,7 +93,7 @@ export default function NewsTemplate({
 
       {/* Footer CTA */}
       <div className="relative z-40 bg-secondary">
-        <HomeCTA />
+        <HomeContactForm />
         <Footer />
       </div>
     </main>

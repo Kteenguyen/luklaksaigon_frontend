@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { stripHtml } from '../utils/helpers';
 
 export default function FeaturedDesignStack({ projects }) {
   const containerRef = useRef(null);
@@ -64,7 +65,8 @@ const Card = ({ project, i, progress, range, targetScale }) => {
           <Image
             src={project.coverImg || project.mainImage?.src}
             fill
-            alt="Featured Design"
+            alt={stripHtml(project.title)}
+            title={stripHtml(project.title)}
             className="object-cover filter brightness-[0.7]"
             unoptimized
           />
@@ -79,7 +81,7 @@ const Card = ({ project, i, progress, range, targetScale }) => {
                 0{i + 1} — {project.type || "Kiến trúc & Nội thất"}
               </span>
               <h3
-                className="text-6xl md:text-8xl lg:text-[9rem] font-serif font-light leading-[0.9] tracking-tighter uppercase text-white drop-shadow-2xl"
+                className="text-6xl md:text-8xl lg:text-[9rem] font-serif font-light leading-[1.15] tracking-tight uppercase text-white drop-shadow-2xl pb-2"
                 dangerouslySetInnerHTML={{ __html: project.title }}
               />
             </div>

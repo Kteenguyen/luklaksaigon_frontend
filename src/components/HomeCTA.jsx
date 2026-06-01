@@ -48,7 +48,7 @@ export default function HomeCTA() {
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <a 
-            href="/dang-ky-tu-van" 
+            href="/lien-he" 
             className="inline-block border border-white text-white hover:bg-white hover:text-secondary px-10 py-4 text-xs tracking-[0.2em] uppercase font-medium transition-all duration-300 shadow-lg hover:shadow-white/25"
           >
             Đăng ký tư vấn ngay

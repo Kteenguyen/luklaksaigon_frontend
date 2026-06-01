@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion';
-import HomeCTA from "../../components/HomeCTA";
+import HomeContactForm from "../../components/HomeContactForm";
 import Footer from "../../components/Footer";
 import { pressData } from "../../data/mockData";
 
@@ -75,7 +75,7 @@ export default function BaoChiTruyenThongPage() {
 
       {/* Footer CTA */}
       <div className="relative z-40 bg-secondary">
-        <HomeCTA />
+        <HomeContactForm />
         <Footer />
       </div>
     </main>

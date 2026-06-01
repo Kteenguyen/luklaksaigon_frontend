@@ -2,6 +2,7 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
+import { stripHtml } from '../utils/helpers';
 import img1 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450163862634_83a0f94c7430897270c93b1b0a7bcfd6.jpg';
 import img2 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450163989369_be1b80a76e84bb7dc5b88bc685725aee.jpg';
 import img3 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450164007724_768e2f7d26c3ae5ab581260ed9f2a55b.jpg';
@@ -63,7 +64,8 @@ export default function ProjectShowcase({ project = defaultProject, isFirst = fa
         <motion.img
           style={{ opacity: mainImageOpacity, scale: mainImageScale }}
           src={coverSrc}
-          alt={project.title}
+          alt={stripHtml(project.title)}
+          title={stripHtml(project.title)}
           className="absolute inset-0 w-full h-full object-cover transform-gpu"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10 z-10" />
@@ -78,10 +80,11 @@ export default function ProjectShowcase({ project = defaultProject, isFirst = fa
               style={{ y: parallaxTransforms[i] || 0 }}
               className={`w-full md:w-[60%] lg:w-[50%] ${i % 2 === 0 ? 'ml-auto mr-0' : 'mr-auto ml-0'}`}
             >
-              <figure className="relative w-full aspect-[4/3] md:aspect-video overflow-hidden shadow-2xl p-2 md:p-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-sm">
+              <figure className="relative w-full aspect-[4/3] md:aspect-video overflow-hidden shadow-2xl p-3 bg-white border border-neutral-100 rounded-none">
                 <img
                   src={slide.src || slide}
-                  alt={`${project.title} details`}
+                  alt={`${stripHtml(project.title)} details`}
+                  title={`${stripHtml(project.title)} details`}
                   className="w-full h-full object-cover filter brightness-[0.8] hover:brightness-100 transition-all duration-700"
                 />
               </figure>

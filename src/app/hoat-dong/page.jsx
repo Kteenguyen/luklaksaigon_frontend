@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import HomeCTA from "../../components/HomeCTA";
+import HomeContactForm from "../../components/HomeContactForm";
 import Footer from "../../components/Footer";
 import { hoatDongData } from "../../data/mockData";
 
@@ -69,18 +69,20 @@ export default function HoatDongPage() {
                 className="group"
               >
                 <Link href={`/hoat-dong/${item.slug}`} className="flex flex-col h-full">
-                  {/* 1. Category tag in orange */}
-                  <span className="text-primary uppercase tracking-widest text-xs font-semibold">
-                    {item.category}
-                  </span>
+                  <div className="flex-grow flex flex-col mb-4">
+                    {/* 1. Category tag in orange */}
+                    <span className="text-primary uppercase tracking-widest text-xs font-semibold">
+                      {item.category}
+                    </span>
 
-                  {/* 2. Title directly below the tag */}
-                  <h3 className="text-xl md:text-2xl font-serif italic text-secondary leading-snug font-light mb-4 mt-2 group-hover:text-primary transition-colors duration-300">
-                    {item.title}
-                  </h3>
+                    {/* 2. Title directly below the tag */}
+                    <h3 className="text-xl md:text-2xl font-serif italic text-secondary leading-snug font-light mt-2 group-hover:text-primary transition-colors duration-300 line-clamp-2">
+                      {item.title}
+                    </h3>
+                  </div>
 
                   {/* 3. Image rendered below the title */}
-                  <div className="relative aspect-[3/2] w-full overflow-hidden rounded-sm bg-secondary/5">
+                  <div className="relative aspect-[3/2] w-full overflow-hidden rounded-sm bg-secondary/5 mt-auto">
                     <img
                       src={item.coverImg.src || item.coverImg}
                       alt={item.title}
@@ -97,7 +99,7 @@ export default function HoatDongPage() {
 
       {/* Footer CTA */}
       <div className="relative z-40 bg-secondary">
-        <HomeCTA />
+        <HomeContactForm />
         <Footer />
       </div>
     </main>

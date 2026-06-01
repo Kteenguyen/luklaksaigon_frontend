@@ -92,7 +92,7 @@ export default function Portfolio() {
               <h2 className="text-5xl md:text-7xl font-serif text-white tracking-wide font-light leading-tight">
                 {project.title}
               </h2>
-              <button className="mt-8 px-8 py-3 border border-white/50 rounded-full text-white text-[10px] md:text-sm tracking-widest hover:bg-white hover:text-secondary transition-colors duration-300">
+              <button className="mt-8 px-10 py-4 border border-white/30 text-white text-xs tracking-[0.2em] uppercase hover:bg-white hover:text-secondary transition-colors duration-500 bg-transparent">
                 VIEW PROJECT
               </button>
             </motion.div>

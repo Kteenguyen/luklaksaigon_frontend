@@ -57,7 +57,7 @@ export default function IntroLoader({ onComplete }) {
     <AnimatePresence>
       {!isFinished && (
         <motion.div
-          className="fixed inset-0 z-[9999] overflow-hidden flex items-center justify-center pointer-events-none"
+          className="fixed inset-0 z-loader overflow-hidden flex items-center justify-center pointer-events-none"
         >
           {/* ── LEFT DOOR PANEL ── */}
           <motion.div
@@ -102,14 +102,15 @@ export default function IntroLoader({ onComplete }) {
                   <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: [0, 0.25, 0.15], scale: [0.8, 1.2, 1.0] }}
-                    transition={{ duration: 1.8, ease: "easeOut" }}
+                    transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
                     className="absolute w-48 h-48 rounded-full bg-gradient-to-r from-primary/30 to-transparent blur-2xl"
                   />
 
                   {/* Monogram Symbol */}
                   <motion.img
                     src={monogramSrc.src || monogramSrc}
-                    alt="Luklak Icon"
+                    alt="Biểu tượng Monogram chữ L cách điệu của Luklak"
+                    title="Biểu tượng Monogram Luklak"
                     initial={{ opacity: 0, scale: 0.6, filter: 'blur(5px)' }}
                     animate={{ 
                       opacity: [0, 1, 1],
@@ -119,7 +120,7 @@ export default function IntroLoader({ onComplete }) {
                     transition={{ 
                       times: [0, 0.2, 1],
                       duration: 1.8, 
-                      ease: "easeInOut" 
+                      ease: [0.16, 1, 0.3, 1]
                     }}
                     className="w-16 h-16 object-contain z-10"
                   />
@@ -133,15 +134,13 @@ export default function IntroLoader({ onComplete }) {
                       stroke="#C95928"
                       strokeWidth="0.75"
                       fill="transparent"
-                      initial={{ pathLength: 0, rotate: -90 }}
+                      initial={{ opacity: 0 }}
                       animate={{ 
-                        pathLength: [0, 1, 1],
-                        opacity: [0, 1, 1]
+                        opacity: 1
                       }}
                       transition={{ 
-                        times: [0, 0.8, 1],
                         duration: 1.8, 
-                        ease: "easeInOut" 
+                        ease: [0.16, 1, 0.3, 1]
                       }}
                     />
                   </svg>
@@ -159,7 +158,8 @@ export default function IntroLoader({ onComplete }) {
                   <div className="relative overflow-hidden w-64 h-16 flex items-center justify-center mb-4">
                     <img
                       src={logoSrc.src || logoSrc}
-                      alt="Luklak Saigon Logo"
+                      alt="Logo chính thức Luklak Saigon Kiến trúc & Xây dựng"
+                      title="Logo thương hiệu Luklak Saigon"
                       className="h-10 w-auto object-contain"
                     />
 
@@ -170,7 +170,7 @@ export default function IntroLoader({ onComplete }) {
                       transition={{ 
                         duration: 1.5,
                         delay: 0.2,
-                        ease: "easeInOut" 
+                        ease: [0.16, 1, 0.3, 1]
                       }}
                       className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/35 to-transparent skew-x-20 pointer-events-none"
                     />
@@ -186,7 +186,7 @@ export default function IntroLoader({ onComplete }) {
                         transition={{ 
                           duration: 0.6, 
                           delay: index * 0.03,
-                          ease: "easeOut"
+                          ease: [0.16, 1, 0.3, 1]
                         }}
                         className="text-[9px] md:text-[10px] text-primary/75 tracking-[0.2em] font-light font-sans inline-block"
                       >

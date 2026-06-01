@@ -1,5 +1,5 @@
 "use client";
-import HomeCTA from "../../components/HomeCTA";
+import HomeContactForm from "../../components/HomeContactForm";
 import Footer from "../../components/Footer";
 import ProjectGallery from "../../components/ProjectGallery";
 
@@ -26,7 +26,7 @@ export default function ProjectsPage() {
       <div className="relative z-40 bg-[#FAF7F2]">
         <ProjectGallery />
       </div>
-      <HomeCTA />
+      <HomeContactForm />
       <Footer />
     </main>
   );

@@ -304,6 +304,17 @@ export const constructionProjectsData = [
 
 export const blogData = [
   {
+    id: 'b0',
+    title: "Xu hướng thiết kế biệt thự nhiệt đới (Tropical Villa) năm 2026",
+    slug: "xu-huong-thiet-ke-biet-thu-nhiet-doi-tropical-villa-nam-2026",
+    excerpt: "Kiến trúc biệt thự nhiệt đới (Tropical Villa) đang trở thành xu hướng dẫn đầu cho không gian sống sinh thái cao cấp tại Việt Nam trong năm 2026. Cùng khám phá các giải pháp tối ưu không gian xanh...",
+    content: "## 1. Biệt thự nhiệt đới là gì?\nBiệt thự nhiệt đới (Tropical Villa) là sự giao hòa tuyệt đối giữa kiến trúc hiện đại và hệ sinh thái bản địa. Xu hướng này hướng đến việc tối ưu vi khí hậu, đón gió tự nhiên và đưa thảm thực vật nhiệt đới xanh mát vào trung tâm không gian sống.\n\n## 2. Các đặc trưng cốt lõi của phong cách Tropical\n### Vật liệu tự nhiên thô mộc\nƯu tiên hàng đầu trong thiết kế Tropical Villa là các vật liệu nguyên bản, thô mộc như gỗ tự nhiên (đặc biệt là gỗ sồi, gỗ óc chó hoặc gỗ teak chịu ẩm), đá tự nhiên, xi măng trần, mây tre đan và gạch nung. Những vật liệu này không chỉ mang lại sự ấm áp mà còn có khả năng điều hòa nhiệt độ cực tốt cho ngôi nhà.\n\n### Thiết kế mở và kết nối không gian liền mạch\nĐể xóa nhòa ranh giới giữa trong nhà và ngoài trời, các diện kính lớn sát trần cùng hệ thống cửa trượt tiện lợi được áp dụng tối đa. Điều này giúp không gian bên trong luôn ngập tràn ánh sáng tự nhiên và mở ra tầm nhìn xanh mát hướng ra khu vườn xung quanh.\n\n### Mảng xanh và mặt nước điều hòa\nTích hợp cây xanh và hồ nước (như hồ cá Koi, bể bơi tràn bờ) không chỉ tạo nên điểm nhấn thẩm mỹ đắt giá mà còn đóng vai trò là chiếc 'điều hòa tự nhiên' khổng lồ, lọc không khí và mang lại luồng gió mát rượi cho toàn bộ ngôi nhà.\n\n## 3. Giải pháp chuẩn SEO cho thiết kế Tropical Villa tại Việt Nam\n### Tối ưu hóa vi khí hậu và thông gió tự nhiên\nViệc nghiên cứu hướng nắng, hướng gió để bố trí hệ thống lam chắn nắng gỗ và giếng trời là yếu tố sống còn giúp ngôi nhà mát mẻ quanh năm mà không phụ thuộc nhiều vào điều hòa không khí.\n\n### Ứng dụng vật liệu địa phương bền vững\nBằng việc chọn lựa các nhà cung cấp vật liệu nội thất uy tín tại địa phương, công trình vừa rút ngắn thời gian thi công vừa góp phần giảm lượng phát thải carbon ra môi trường, tạo lập một phong cách sống bền vững đích thực.\n\n## 4. Kết luận\nKiến trúc biệt thự nhiệt đới không chỉ dừng lại ở một xu hướng thiết kế nhất thời, mà chính là triết lý sống an lành, chốn về bình yên sau những bộn bề của cuộc sống hiện đại. Hãy đồng hành cùng Luklak Saigon để kiến tạo nên những công trình mang đậm bản sắc cá nhân và bền vững cùng thời gian.",
+    date: "02 Tháng 6, 2026",
+    category: "Xu hướng",
+    author: "Khúc Văn Hiển",
+    coverImg: img4
+  },
+  {
     id: 'b1',
     title: "Xu hướng kiến trúc bền vững lên ngôi trong năm 2024",
     slug: "xu-huong-kien-truc-ben-vung-len-ngoi-trong-nam-2024",

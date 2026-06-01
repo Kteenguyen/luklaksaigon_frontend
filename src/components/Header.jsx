@@ -27,12 +27,13 @@ const navItems = [
     name: 'Tin tức',
     path: '/hoat-dong',
     dropdown: [
+      { label: 'Tạp chí & Blog', path: '/blog' },
       { label: 'Báo chí truyền thông', path: '/bao-chi-truyen-thong' },
       { label: 'Hoạt động Luklak', path: '/hoat-dong' },
       { label: 'FAQs', path: '/faqs' }
     ]
   },
-  { name: 'Đăng ký tư vấn', path: '/dang-ky-tu-van' }
+  { name: 'Liên hệ', path: '/lien-he' }
 ];
 
 export default function Header() {
@@ -99,16 +100,16 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between transition-all duration-500 w-full bg-transparent transform-gpu will-change-transform ${
+        className={`fixed top-0 left-0 right-0 z-sticky-header flex items-center justify-between transition-all duration-500 w-full bg-transparent transform-gpu will-change-transform ${
           isHidden ? '-translate-y-full' : 'translate-y-0'
         } ${isAtTop || menuOpen ? 'h-28 px-8 md:px-16' : 'h-20 px-6 md:px-12'} ${
-          !isMenuOrDropdownOpen ? 'mix-blend-difference' : ''
+          !menuOpen ? 'mix-blend-difference' : ''
         }`}
       >
         {/* LOGO */}
         <a href="/" className="cursor-pointer z-50 flex-shrink-0 transform-gpu will-change-transform">
           <img
-            src={!isMenuOrDropdownOpen ? (logoSrc.src || logoSrc) : (headerTheme === 'dark' || menuOpen ? (logoSrc.src || logoSrc) : (logoDarkSrc.src || logoDarkSrc))}
+            src={!menuOpen ? (logoSrc.src || logoSrc) : (headerTheme === 'dark' || menuOpen ? (logoSrc.src || logoSrc) : (logoDarkSrc.src || logoDarkSrc))}
             alt="LukLak Design & Build"
             className="h-10 md:h-14 w-auto object-contain transition-all duration-500"
           />
@@ -128,7 +129,7 @@ export default function Header() {
               <a
                 href={item.path}
                 className={`flex items-center gap-2 text-[11px] lg:text-[12px] font-sans tracking-[0.2em] font-medium uppercase transition-colors duration-300 transform-gpu will-change-transform ${
-                  !isMenuOrDropdownOpen
+                  !menuOpen
                     ? 'text-white hover:opacity-70 transition-opacity'
                     : (headerTheme === 'dark' ? 'text-white hover:text-primary' : 'text-secondary hover:text-primary')
                 }`}
@@ -156,8 +157,8 @@ export default function Header() {
                         transition={{ delay: idx * 0.05, duration: 0.4 }}
                         className="group flex items-center gap-3 w-full"
                       >
-                        <span className="w-0 h-[1px] bg-primary transition-all duration-300 group-hover:w-4" />
-                        <span className="text-[10px] lg:text-[11px] font-sans tracking-[0.2em] uppercase transition-colors whitespace-nowrap text-surface/70 group-hover:text-primary">
+                        <span className="w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-4" />
+                        <span className="text-[10px] lg:text-[11px] font-sans tracking-[0.2em] uppercase transition-colors whitespace-nowrap text-surface/70 group-hover:text-white">
                           {sub.label}
                         </span>
                       </motion.a>
@@ -170,8 +171,8 @@ export default function Header() {
         </nav>
 
         {/* RIGHT ACTION: Search & Mobile Menu Button */}
-        <div className={`flex items-center justify-end flex-shrink-0 gap-8 z-50 transition-colors duration-300 transform-gpu will-change-transform ${
-          !isMenuOrDropdownOpen
+        <div className={`flex items-center justify-end flex-shrink-0 gap-8 z-sticky-header transform-gpu will-change-transform transition-colors duration-300 ${
+          !menuOpen
             ? 'text-white'
             : (headerTheme === 'dark' || menuOpen ? 'text-white' : 'text-secondary')
         }`}>
@@ -202,7 +203,7 @@ export default function Header() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.6 }}
             onClick={() => setMenuOpen(false)}
-            className="fixed inset-0 z-30 bg-secondary/80 backdrop-blur-md"
+            className="fixed inset-0 z-overlay bg-secondary/80 backdrop-blur-md"
           />
         )}
       </AnimatePresence>
@@ -215,7 +216,7 @@ export default function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-x-0 top-20 z-40 lg:hidden flex flex-col items-center pt-8 pb-12 overflow-y-auto max-h-[calc(100vh-5rem)] [&::-webkit-scrollbar]:hidden bg-secondary/95 backdrop-blur-xl"
+            className="fixed inset-x-0 top-28 z-mobile-menu lg:hidden flex flex-col items-center pt-8 pb-12 overflow-y-auto max-h-[calc(100vh-7rem)] [&::-webkit-scrollbar]:hidden bg-secondary/95 backdrop-blur-xl"
           >
             <nav className="flex flex-col gap-8 w-full px-8">
               {navItems.map((item, i) => (
@@ -229,7 +230,7 @@ export default function Header() {
                   }}>
                     <motion.a
                       href={item.dropdown ? '#' : item.path}
-                      className="text-xl font-serif font-light text-surface group-hover:text-primary transition-colors duration-300 uppercase tracking-widest text-center"
+                      className="text-xl font-serif font-light text-surface group-hover:opacity-70 transition-opacity duration-300 uppercase tracking-widest text-center"
                       onClick={(e) => {
                         if (item.dropdown) e.preventDefault();
                       }}
@@ -249,7 +250,7 @@ export default function Header() {
                       >
                         <div className="flex flex-col gap-4 pt-6 pb-2 text-center">
                           {item.dropdown.map((sub, idx) => (
-                            <a key={idx} href={sub.path} onClick={() => setMenuOpen(false)} className="text-[10px] tracking-[0.2em] uppercase text-surface/60 hover:text-primary transition-colors">
+                            <a key={idx} href={sub.path} onClick={() => setMenuOpen(false)} className="text-[10px] tracking-[0.2em] uppercase text-surface/60 hover:text-white transition-colors">
                               {sub.label}
                             </a>
                           ))}
@@ -263,10 +264,10 @@ export default function Header() {
 
             {/* Mobile Contact Footer inside Menu */}
             <div className="mt-12 pt-8 border-t border-surface/10 flex flex-col gap-4 text-center text-[9px] tracking-[0.2em] uppercase text-surface/50 w-3/4">
-              <a href="mailto:info@luklaksg.vn" className="hover:text-primary transition-colors">info@luklaksg.vn</a>
+              <a href="mailto:info@luklaksg.vn" className="hover:text-white transition-colors">info@luklaksg.vn</a>
               <div className="flex justify-center gap-6 mt-2">
-                <a href="#" className="hover:text-primary transition-colors">Instagram</a>
-                <a href="#" className="hover:text-primary transition-colors">Facebook</a>
+                <a href="#" className="hover:text-white transition-colors">Instagram</a>
+                <a href="#" className="hover:text-white transition-colors">Facebook</a>
               </div>
             </div>
           </motion.div>

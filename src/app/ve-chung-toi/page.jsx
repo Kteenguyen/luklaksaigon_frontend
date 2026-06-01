@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform, animate, AnimatePresence } from 'framer-motion';
-import HomeCTA from "../../components/HomeCTA";
+import HomeContactForm from "../../components/HomeContactForm";
 import Footer from "../../components/Footer";
 import { ShieldCheck, HeartHandshake, Award, Lightbulb, Zap, Users } from 'lucide-react';
 
@@ -13,6 +13,15 @@ import imgPhuc from "../../assets/hr/Hoàng Phúc_xxx.png";
 import imgHung from "../../assets/hr/Hưng lê__.png";
 import imgAddress from "../../assets/systemImage/address-branch.JPG";
 import imgTeam from "../../assets/systemImage/team.webp";
+
+// Core Values Images
+import imgUyTin from "../../assets/projectImage/Dự án thực tế/KC Villa/z7450163862634_83a0f94c7430897270c93b1b0a7bcfd6.jpg";
+import imgTonTrong from "../../assets/projectImage/Dự án thực tế/KC Villa/z7450163989369_be1b80a76e84bb7dc5b88bc685725aee.jpg";
+import imgChatLuong from "../../assets/projectImage/Dự án thực tế/KC Villa/z7450164007725_487732fcdca5ccf6a4189f90c0c957fa.jpg";
+import imgSangTao from "../../assets/projectImage/Dự án thực tế/KC Villa/z7450164022155_66f13bcfae7d52a8681c0232feeb187f.jpg";
+import imgTocDo from "../../assets/projectImage/Dự án thực tế/KC Villa/z7450164022157_9985b14bc96b0721c6f25d1c6bf3e6a0.jpg";
+import imgDoanKet from "../../assets/projectImage/Dự án thực tế/KC Villa/z7450164022158_478bff7e126689859a32fa842add2090.jpg";
+
 
 /* =====================================================================
    1. HERO SECTION
@@ -31,7 +40,8 @@ function AboutHero() {
       <motion.div style={{ y, opacity }} className="absolute inset-0 z-0 pointer-events-none">
         <img
           src={imgKienTruc.src || imgKienTruc}
-          alt="Kiến tạo giá trị bền vững"
+          alt="Kiến trúc công trình biệt thự cao cấp do Luklak Architects thực hiện"
+          title="Công trình biệt thự cao cấp"
           className="w-full h-full object-cover opacity-40"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-secondary via-transparent to-transparent" />
@@ -99,53 +109,58 @@ function ScrubbingText({ text }) {
 
 function GroupSection() {
   return (
-    <section className="w-full bg-background text-secondary py-32 px-8 md:px-16 overflow-hidden" data-theme="light">
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 lg:gap-24 items-center">
-
-        {/* Left: Image Split */}
+    <section className="w-full bg-background text-secondary py-24 md:py-32 px-8 md:px-16 overflow-hidden" data-theme="light">
+      <div className="max-w-7xl mx-auto flex flex-col gap-12 md:gap-16">
+        
+        {/* Full-width Panoramic Team Image */}
         <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}
-          className="w-full lg:w-1/2"
+          className="w-full overflow-hidden rounded-sm bg-neutral-100"
         >
-          <div className="relative aspect-[3/4] w-full overflow-hidden rounded-sm">
-            <img src={imgKienTruc.src || imgKienTruc} alt="Luklak Architecture Detail" className="w-full h-full object-cover filter brightness-90 hover:scale-105 transition-transform duration-[2s] ease-out" />
-          </div>
+          <img 
+            src={imgTeam.src || imgTeam} 
+            alt="Đội ngũ nhân sự LUKLAK GROUP VIỆT NAM" 
+            title="Tập thể nhân sự Luklak" 
+            className="w-full h-auto object-cover filter brightness-[0.98] hover:scale-[1.02] transition-transform duration-[2s] ease-out" 
+          />
         </motion.div>
 
-        {/* Right: Content Split */}
-        <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="w-full lg:w-1/2 flex flex-col"
-        >
-          <span className="text-primary text-[10px] md:text-xs tracking-[0.3em] uppercase border-b border-secondary/20 pb-2 mb-12 inline-block self-start">
-            Luklak Group
-          </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light leading-tight mb-8">
-            Kiến tạo giải pháp <br /><span className="italic text-secondary/70">không gian hoàn mỹ.</span>
-          </h2>
-          <p className="text-secondary/70 font-light leading-relaxed mb-12 text-lg">
-            Ra đời năm 2020, Luklak Group không ngừng nỗ lực kiến tạo các giải pháp không gian hoàn mỹ. Bằng tư duy tiên phong, chúng tôi lấy kiến trúc và xây dựng làm cốt lõi để phát triển một hệ sinh thái đa ngành bền vững tại Việt Nam.
-          </p>
+        {/* Text split block */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 pt-4">
+          
+          {/* Left Column: Section Title */}
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="lg:col-span-3"
+          >
+            <span className="text-secondary tracking-[0.2em] uppercase font-semibold text-sm flex items-center gap-2">
+              <span className="text-primary font-normal">/</span> VỀ CHÚNG TÔI
+            </span>
+          </motion.div>
 
-          <div className="grid grid-cols-2 gap-8 pt-8 border-t border-secondary/10">
-            <div>
-              <h4 className="text-4xl font-serif text-primary mb-2">04</h4>
-              <p className="text-xs uppercase tracking-widest text-secondary/50 mb-2">Trụ sở</p>
-              <p className="text-sm font-light text-secondary/70">Hà Nội, Đà Nẵng, Huế, TP.HCM</p>
-            </div>
-            <div>
-              <h4 className="text-4xl font-serif text-primary mb-2">1000+</h4>
-              <p className="text-xs uppercase tracking-widest text-secondary/50 mb-2">Nhân sự</p>
-              <p className="text-sm font-light text-secondary/70">Chuyên môn cao, tận tâm</p>
-            </div>
-          </div>
-        </motion.div>
+          {/* Right Column: Paragraphs */}
+          <motion.div 
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="lg:col-span-9 flex flex-col gap-6 text-left"
+          >
+            <p className="text-secondary/80 font-light leading-relaxed text-base md:text-lg">
+              Được thành lập ngày 1.10.2020 sau những năm không ngừng nỗ lực, LUKLAK GROUP đã xây dựng thành công những thương hiệu trực thuộc nhằm phục vụ đa dạng nhu cầu của thị trường trong lĩnh vực tư vấn thiết kế và xây dựng. Cùng với 1 chiến lược phát triển bền vững, LUKLAK GROUP định hướng trở thành tập đoàn đa ngành hàng đầu tại Việt Nam vào năm 2033. Hiện tại LUKLAK GROUP đã vững vàng phát triển tại 03 thành phố lớn: TP. Hà Nội, TP. Đà Nẵng và TP. Hồ Chí Minh. Chúng tôi luôn không ngừng sáng tạo, đổi mới cùng với mong muốn kiến tạo thêm nhiều giá trị cho khách hàng, đối tác, cũng như tạo ra môi trường làm việc chất lượng cho đội ngũ nhân viên.
+            </p>
+            <p className="text-secondary/80 font-light leading-relaxed text-base md:text-lg">
+              Trong giai đoạn 2025 – 2027, LUKLAK GROUP VIỆT NAM đặt mục tiêu phát triển quy mô trên 1000 nhân sự chất lượng cao, tâm huyết. Tiếp tục xây dựng và cải tổ hoàn thiện 03 trụ sở tại 03 thành phố lớn và mở rộng thị trường từ 2025 đến 2027 thêm 10 trụ sở mới tại các tỉnh và thành phố tại Việt Nam.
+            </p>
+          </motion.div>
+
+        </div>
 
       </div>
     </section>
@@ -178,7 +193,7 @@ function SystemDiagramSection() {
   ];
 
   return (
-    <section className="relative w-full bg-[#FAF7F2] text-secondary py-24 md:py-32 px-6 md:px-12 overflow-hidden" data-theme="light">
+    <section className="relative w-full bg-cream text-secondary py-24 md:py-32 px-6 md:px-12 overflow-hidden" data-theme="light">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center">
           {/* Left Column */}
@@ -224,7 +239,7 @@ function SystemDiagramSection() {
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: "auto", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                           className="overflow-hidden"
                         >
                           <p className="pt-4 pb-2 text-secondary/70 font-light leading-relaxed text-sm md:text-base">
@@ -241,8 +256,8 @@ function SystemDiagramSection() {
             {/* Button */}
             <div>
               <a
-                href="/dang-ky-tu-van"
-                className="inline-block border border-secondary text-secondary hover:bg-secondary hover:text-[#FAF7F2] rounded-full px-10 py-4 text-xs tracking-widest uppercase font-medium transition-all duration-300 shadow-sm"
+                href="/lien-he"
+                className="inline-block border border-secondary text-secondary hover:bg-secondary hover:text-white px-10 py-4 text-xs tracking-[0.2em] uppercase transition-colors duration-500 bg-transparent"
               >
                 CHI NHÁNH & VĂN PHÒNG ĐẠI DIỆN ↗
               </a>
@@ -257,7 +272,8 @@ function SystemDiagramSection() {
               {/* Map Image as Background */}
               <img
                 src={imgAddress.src || imgAddress}
-                alt="Bản đồ hệ thống chi nhánh Luklak"
+                alt="Bản đồ vị trí hệ thống chi nhánh Luklak Architects tại Việt Nam"
+                title="Hệ thống chi nhánh Luklak"
                 className="w-full h-full object-contain opacity-90 mix-blend-multiply"
               />
 
@@ -430,35 +446,38 @@ function VisionMissionSection() {
 
   const stats = [
     {
-      number: "04",
+      from: 0,
+      to: 4,
+      prefix: "0",
+      suffix: "",
       label: "Trụ cột",
       desc: "4 Trụ cột – 1 Phát triển vững chắc trên 4 trụ cột chiến lược: Thương mại – Dịch vụ – Sản xuất – Bất động sản"
     },
     {
-      number: "500+",
+      from: 0,
+      to: 500,
+      prefix: "",
+      suffix: "+",
       label: "Nhân sự",
       desc: "LUKLAK GROUP cam kết xây dựng đội ngũ chuyên môn vững vàng, sáng tạo và trách nhiệm, làm nền tảng cho sự phát triển bền vững và vươn xa."
     },
     {
-      number: "5",
+      from: 0,
+      to: 5,
+      prefix: "",
+      suffix: "",
       label: "Trụ sở",
       desc: "Hiện diện tại Hà Nội, Hải Phòng, Đà Nẵng, Huế, TP. Hồ Chí Minh"
     },
     {
-      number: "1000+",
+      from: 0,
+      to: 1000,
+      prefix: "",
+      suffix: "+",
       label: "Công trình",
       desc: "Công trình đã và đang hoàn thiện, mỗi công trình là một \"chìa khoá trao tay\" được hoàn thiện chỉn chu – bài bản – không lặp lại."
     }
   ];
-
-  const borderClasses = (idx) => {
-    let classes = "";
-    if (idx > 0) classes += " border-t border-secondary/10";
-    if (idx % 2 === 1) classes += " sm:border-l sm:border-secondary/10";
-    if (idx === 1) classes += " sm:border-t-0";
-    if (idx > 0) classes += " lg:border-t-0 lg:border-l lg:border-secondary/10";
-    return classes;
-  };
 
   return (
     <section className="w-full bg-background text-secondary py-32 px-8 md:px-16 border-t border-secondary/10" data-theme="light">
@@ -497,29 +516,19 @@ function VisionMissionSection() {
               </div>
             </div>
 
-            {/* Vision */}
-            <div>
-              <h3 className="text-2xl font-serif mb-12 text-primary border-b border-secondary/10 pb-4">Tầm Nhìn</h3>
-              <div className="flex flex-col gap-6 border border-secondary/10 p-12 rounded-sm bg-secondary/5 hover:border-secondary/30 transition-colors">
-                <h4 className="text-3xl md:text-4xl font-serif font-light leading-snug">04 Trụ cột</h4>
-                <p className="text-secondary/70 font-light leading-relaxed text-lg">
-                  4 Trụ cột – 1 Phát triển vững chắc trên 4 trụ cột chiến lược:<br />
-                  Thương mại – Dịch vụ – Sản xuất – Bất động sản
-                </p>
-              </div>
-            </div>
           </div>
         </div>
 
         {/* BOTTOM: Full Width Stats Layout */}
-        <div className="flex flex-col w-full border border-secondary/10 overflow-hidden rounded-sm bg-[#FAF7F2]">
+        <div className="flex flex-col w-full relative">
           
           {/* Top Banner (Horizontal panoramic) */}
-          <div ref={bannerRef} className="relative w-full h-[300px] md:h-[450px] lg:h-[500px] overflow-hidden bg-secondary">
+          <div ref={bannerRef} className="relative w-full h-[300px] md:h-[450px] lg:h-[500px] overflow-hidden bg-secondary rounded-sm">
             <motion.div style={{ y: yBg }} className="absolute inset-0 w-full h-[124%] -top-[12%] z-0">
               <img 
                 src={imgKienTruc.src || imgKienTruc} 
-                alt="Công trình Luklak" 
+                alt="Ảnh thực tế công trình xây dựng biệt thự trọn gói" 
+                title="Công trình thi công biệt thự thực tế" 
                 className="w-full h-full object-cover object-center filter grayscale opacity-40" 
               />
               <div className="absolute inset-0 bg-black/45" />
@@ -528,7 +537,7 @@ function VisionMissionSection() {
             {/* Parallax Overlay Text */}
             <motion.div 
               style={{ y: yText, opacity: opacityText }}
-              className="absolute inset-0 z-10 flex flex-col justify-center items-center text-center px-6 md:px-12 pointer-events-none"
+              className="absolute inset-0 z-10 flex flex-col justify-center items-center text-center px-6 md:px-12 pb-16 md:pb-24 pointer-events-none"
             >
               <span className="text-primary text-[10px] md:text-xs tracking-[0.3em] uppercase mb-4 font-semibold">
                 Luklak Group
@@ -539,24 +548,38 @@ function VisionMissionSection() {
             </motion.div>
           </div>
 
-          {/* Stats Grid directly below it */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 bg-[#FAF7F2]">
-            {stats.map((stat, idx) => (
-              <div 
-                key={idx} 
-                className={`p-8 md:p-10 flex flex-col justify-start ${borderClasses(idx)}`}
-              >
-                <span className="text-4xl md:text-5xl font-serif text-primary mb-3 block">
-                  {stat.number}
-                </span>
-                <h4 className="text-xs uppercase tracking-widest text-secondary/50 mb-3 font-semibold">
-                  {stat.label}
-                </h4>
-                <p className="text-sm md:text-base font-light text-secondary/75 leading-relaxed">
-                  {stat.desc}
-                </p>
-              </div>
-            ))}
+          {/* Stats Grid directly below it - Floating & Overlapping */}
+          <div className="relative z-20 px-4 md:px-8 lg:px-12 -mt-12 md:-mt-20 lg:-mt-28">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+              {stats.map((stat, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.8, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  whileHover={{ y: -8 }}
+                  className="bg-white/95 backdrop-blur-md border border-secondary/[0.08] hover:border-primary/25 p-8 md:p-10 rounded-[8px] flex flex-col justify-start group transition-all duration-500 shadow-[0_15px_40px_-20px_rgba(0,0,0,0.06)] hover:shadow-[0_30px_60px_-15px_rgba(201,89,40,0.1)]"
+                >
+                  <span className="text-5xl lg:text-6.5xl font-serif text-primary tracking-tight font-light mb-3 block">
+                    {stat.prefix}
+                    <AnimatedCounter from={stat.from} to={stat.to} duration={2.5} />
+                    {stat.suffix}
+                  </span>
+                  
+                  <h4 className="text-xs uppercase tracking-widest text-secondary/80 mb-2.5 font-bold">
+                    {stat.label}
+                  </h4>
+                  
+                  {/* Decorative Expandable Horizontal Line */}
+                  <div className="w-6 h-[1.5px] bg-primary/30 group-hover:w-16 group-hover:bg-primary transition-all duration-500 mb-4" />
+                  
+                  <p className="text-xs md:text-sm font-light text-secondary/70 leading-relaxed font-sans text-left">
+                    {stat.desc}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
           </div>
 
         </div>
@@ -570,29 +593,30 @@ function VisionMissionSection() {
    4. GIÁ TRỊ CỐT LÕI (Hover List)
    ===================================================================== */
 const values = [
-  { title: "Uy tín", icon: ShieldCheck, desc: "Giữ vững cam kết với khách hàng" },
-  { title: "Tôn trọng", icon: HeartHandshake, desc: "Trân trọng đối tác và nhân sự" },
-  { title: "Chất lượng", icon: Award, desc: "Đỉnh cao trong từng chi tiết" },
-  { title: "Sáng tạo", icon: Lightbulb, desc: "Liên tục đổi mới tư duy thiết kế" },
-  { title: "Tốc độ", icon: Zap, desc: "Hiệu quả và đúng tiến độ" },
-  { title: "Đoàn kết", icon: Users, desc: "Sức mạnh từ sự thấu hiểu tập thể" }
+  { title: "Uy tín", icon: ShieldCheck, desc: "Giữ vững cam kết với khách hàng", image: imgUyTin, caption: "KC VILLA - TRUSTWORTHINESS" },
+  { title: "Tôn trọng", icon: HeartHandshake, desc: "Trân trọng đối tác và nhân sự", image: imgTonTrong, caption: "KC VILLA - RESPECT" },
+  { title: "Chất lượng", icon: Award, desc: "Đỉnh cao trong từng chi tiết", image: imgChatLuong, caption: "KC VILLA - CRAFTSMANSHIP" },
+  { title: "Sáng tạo", icon: Lightbulb, desc: "Liên tục đổi mới tư duy thiết kế", image: imgSangTao, caption: "KC VILLA - CREATIVITY" },
+  { title: "Tốc độ", icon: Zap, desc: "Hiệu quả và đúng tiến độ", image: imgTocDo, caption: "KC VILLA - VELOCITY" },
+  { title: "Đoàn kết", icon: Users, desc: "Sức mạnh từ sự thấu hiểu tập thể", image: imgDoanKet, caption: "KC VILLA - UNITY" }
 ];
 
 function CoreValuesSection() {
+  const [activeIndex, setActiveIndex] = useState(0);
   const containerRef = useRef(null);
+  
+  // Parallax scrolling for background texture
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
   });
-
-  const yBg = useTransform(scrollYProgress, [0, 1], ["-15%", "15%"]);
-  const yContent = useTransform(scrollYProgress, [0, 1], [50, -50]);
+  const yBg = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
 
   return (
     <section 
       ref={containerRef}
-      className="relative w-full bg-[#121110] text-surface py-32 px-6 md:px-12 lg:px-16 overflow-hidden min-h-[900px] flex items-center" 
-      data-theme="dark"
+      className="relative w-full bg-alabaster text-secondary py-16 lg:py-20 px-8 md:px-16 lg:px-24 overflow-hidden flex items-center" 
+      data-theme="light"
     >
       {/* SVG Linear Gradient for Icons */}
       <svg className="absolute w-0 h-0" width="0" height="0">
@@ -605,65 +629,238 @@ function CoreValuesSection() {
         </defs>
       </svg>
 
-      {/* Background Banner with Parallax */}
-      <motion.div style={{ y: yBg }} className="absolute inset-0 z-0 w-full h-[130%] -top-[15%] pointer-events-none">
+      {/* Subtle Luminous Background Accent Lights */}
+      <div className="absolute top-[20%] left-[10%] w-[400px] h-[400px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[20%] right-[10%] w-[500px] h-[500px] bg-[#E08354]/5 rounded-full blur-[150px] pointer-events-none" />
+
+      {/* Subtle Background Parallax Image Layer (Luminous/Low opacity blend) */}
+      <motion.div style={{ y: yBg }} className="absolute inset-0 z-0 w-full h-[120%] -top-[10%] pointer-events-none opacity-[0.03] mix-blend-multiply">
         <img 
           src={imgKienTruc.src || imgKienTruc} 
-          alt="Core Values Background" 
-          className="w-full h-full object-cover filter grayscale opacity-[0.25]" 
+          alt="Phối cảnh thiết kế kiến trúc biệt thự cao cấp" 
+          title="Phối cảnh thiết kế biệt thự" 
+          className="w-full h-full object-cover filter grayscale" 
         />
-        {/* Layered overlays for high-contrast dark theme */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#121110] via-secondary/75 to-[#121110] mix-blend-multiply" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#121110]/50 via-transparent to-[#121110]/50" />
       </motion.div>
 
-      <motion.div 
-        style={{ y: yContent }}
-        className="max-w-7xl mx-auto relative z-10 w-full"
-      >
-        <div className="text-center mb-24 flex flex-col items-center">
-          <span className="text-primary text-xs tracking-[0.4em] uppercase mb-4 font-sans font-semibold">
-            Bản sắc doanh nghiệp
-          </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light text-white tracking-wide">
-            Giá trị Cốt lõi
-          </h2>
-          <div className="w-16 h-[1px] bg-primary/40 mt-6" />
-        </div>
+      <div className="max-w-7xl mx-auto relative z-10 w-full">
+        {/* Desktop Split Screen Layout (Hidden on Mobile) */}
+        <div className="hidden lg:grid grid-cols-12 gap-12 xl:gap-16 items-start">
+          
+          {/* LEFT COLUMN: Sticky Premium Visual Card */}
+          <div className="col-span-5 sticky top-28 flex flex-col items-start justify-start">
+            
+            {/* Title Block inside left column */}
+            <div className="mb-4 text-left">
+              <span className="text-primary text-[10px] tracking-[0.3em] uppercase mb-2 font-semibold block">
+                / Bản sắc doanh nghiệp
+              </span>
+              <h2 className="text-3xl md:text-4xl lg:text-[42px] font-serif font-light text-secondary tracking-tight leading-tight">
+                Giá trị Cốt lõi
+              </h2>
+            </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-          {values.map((v, idx) => (
-            <motion.div
-              key={idx}
-              whileHover={{ y: -8, scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 350, damping: 25 }}
-              className="group relative bg-white/[0.02] border border-white/10 p-8 md:p-10 rounded-2xl flex flex-col items-start backdrop-blur-md shadow-2xl hover:border-primary/50 hover:bg-white/[0.04] hover:shadow-[0_20px_50px_rgba(201,89,40,0.15)] transition-all duration-500 overflow-hidden"
-            >
-              {/* Subtle inner border glow on hover */}
-              <div className="absolute inset-0 border border-primary/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            {/* Ambient Background Glow behind the card */}
+            <div className="absolute w-[200px] h-[200px] bg-primary/10 rounded-full blur-[80px] top-[140px] left-[50px] z-0 pointer-events-none animate-pulse duration-[6s]" />
 
-              {/* Icon Container with subtle glow */}
-              <div className="w-16 h-16 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center justify-center mb-8 relative overflow-hidden group-hover:border-primary/40 group-hover:bg-primary/5 transition-all duration-500 shadow-[0_4px_20px_rgba(0,0,0,0.2)]">
-                {/* Background glow in card */}
-                <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 blur-md transition-opacity duration-500" />
-                <v.icon 
-                  stroke="url(#warm-accent-gradient)" 
-                  size={32} 
-                  strokeWidth={1.2} 
-                  className="relative z-10 filter drop-shadow-[0_2px_10px_rgba(201,89,40,0.25)] group-hover:scale-110 transition-transform duration-500" 
-                />
+            {/* Luxury Printed Photo Card with White Border, Gold Trim, and Deep Drop Shadow */}
+            <div className="relative w-full max-w-[290px] aspect-[4/5] bg-white p-3 shadow-[0_20px_50px_rgba(201,89,40,0.05),0_10px_20px_rgba(0,0,0,0.03)] border border-secondary/5 rounded-none z-10 transform -rotate-1 hover:rotate-0 transition-transform duration-700 ease-out flex flex-col mt-2">
+              
+              {/* Huge low-opacity serif background index number */}
+              <div className="absolute top-[-30px] left-[-15px] select-none pointer-events-none overflow-hidden z-0">
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={activeIndex}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 0.12, y: 0 }}
+                    exit={{ opacity: 0, y: -15 }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
+                    className="font-serif italic font-extrabold text-[240px] leading-none text-primary block"
+                  >
+                    0{activeIndex + 1}
+                  </motion.span>
+                </AnimatePresence>
               </div>
 
-              <h3 className="text-2xl md:text-3xl font-serif font-light text-white mb-4 group-hover:text-primary transition-colors duration-500">
-                {v.title}
-              </h3>
-              <p className="text-white/60 font-light text-sm md:text-base tracking-wide leading-relaxed group-hover:text-white/80 transition-colors duration-500">
+              {/* Image Frame Container */}
+              <div className="w-full flex-1 overflow-hidden relative bg-neutral-50 z-10">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeIndex}
+                    initial={{ opacity: 0, scale: 1.02 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.99 }}
+                    transition={{ duration: 0.35, ease: "easeOut" }}
+                    className="absolute inset-0 w-full h-full"
+                  >
+                    <img 
+                      src={values[activeIndex].image.src || values[activeIndex].image} 
+                      alt={`Giá trị cốt lõi - ${values[activeIndex].title} do Luklak Saigon cam kết`} 
+                      title={`Giá trị cốt lõi: ${values[activeIndex].title}`}
+                      className="w-full h-full object-cover filter brightness-[0.97]" 
+                    />
+                  </motion.div>
+                </AnimatePresence>
+
+                {/* LIGHT SWEEP SHINE SHEEN EFFECT */}
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={`sheen-${activeIndex}`}
+                    initial={{ x: "-120%", opacity: 0.8 }}
+                    animate={{ x: "250%", opacity: 0 }}
+                    transition={{ duration: 0.7, ease: "easeOut" }}
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/70 to-transparent pointer-events-none z-20"
+                  />
+                </AnimatePresence>
+              </div>
+
+              {/* Photo Caption */}
+              <div className="pt-3 pb-0.5 flex flex-col justify-center items-start text-secondary font-serif z-10">
+                <span className="text-[9px] tracking-[0.2em] font-sans font-bold uppercase text-primary mb-0.5">
+                  LUKLAK SAIGON
+                </span>
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={activeIndex}
+                    initial={{ opacity: 0, x: -3 }}
+                    animate={{ opacity: 0.4, x: 0 }}
+                    exit={{ opacity: 0, x: 3 }}
+                    transition={{ duration: 0.25 }}
+                    className="text-[8px] uppercase tracking-widest font-mono font-medium"
+                  >
+                    {values[activeIndex].caption}
+                  </motion.span>
+                </AnimatePresence>
+              </div>
+            </div>
+            
+          </div>
+
+          {/* RIGHT COLUMN: Asymmetric Dynamic Accordion List */}
+          <div className="col-span-7 flex flex-col gap-1">
+            {values.map((v, idx) => {
+              const isActive = activeIndex === idx;
+              return (
+                <div
+                  key={idx}
+                  onMouseEnter={() => setActiveIndex(idx)}
+                  className="group border-b border-secondary/10 py-4 transition-all duration-500 cursor-default relative overflow-hidden"
+                >
+                  {/* Subtle Background Glow Row */}
+                  <div className={`absolute inset-0 -z-10 bg-gradient-to-r from-primary/[0.03] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                  
+                  {/* Row Header */}
+                  <div className="flex items-center justify-between relative z-10">
+                    <div className="flex items-center gap-8">
+                      {/* Asymmetrical Floating Line Indicator */}
+                      <div className="w-12 flex items-center justify-start overflow-hidden">
+                        <motion.div
+                          animate={{ x: isActive ? 0 : -48 }}
+                          transition={{ duration: 0.4, ease: "easeOut" }}
+                          className="h-[1.5px] w-12 bg-primary"
+                        />
+                      </div>
+                      
+                      {/* Serif Index */}
+                      <span className={`font-serif text-lg transition-all duration-500 ${isActive ? 'text-primary font-medium' : 'text-secondary/30 group-hover:text-secondary/60'}`}>
+                        0{idx + 1}
+                      </span>
+                      
+                      {/* Core Value Title */}
+                      <h3 className={`text-2xl md:text-3xl font-serif transition-colors duration-500 ${isActive ? 'text-secondary font-medium' : 'text-secondary/60 group-hover:text-secondary'}`}>
+                        {v.title}
+                      </h3>
+                    </div>
+
+                    {/* Icon with subtle scale rotation */}
+                    <div className={`w-12 h-12 rounded-xl border flex items-center justify-center transition-all duration-500 ${isActive ? 'bg-primary/5 border-primary/20 shadow-[0_4px_12px_rgba(201,89,40,0.06)]' : 'bg-secondary/[0.02] border-secondary/5 group-hover:border-secondary/15'}`}>
+                      <v.icon 
+                        stroke="url(#warm-accent-gradient)" 
+                        size={20} 
+                        strokeWidth={1.3} 
+                        className={`transition-transform duration-700 ${isActive ? 'scale-110 rotate-12' : 'group-hover:scale-105'}`}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Accordion Detail Area */}
+                  <AnimatePresence initial={false}>
+                    {isActive && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.35, ease: "easeOut" }}
+                        className="overflow-hidden"
+                      >
+                        <div className="pl-28 pr-16 pt-3 pb-1">
+                          <p className="text-secondary/70 font-light leading-relaxed text-sm md:text-base tracking-wide max-w-xl">
+                            {v.desc}
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                  
+                </div>
+              );
+            })}
+          </div>
+
+        </div>
+
+        {/* Mobile Title Block (Visible on mobile, hidden on desktop) */}
+        <div className="lg:hidden text-left mb-8 px-2">
+          <span className="text-primary text-[10px] md:text-xs tracking-[0.4em] uppercase mb-2 block">
+            / Bản sắc doanh nghiệp
+          </span>
+          <h2 className="text-3xl md:text-4xl font-serif font-light text-secondary tracking-tight">
+            Giá trị Cốt lõi
+          </h2>
+        </div>
+
+        {/* Mobile Tactile Card Carousel (Hidden on Desktop) */}
+        <div className="lg:hidden flex flex-col gap-6 px-2">
+          {values.map((v, idx) => (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: idx * 0.05 }}
+              key={idx}
+              className="bg-white border border-secondary/[0.08] rounded-xl overflow-hidden shadow-[0_15px_45px_rgba(0,0,0,0.02)] p-6 md:p-8 flex flex-col gap-6 relative"
+            >
+              {/* Top Row: Index, Icon, Title */}
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-4">
+                  <span className="font-serif text-sm text-primary">0{idx + 1}</span>
+                  <h3 className="text-xl md:text-2xl font-serif text-secondary font-medium">{v.title}</h3>
+                </div>
+                
+                <div className="w-10 h-10 rounded-lg bg-primary/5 border border-primary/10 flex items-center justify-center">
+                  <v.icon stroke="url(#warm-accent-gradient)" size={18} strokeWidth={1.3} />
+                </div>
+              </div>
+
+              {/* Description */}
+              <p className="text-secondary/70 font-light text-sm md:text-base leading-relaxed pl-1">
                 {v.desc}
               </p>
+
+              {/* Inlined Project Image mimicking Polaroid print */}
+              <div className="w-full aspect-[16/9] bg-neutral-100 relative overflow-hidden rounded-[6px] border border-secondary/5 shadow-inner">
+                <img 
+                  src={v.image.src || v.image} 
+                  alt={`Giá trị cốt lõi di động - ${v.title}`} 
+                  title={`Giá trị cốt lõi di động: ${v.title}`}
+                  className="w-full h-full object-cover filter brightness-[0.95]" 
+                />
+              </div>
             </motion.div>
           ))}
         </div>
-      </motion.div>
+
+      </div>
     </section>
   );
 }
@@ -676,7 +873,7 @@ function LeadershipSection() {
   const teamCards = [
     {
       type: 'text',
-      title: 'Founder & CEO',
+      title: 'Founder & Board',
       number: '01'
     },
     {
@@ -686,6 +883,12 @@ function LeadershipSection() {
       img: imgHien
     },
     {
+      type: 'photo',
+      name: 'Nguyễn Lâm Vũ',
+      role: 'Design Director',
+      img: imgToan
+    },
+    {
       type: 'text',
       title: 'Accounting & HR',
       number: '02'
@@ -693,14 +896,8 @@ function LeadershipSection() {
     {
       type: 'photo',
       name: 'Hoàng Phúc',
-      role: 'Accounting & HR',
+      role: 'Chief Accountant',
       img: imgPhuc
-    },
-    {
-      type: 'photo',
-      name: 'Lê Hưng',
-      role: 'Interior Designer',
-      img: imgHung
     },
     {
       type: 'photo',
@@ -710,13 +907,54 @@ function LeadershipSection() {
     },
     {
       type: 'text',
-      title: 'Business Development',
+      title: 'Architecture & Concept',
       number: '03'
     },
     {
       type: 'photo',
-      name: 'Văn Quân',
-      role: 'BD Executive',
+      name: 'Lê Hưng',
+      role: 'Concept Architect',
+      img: imgHung
+    },
+    {
+      type: 'photo',
+      name: 'Phạm Minh Tuấn',
+      role: 'Senior Architect',
+      img: imgToan
+    },
+    {
+      type: 'photo',
+      name: 'Trần Thu Hà',
+      role: 'Interior Designer',
+      img: imgHung
+    },
+    {
+      type: 'photo',
+      name: 'Nguyễn Hoàng Long',
+      role: 'Concept Architect',
+      img: imgHung
+    },
+    {
+      type: 'photo',
+      name: 'Đỗ Thùy Linh',
+      role: '3D & Visualizer',
+      img: imgPhuc
+    },
+    {
+      type: 'text',
+      title: 'Project & BD',
+      number: '04'
+    },
+    {
+      type: 'photo',
+      name: 'Nguyễn Thế Toàn',
+      role: 'Senior Project Manager',
+      img: imgToan
+    },
+    {
+      type: 'photo',
+      name: 'Thu Hương',
+      role: 'Project Coordinator',
       img: imgHung
     },
     {
@@ -726,21 +964,51 @@ function LeadershipSection() {
       img: imgPhuc
     },
     {
-      type: 'text',
-      title: 'Project Manager',
-      number: '04'
+      type: 'photo',
+      name: 'Văn Quân',
+      role: 'BD Executive',
+      img: imgHung
     },
     {
       type: 'photo',
-      name: 'Nguyễn Thế Toàn',
-      role: 'Project Manager',
+      name: 'Nguyễn Tiến Dũng',
+      role: 'Procurement Specialist',
+      img: imgToan
+    },
+    {
+      type: 'text',
+      title: 'Construction & Site',
+      number: '05'
+    },
+    {
+      type: 'photo',
+      name: 'Trần Anh Tuấn',
+      role: 'Site Lead Engineer',
       img: imgToan
     },
     {
       type: 'photo',
-      name: 'Thu Hương',
-      role: 'Project Assistant',
+      name: 'Lê Huy Hoàng',
+      role: 'ME Engineer',
       img: imgHung
+    },
+    {
+      type: 'photo',
+      name: 'Nguyễn Văn Đức',
+      role: 'Construction Supervisor',
+      img: imgPhuc
+    },
+    {
+      type: 'photo',
+      name: 'Phan Văn Nam',
+      role: 'Site Supervisor',
+      img: imgToan
+    },
+    {
+      type: 'photo',
+      name: 'Bùi Quốc Khánh',
+      role: 'QS Engineer',
+      img: imgPhuc
     }
   ];
 
@@ -802,10 +1070,11 @@ function LeadershipSection() {
                     initial={{ scale: 1.1 }}
                     whileInView={{ scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 1.2, ease: "easeOut" }}
+                    transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
                     whileHover={{ scale: 1.05 }}
                     src={card.img.src || card.img}
-                    alt={card.name}
+                    alt={`Thành viên ${card.name} - ${card.role} tại Luklak Architects`}
+                    title={`KTS ${card.name} - ${card.role} Luklak`}
                     className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 ease-out"
                   />
                   {/* Hover Overlay */}
@@ -839,7 +1108,7 @@ export default function AboutPage() {
       <VisionMissionSection />
       <CoreValuesSection />
       <LeadershipSection />
-      <HomeCTA />
+      <HomeContactForm />
       <Footer />
     </main>
   );
