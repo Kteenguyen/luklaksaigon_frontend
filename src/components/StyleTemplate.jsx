@@ -1,7 +1,8 @@
 "use client";
 import { useState, useRef } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import Contact from "./Contact";
+import HomeCTA from "./HomeCTA";
+import Footer from "./Footer";
 import Image from 'next/image';
 import Link from 'next/link';
 import { projectsData } from "../data/mockData";
@@ -213,7 +214,8 @@ export default function StyleTemplate({
 
       {/* 4. Contact CTA */}
       <div className="relative z-40 bg-secondary text-primary">
-        <Contact />
+        <HomeCTA />
+        <Footer />
       </div>
     </main>
   );

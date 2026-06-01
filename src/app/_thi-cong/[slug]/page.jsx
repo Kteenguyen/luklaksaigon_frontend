@@ -3,7 +3,8 @@ import { useParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
-import Contact from "../../../components/Contact";
+import HomeCTA from "../../../components/HomeCTA";
+import Footer from "../../../components/Footer";
 import { constructionProjectsData } from "../../../data/mockData";
 
 export default function ConstructionDetail() {
@@ -128,7 +129,8 @@ export default function ConstructionDetail() {
       </Link>
 
       <div className="relative z-40 bg-background">
-        <Contact />
+        <HomeCTA />
+        <Footer />
       </div>
     </main>
   );

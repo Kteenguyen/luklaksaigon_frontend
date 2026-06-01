@@ -2,7 +2,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { projectsData } from '../data/mockData';
 
 const categories = ['Tất cả', 'Villa', 'Nhà phố', 'Căn hộ', 'Building', 'Công trình dịch vụ'];
@@ -21,7 +21,6 @@ function ProjectFilter({ activeTab, setActiveTab }) {
 }
 
 export default function DesignProjects({ hideViewAll = false }) {
-  const router = useRouter();
   const [activeTab, setActiveTab] = useState('Tất cả');
   const [visibleCount, setVisibleCount] = useState(9);
 
@@ -39,7 +38,6 @@ export default function DesignProjects({ hideViewAll = false }) {
   const handleTabChange = (cat) => {
     setActiveTab(cat);
     setVisibleCount(9);
-    router.push(cat === 'Tất cả' ? '/du-an' : `/du-an?category=${cat}`, { scroll: false });
   };
 
   return (
@@ -92,7 +90,7 @@ export default function DesignProjects({ hideViewAll = false }) {
                 exit={{ opacity: 0, scale: 0.95, y: 20 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 key={project.id}
-                className="group relative overflow-hidden rounded-sm cursor-pointer aspect-[4/5]"
+                className="group relative overflow-hidden rounded-sm cursor-pointer aspect-[3/2]"
               >
                 <Link href={`/du-an/${project.slug}`} className="block w-full h-full relative">
                   {/* Photo container */}
@@ -104,22 +102,22 @@ export default function DesignProjects({ hideViewAll = false }) {
                     <img
                       src={project.coverImg.src || project.coverImg}
                       alt={project.title}
-                      className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700"
+                      className="w-full h-full object-cover transition-all duration-700"
                     />
                   </motion.div>
 
-                  {/* Elegant Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  
-                  {/* Information Overlay */}
-                  <div className="absolute bottom-0 left-0 w-full p-8 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
-                    <span className="text-primary text-[10px] uppercase tracking-widest mb-3 block font-medium">
+                  {/* Elegant Gradient Overlay - Always slightly visible for readability, darkens on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent group-hover:from-black/90 group-hover:via-black/40 transition-all duration-500" />
+
+                  {/* Information Overlay - Always visible, slides up slightly on hover */}
+                  <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 transition-transform duration-500 group-hover:-translate-y-2">
+                    <span className="text-primary text-[10px] uppercase tracking-widest mb-2 block font-medium">
                       {project.category}
                     </span>
-                    <h3 className="text-white text-2xl md:text-3xl font-serif font-light">
+                    <h3 className="text-white text-xl md:text-2xl font-serif font-light leading-tight">
                       {project.title}
                     </h3>
-                    <p className="text-white/60 text-xs mt-2 font-light">
+                    <p className="text-white/60 text-[10px] md:text-xs mt-2 font-light">
                       {project.location} &bull; {project.area}
                     </p>
                   </div>
@@ -147,9 +145,9 @@ export default function DesignProjects({ hideViewAll = false }) {
             <Link href="/du-an"
               className="group relative inline-flex items-center gap-4 text-xs tracking-[0.2em] uppercase py-4 px-10 border border-secondary overflow-hidden bg-secondary text-surface"
             >
-              <div className="absolute inset-0 bg-primary translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
-              <span className="relative z-10 transition-colors duration-500 group-hover:text-secondary">Xem Tất Cả Dự Án</span>
-              <span className="relative z-10 transition-colors duration-500 group-hover:text-secondary">&rarr;</span>
+              <div className="absolute inset-0 bg-white translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+              <span className="relative z-10 transition-colors duration-500 group-hover:text-black">Xem Tất Cả Dự Án</span>
+              <span className="relative z-10 transition-colors duration-500 group-hover:text-black">&rarr;</span>
             </Link>
           )}
         </div>

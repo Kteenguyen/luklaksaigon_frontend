@@ -27,11 +27,11 @@ export default function Home() {
       {/* Section 3 (Tầm 3 Dự án thực tế Key - Staggered layout & parallax scroll) */}
       <div className="relative z-10 bg-secondary" data-theme="dark">
         {keyProjects.map((project, idx) => (
-          <ProjectShowcase 
-            key={project.id} 
-            project={project} 
-            isFirst={idx === 0} 
-            isLast={idx === keyProjects.length - 1} 
+          <ProjectShowcase
+            key={project.id}
+            project={project}
+            isFirst={idx === 0}
+            isLast={idx === keyProjects.length - 1}
           />
         ))}
       </div>

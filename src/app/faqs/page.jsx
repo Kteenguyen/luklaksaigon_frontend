@@ -1,7 +1,8 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import Contact from "../../components/Contact";
+import HomeCTA from "../../components/HomeCTA";
+import Footer from "../../components/Footer";
 
 const faqsData = {
   'Tổng quan & Thiết kế': [
@@ -175,7 +176,8 @@ export default function FAQsPage() {
 
       {/* Footer CTA */}
       <div className="relative z-40 bg-secondary">
-        <Contact />
+        <HomeCTA />
+        <Footer />
       </div>
     </main>
   );

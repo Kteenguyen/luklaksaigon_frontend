@@ -346,7 +346,7 @@ export const hoatDongData = [
     excerpt: "Sự kiện đánh dấu cột mốc quan trọng trong việc nâng cao chất lượng vật tư đầu vào, đảm bảo mang đến những sản phẩm nội thất hoàn mỹ nhất cho khách hàng...",
     content: "Sáng ngày 20/4/2024, Lễ ký kết hợp tác chiến lược giữa Luklak Saigon và Tập đoàn Gỗ An Cường đã diễn ra thành công tốt đẹp.\n\nSự kiện này đánh dấu bước tiến mới của Luklak trong việc cam kết sử dụng 100% ván gỗ công nghiệp đạt chuẩn E1 Châu Âu, đảm bảo an toàn tuyệt đối cho sức khỏe người dùng và tính bền bỉ vượt thời gian cho các công trình thi công nội thất.",
     date: "20 Tháng 4, 2024",
-    category: "Sự kiện",
+    category: "HOẠT ĐỘNG LUKLAK",
     author: "Ban Truyền thông",
     coverImg: img3
   },
@@ -357,7 +357,7 @@ export const hoatDongData = [
     excerpt: "Vượt qua mọi khó khăn về thời tiết, đội ngũ kỹ sư Luklak đã đưa dự án cán đích phần thô đúng tiến độ cam kết.",
     content: "Dự án The Monolith - Khu đô thị sinh thái cao cấp tại ngoại ô Hà Nội đã chính thức cất nóc sau 6 tháng thi công liên tục.\n\nĐây là một trong những dự án có yêu cầu kỹ thuật kết cấu phức tạp nhất mà Luklak đảm nhận trong năm nay. Đội ngũ kỹ sư và công nhân đã làm việc không ngừng nghỉ, áp dụng các công nghệ thi công cốp pha trượt hiện đại để đẩy nhanh tiến độ mà vẫn đảm bảo độ chính xác tuyệt đối.",
     date: "15 Tháng 4, 2024",
-    category: "Dự án",
+    category: "BEHIND THE SPACE",
     author: "Ban Quản lý Dự án",
     coverImg: img1
   },
@@ -368,8 +368,41 @@ export const hoatDongData = [
     excerpt: "Chuyến đi 3 ngày 2 đêm tại Phú Quốc đã mang lại những phút giây thư giãn và nạp lại năng lượng cho toàn thể nhân viên.",
     content: "Với thông điệp 'One Team - One Dream', chuyến Teambuilding thường niên của Luklak Saigon tại Đảo ngọc Phú Quốc đã kết thúc rực rỡ.\n\nKhông chỉ là khoảng thời gian nghỉ ngơi sau chuỗi ngày bận rộn trên bản vẽ và công trường, đây còn là cơ hội để các phòng ban thấu hiểu nhau hơn qua các trò chơi tập thể đòi hỏi sự đồng lòng và sáng tạo. Chắc chắn sau chuyến đi này, đội ngũ Luklak sẽ quay trở lại làm việc với 200% năng lượng.",
     date: "05 Tháng 4, 2024",
-    category: "Nội bộ",
+    category: "HOẠT ĐỘNG LUKLAK",
     author: "Công đoàn",
+    coverImg: img2
+  },
+  {
+    id: 'h4',
+    title: "Luklak khai trương văn phòng đại diện mới tại TP.HCM",
+    slug: "luklak-khai-truong-van-phong-dai-dien-moi-tai-tphcm",
+    excerpt: "Sự kiện khai trương văn phòng đại diện mới khẳng định bước tiến mạnh mẽ của Luklak tại thị trường miền Nam...",
+    content: "Văn phòng mới tọa lạc tại vị trí đắc địa, được thiết kế theo phong cách tối giản Japandi mang đậm dấu ấn kiến trúc của Luklak...",
+    date: "01 Tháng 5, 2024",
+    category: "TIN TỨC",
+    author: "Ban Truyền thông",
+    coverImg: img4
+  },
+  {
+    id: 'h5',
+    title: "Behind The Space: Thiết kế căn hộ Japandi tối giản",
+    slug: "behind-the-space-thiet-ke-can-ho-japandi-toi-gian",
+    excerpt: "Hành trình từ ý tưởng phác thảo đến thực tế thi công trọn gói căn hộ Landmark của đội ngũ thiết kế Luklak...",
+    content: "Căn hộ Landmark được hoàn thiện tỉ mỉ từng chi tiết gỗ, đá và ánh sáng nhằm mang lại trải nghiệm sống mộc mạc yên bình...",
+    date: "25 Tháng 4, 2024",
+    category: "BEHIND THE SPACE",
+    author: "Đội ngũ Thiết kế",
+    coverImg: img1
+  },
+  {
+    id: 'h6',
+    title: "Xu hướng thiết kế không gian làm việc xanh năm 2024",
+    slug: "xu-huong-thiet-ke-khong-gian-lam-viec-xanh-nam-2024",
+    excerpt: "Tích hợp mảng xanh vào văn phòng không chỉ tăng năng suất làm việc mà còn bảo vệ sức khỏe nhân viên...",
+    content: "Các giải pháp chiếu sáng thông minh kết hợp hệ thống cây xanh thanh lọc không khí được ứng dụng tối đa trong dự án văn phòng mới...",
+    date: "10 Tháng 4, 2024",
+    category: "TIN TỨC",
+    author: "Ban Biên tập",
     coverImg: img2
   }
 ];
@@ -392,3 +425,48 @@ constructionProjectsData.forEach(c => {
     });
   }
 });
+
+export const pressData = [
+  {
+    id: 1,
+    title: "Nhà ống 80m2 với hình dáng vòm ngẫu hứng",
+    source: "vnexpress.net",
+    url: "https://vnexpress.net",
+    coverImg: img1
+  },
+  {
+    id: 2,
+    title: "Room tour: Sự giao hòa không gian và lối sống",
+    source: "elledecoration.vn",
+    url: "https://elledecoration.vn",
+    coverImg: img2
+  },
+  {
+    id: 3,
+    title: "Nhà phố 50m2 với thang máy trong nhà",
+    source: "archdaily.com",
+    url: "https://www.archdaily.com",
+    coverImg: img3
+  },
+  {
+    id: 4,
+    title: "Kiến tạo tổ ấm tinh tế và gần gũi với thiên nhiên",
+    source: "elledecoration.vn",
+    url: "https://elledecoration.vn",
+    coverImg: img4
+  },
+  {
+    id: 5,
+    title: "Không gian sống tối giản mang đậm triết lý Wabi-Sabi",
+    source: "kientruc.vn",
+    url: "https://kientruc.vn",
+    coverImg: img1
+  },
+  {
+    id: 6,
+    title: "Biệt thự hiện đại nổi bật với thiết kế giếng trời lớn",
+    source: "vnexpress.net",
+    url: "https://vnexpress.net",
+    coverImg: img2
+  }
+];
