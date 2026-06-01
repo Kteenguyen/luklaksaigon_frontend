@@ -20,8 +20,8 @@ export default function FeaturedHorizontalScroll({ projects, title = "Dự án N
   if (!projects || projects.length === 0) return null;
 
   return (
-    <section ref={scrollRef} className="relative bg-black text-white" style={{ height: `${totalSlides * 100}vh` }}>
-      <div className="sticky top-0 h-screen overflow-hidden flex items-center bg-black">
+    <section ref={scrollRef} className="relative bg-secondary text-white" style={{ height: `${totalSlides * 100}vh` }} data-theme="dark">
+      <div className="sticky top-0 h-screen overflow-hidden flex items-center bg-secondary">
         <motion.div style={{ x, width: `${totalSlides * 100}vw` }} className="flex h-full">
 
           {/* INTRO SLIDE */}
@@ -55,8 +55,8 @@ export default function FeaturedHorizontalScroll({ projects, title = "Dự án N
                 <Image src={project.coverImg || project.mainImage?.src} fill className="object-cover filter brightness-[0.8]" alt={project.title} unoptimized />
 
                 {/* Gradient tạo tương phản cho chữ */}
-                <div className={`absolute inset-0 bg-gradient-to-r ${isLeft ? 'from-black/80 via-black/40' : 'from-transparent via-black/40 to-black/80'} to-transparent pointer-events-none`} />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                <div className={`absolute inset-0 bg-gradient-to-r ${isLeft ? 'from-secondary/80 via-secondary/40' : 'from-transparent via-secondary/40 to-secondary/80'} to-transparent pointer-events-none`} />
+                <div className="absolute inset-0 bg-gradient-to-t from-secondary/60 via-transparent to-transparent pointer-events-none" />
 
                 <div className={`relative z-10 w-full max-w-5xl flex flex-col ${isLeft ? 'ml-0 items-start text-left' : 'ml-auto mr-0 md:mr-16 items-end text-right'}`}>
                   <span className="text-[#D4AF37] text-sm tracking-[0.4em] mb-6 block drop-shadow-md font-medium uppercase">

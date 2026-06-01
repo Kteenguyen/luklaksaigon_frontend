@@ -3,7 +3,7 @@
 
 export default function Contact() {
   return (
-    <section className="relative w-full bg-secondary text-white overflow-hidden h-screen" style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}>
+    <section className="relative w-full bg-secondary text-white overflow-hidden h-screen" style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }} data-theme="dark">
       
       {/* Cấu trúc Sticky Footer (Curtain Reveal) */}
       <div className="fixed bottom-0 w-full h-screen flex flex-col justify-between pt-32 pb-8 px-8 md:px-16 pointer-events-none">

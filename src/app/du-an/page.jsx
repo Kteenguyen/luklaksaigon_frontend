@@ -1,6 +1,7 @@
 "use client";
 import { motion } from 'framer-motion';
-import Contact from "../../components/Contact";
+import HomeCTA from "../../components/HomeCTA";
+import Footer from "../../components/Footer";
 import ProjectGallery from "../../components/ProjectGallery";
 
 // MOCK DATA: Import images for the scattered gallery
@@ -63,7 +64,7 @@ const floatingImages = [
 
 export default function ProjectsPage() {
   return (
-    <main className="bg-background min-h-screen flex flex-col justify-between overflow-hidden">
+    <main className="bg-background min-h-screen flex flex-col justify-between overflow-hidden" data-theme="light">
 
       {/* Hero Section - Split Screen */}
       <div className="relative w-full min-h-screen flex items-center pt-24 pb-16">
@@ -116,7 +117,8 @@ export default function ProjectsPage() {
         <ProjectGallery />
       </div>
 
-      <Contact />
+      <HomeCTA />
+      <Footer />
     </main>
   )
 }

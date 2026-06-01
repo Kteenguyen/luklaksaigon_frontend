@@ -64,7 +64,7 @@ export default function DesignProjects({ hideViewAll = false }) {
   };
 
   return (
-    <section className="w-full bg-background text-secondary py-24 md:py-32">
+    <section className="w-full bg-background text-secondary py-24 md:py-32" data-theme="light">
       <Suspense fallback={null}>
         <ProjectFilter activeTab={activeTab} setActiveTab={setActiveTab} />
       </Suspense>

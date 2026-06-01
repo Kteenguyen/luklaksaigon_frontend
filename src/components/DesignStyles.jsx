@@ -1,5 +1,5 @@
 "use client";
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 // Tạm thời lấy các ảnh từ KC Villa để demo, sau này thay bằng ảnh đúng phong cách
 import imgJapandi from '../assets/projectImage/Dự án thực tế/KC Villa/z7450163989369_be1b80a76e84bb7dc5b88bc685725aee.jpg';
@@ -20,14 +20,14 @@ export default function DesignStyles() {
   const [active, setActive] = useState(styles[0].id);
 
   return (
-    <section className="w-full bg-background text-secondary py-24 md:py-32">
-      
+    <section id="design-styles" className="w-full bg-background text-secondary py-24 md:py-32" data-theme="light">
+
       <div className="px-8 md:px-16 mb-16">
         <span className="text-[10px] md:text-xs tracking-[0.3em] uppercase text-primary border-b border-secondary/20 pb-2">
           Phong Cách Thiết Kế
         </span>
         <h2 className="text-4xl md:text-5xl lg:text-7xl font-serif font-light mt-8">
-          Định hình <br/>Không gian
+          Định hình <br />Không gian
         </h2>
       </div>
 
@@ -35,7 +35,7 @@ export default function DesignStyles() {
       <div className="w-full h-[60vh] md:h-[80vh] flex flex-col md:flex-row overflow-hidden border-y border-secondary/10">
         {styles.map((style) => {
           const isActive = active === style.id;
-          
+
           return (
             <motion.div
               key={style.id}
@@ -48,7 +48,7 @@ export default function DesignStyles() {
                 transition: "flex 0.6s cubic-bezier(0.16, 1, 0.3, 1)"
               }}
             >
-              
+
               {/* Ảnh nền */}
               <AnimatePresence>
                 {isActive && (
@@ -59,9 +59,9 @@ export default function DesignStyles() {
                     transition={{ duration: 0.8, ease: "easeOut" }}
                     className="absolute inset-0 z-0"
                   >
-                    <img 
-                      src={style.image.src || style.image} 
-                      alt={style.title} 
+                    <img
+                      src={style.image.src || style.image}
+                      alt={style.title}
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-black/40" />

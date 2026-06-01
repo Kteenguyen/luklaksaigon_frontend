@@ -53,6 +53,7 @@ export default function ProjectShowcase({ project = defaultProject }) {
       ref={containerRef}
       className="relative w-full bg-secondary"
       style={{ minHeight: '300vh' }}
+      data-theme="dark"
     >
 
       {/* ── Layer 1: Ảnh Nền (Z-index 0) ── */}

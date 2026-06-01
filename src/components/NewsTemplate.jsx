@@ -11,7 +11,7 @@ export default function NewsTemplate({
   articles
 }) {
   return (
-    <main className="bg-background min-h-screen flex flex-col justify-between">
+    <main className="bg-background min-h-screen flex flex-col justify-between" data-theme="light">
 
       {/* Page Header */}
       <section className="pt-40 pb-16 px-8 md:px-16 text-center max-w-4xl mx-auto">

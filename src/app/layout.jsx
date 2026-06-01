@@ -1,6 +1,7 @@
 import '../app/globals.css';
 import Header from '../components/Header';
 import SmoothScrollProvider from '../components/SmoothScrollProvider';
+import ClientLayoutWrapper from '../components/ClientLayoutWrapper';
 
 export const metadata = {
   title: 'Luklak Saigon | Kiến trúc & Nội thất',
@@ -12,10 +13,12 @@ export default function RootLayout({ children }) {
     <html lang="vi">
       <body>
         <SmoothScrollProvider>
-          <div className="min-h-screen font-sans bg-secondary text-text-main">
-            <Header />
-            {children}
-          </div>
+          <ClientLayoutWrapper>
+            <div className="min-h-screen font-sans bg-secondary text-text-main">
+              <Header />
+              {children}
+            </div>
+          </ClientLayoutWrapper>
         </SmoothScrollProvider>
       </body>
     </html>

@@ -11,12 +11,10 @@ import img5 from '../assets/projectImage/Dự án thực tế/KC Villa/z74501638
 import img6 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450163989369_be1b80a76e84bb7dc5b88bc685725aee.jpg';
 
 const services = [
-  { id: '01', title: 'Xây dựng nhà trọn gói', desc: 'Tạo nên công trình bền vững, kết hợp thẩm mỹ và chức năng.', img: img1 },
-  { id: '02', title: 'Thiết kế kiến trúc', desc: 'Thiết kế sáng tạo, phản ánh phong cách và nhu cầu cá nhân.', img: img2 },
-  { id: '03', title: 'Thiết kế nội thất', desc: 'Nội thất hài hòa, tối ưu không gian sống và cá tính.', img: img3 },
-  { id: '04', title: 'Thi công phần thô', desc: 'Đảm bảo chất lượng, tiến độ và sự an tâm của khách hàng.', img: img4 },
-  { id: '05', title: 'Thi công hoàn thiện', desc: 'Hoàn thiện công trình với sự tận tâm và tỉ mỉ.', img: img5 },
-  { id: '06', title: 'Thi công nội thất', desc: 'Thi công chuyên nghiệp, đáp ứng chất lượng vượt trội.', img: img6 },
+  { id: '01', title: 'Lĩnh Vực Thiết Kế', desc: 'Thiết kế kiến trúc, thiết kế nội thất và thiết kế cảnh quan mang tính cá nhân hoá và thẩm mỹ bền vững.', img: img1 },
+  { id: '02', title: 'Lĩnh Vực Thi Công', desc: 'Thi công xây dựng, thi công nội thất hoàn thiện, quản lý dự án chặt chẽ và cung cấp dịch vụ bảo trì định kỳ chuyên nghiệp.', img: img2 },
+  { id: '03', title: 'Lĩnh Vực Sản Xuất', desc: 'Sản xuất đồ nội thất thủ công tinh sảo và chế tạo các giải pháp sản phẩm chiếu sáng cao cấp mang thương hiệu Luklak.', img: img3 },
+  { id: '04', title: 'Lĩnh Vực Thương Mại', desc: 'Cung cấp các dòng sản phẩm chọn lọc tinh tế: Luklak lighting, Luklak ceramic, và Luklak decor độc bản.', img: img4 }
 ];
 
 export default function Services() {
