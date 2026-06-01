@@ -59,7 +59,7 @@ export default function FeaturedHorizontalScroll({ projects, title = "Dự án N
                 <div className="absolute inset-0 bg-gradient-to-t from-secondary/60 via-transparent to-transparent pointer-events-none" />
 
                 <div className={`relative z-10 w-full max-w-5xl flex flex-col ${isLeft ? 'ml-0 items-start text-left' : 'ml-auto mr-0 md:mr-16 items-end text-right'}`}>
-                  <span className="text-[#D4AF37] text-sm tracking-[0.4em] mb-6 block drop-shadow-md font-medium uppercase">
+                  <span className="text-primary text-sm tracking-[0.4em] mb-6 block drop-shadow-md font-medium uppercase">
                     0{idx + 1} — {project.status || project.category || project.type}
                   </span>
                   <h3

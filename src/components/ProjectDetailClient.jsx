@@ -24,19 +24,19 @@ export default function ProjectDetailClient({ project, nextProject }) {
   return (
     <main className="bg-background min-h-screen flex flex-col justify-between overflow-hidden">
       
-      {/* 1. Banner dự án / Video dự án (Nếu có) */}
-      <section className="relative w-full h-screen">
+      {/* Section 1: Hero & Project Title */}
+      <section className="relative w-full h-[70vh] flex flex-col justify-end">
         <div className="absolute inset-0 z-0">
           <img 
             src={project.coverImg.src || project.coverImg} 
             alt={project.title} 
-            className="w-full h-full object-cover filter brightness-[0.6] grayscale-[20%]"
+            className="w-full h-full object-cover filter brightness-[0.55] grayscale-[10%]"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-black/20 z-10"></div>
         
-        <div className="relative z-20 h-full flex flex-col justify-end pb-24 px-8 md:px-16 max-w-[100rem] mx-auto w-full">
-          <Link href="/du-an" className="flex items-center gap-2 text-white/60 hover:text-primary transition-colors uppercase tracking-widest text-xs font-medium mb-12 w-max">
+        <div className="relative z-20 w-full max-w-[100rem] mx-auto px-8 md:px-16 pb-16">
+          <Link href="/du-an" className="flex items-center gap-2 text-white/70 hover:text-primary transition-colors uppercase tracking-widest text-xs font-semibold mb-8 w-max">
             <ArrowLeft className="w-4 h-4" /> Quay lại Thư viện
           </Link>
           
@@ -44,108 +44,118 @@ export default function ProjectDetailClient({ project, nextProject }) {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-6xl md:text-8xl lg:text-[8rem] font-serif font-light text-white mb-6 tracking-tight"
+            className="text-4xl md:text-5xl lg:text-6xl font-serif font-light text-white tracking-tight leading-tight"
           >
             <span dangerouslySetInnerHTML={{ __html: project.title }} />
           </motion.h1>
         </div>
       </section>
 
-      {/* 2. Thông tin công trình */}
-      <section className="py-16 bg-background px-8 md:px-16 border-b border-secondary/10">
+      {/* Section 2: Project Info & Description */}
+      <section className="py-20 md:py-24 bg-[#FAF9F6] px-8 md:px-16 border-b border-secondary/10">
         <div className="max-w-[100rem] mx-auto w-full">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div>
-              <span className="block text-secondary/55 text-[10px] uppercase tracking-widest mb-2 font-medium">Hạng mục</span>
-              <span className="text-secondary font-light text-lg md:text-xl">{project.category}</span>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
+            
+            {/* Left Label */}
+            <div className="lg:col-span-3">
+              <span className="text-primary text-xs uppercase tracking-widest font-semibold block mt-1">
+                / THÔNG TIN DỰ ÁN
+              </span>
             </div>
-            <div>
-              <span className="block text-secondary/55 text-[10px] uppercase tracking-widest mb-2 font-medium">Vị trí</span>
-              <span className="text-secondary font-light text-lg md:text-xl">{project.location}</span>
-            </div>
-            <div>
-              <span className="block text-secondary/55 text-[10px] uppercase tracking-widest mb-2 font-medium">Quy mô</span>
-              <span className="text-secondary font-light text-lg md:text-xl">{project.area}</span>
-            </div>
-            <div>
-              <span className="block text-secondary/55 text-[10px] uppercase tracking-widest mb-2 font-medium">Hoàn thành</span>
-              <span className="text-secondary font-light text-lg md:text-xl">{project.year}</span>
+            
+            {/* Right Content Area */}
+            <div className="lg:col-span-9 flex flex-col gap-12">
+              
+              {/* Metadata Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8 border-b border-secondary/10 pb-12">
+                <div>
+                  <span className="block text-secondary/40 text-[11px] uppercase tracking-wider mb-2 font-semibold">Địa điểm</span>
+                  <span className="text-secondary font-light text-base md:text-lg">{project.location}</span>
+                </div>
+                <div>
+                  <span className="block text-secondary/40 text-[11px] uppercase tracking-wider mb-2 font-semibold">Diện tích</span>
+                  <span className="text-secondary font-light text-base md:text-lg">{project.area}</span>
+                </div>
+                <div>
+                  <span className="block text-secondary/40 text-[11px] uppercase tracking-wider mb-2 font-semibold">Quy mô</span>
+                  <span className="text-secondary font-light text-base md:text-lg">{project.category}</span>
+                </div>
+                <div>
+                  <span className="block text-secondary/40 text-[11px] uppercase tracking-wider mb-2 font-semibold">Tư vấn Thiết kế</span>
+                  <span className="text-secondary font-light text-base md:text-lg">Luklak Architects</span>
+                </div>
+                <div>
+                  <span className="block text-secondary/40 text-[11px] uppercase tracking-wider mb-2 font-semibold">Tư vấn Thi công</span>
+                  <span className="text-secondary font-light text-base md:text-lg">Luklak Architects</span>
+                </div>
+              </div>
+              
+              {/* Description paragraph */}
+              <div className="max-w-4xl">
+                <p className="text-secondary/80 font-light text-lg md:text-xl leading-relaxed text-justify md:text-left">
+                  {project.overview}
+                </p>
+              </div>
+
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3. Album ảnh */}
-      <section className="px-4 md:px-8 py-24 max-w-[100rem] mx-auto w-full bg-secondary/5">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-          {project.images.slice(0, 4).map((img, index) => (
+      {/* Section 3: Project Image Gallery (Height Constraint) */}
+      <section className="py-16 md:py-24 max-w-[90rem] mx-auto w-full px-4 md:px-8 bg-background">
+        <div className="flex flex-col gap-8 md:gap-12">
+          {project.images.map((img, index) => (
             <motion.div 
               key={index}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6 }}
-              className={`relative overflow-hidden bg-secondary/5 rounded-sm ${
-                index === 0 ? 'md:col-span-2 aspect-[21/9]' : 'aspect-[4/5]'
-              }`}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="w-full max-h-[80vh] md:max-h-[85vh] overflow-hidden rounded-lg bg-neutral-100 flex justify-center items-center"
             >
               <img 
                 src={img.src || img} 
-                alt={`${project.title} - ${index}`} 
-                className="w-full h-full object-cover filter grayscale-[20%] hover:grayscale-0 hover:scale-105 transition-all duration-700"
+                alt={`${project.title} - ${index + 1}`} 
+                className="w-full h-full max-h-[80vh] md:max-h-[85vh] object-cover filter grayscale-[15%] hover:grayscale-0 hover:scale-[1.01] transition-all duration-[1000ms] ease-out rounded-lg"
               />
             </motion.div>
           ))}
         </div>
       </section>
 
-      {/* 4. Mô tả dự án */}
-      <section className="py-24 md:py-32 px-8 md:px-16 max-w-[100rem] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-16 items-start border-t border-secondary/10 bg-background">
-        <div className="lg:col-span-4">
-          <h2 className="text-4xl md:text-5xl font-serif font-light text-secondary mb-6">Mô tả <br/><span className="text-primary italic">Chi tiết</span></h2>
-          <span className="text-primary text-sm uppercase tracking-widest border border-primary/20 px-4 py-2 rounded-sm inline-block">
-            {project.style} Style
-          </span>
-        </div>
-        <div className="lg:col-span-8">
-          <p className="text-secondary/70 font-light text-xl md:text-3xl leading-relaxed font-serif">
-            "{project.overview}"
-          </p>
-        </div>
-      </section>
-
-      {/* 5. Dự án liên quan */}
-      <section className="bg-secondary/5 py-24 md:py-32 px-8 md:px-16 border-t border-secondary/10">
+      {/* Section 4: Related Projects */}
+      <section className="bg-background py-24 md:py-32 px-8 md:px-16 border-t border-secondary/10">
         <div className="max-w-[100rem] mx-auto w-full">
           <div className="flex justify-between items-end mb-16 border-b border-secondary/10 pb-6">
             <h2 className="text-3xl md:text-4xl font-serif font-light text-secondary">
               Dự án <span className="text-primary italic">Liên quan</span>
             </h2>
-            <Link href="/du-an" className="text-primary uppercase text-xs tracking-widest font-medium hover:text-secondary transition-colors hidden md:block">
+            <Link href="/du-an" className="text-primary uppercase text-xs tracking-widest font-semibold hover:text-secondary transition-colors hidden md:block">
               Xem tất cả
             </Link>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
             {relatedProjects.map((item, index) => (
               <Link 
                 href={`/du-an/${item.slug}`} 
                 key={index} 
-                className="group cursor-pointer flex flex-col h-full bg-background border border-secondary/5 p-4 rounded-sm hover:border-primary/50 transition-all duration-500 hover:shadow-xl"
+                className="group cursor-pointer flex flex-col h-full bg-background transition-all duration-500"
               >
-                <div className="w-full aspect-[4/3] rounded-sm overflow-hidden mb-6">
+                <div className="w-full aspect-[3/2] rounded-lg overflow-hidden mb-6 bg-secondary/5">
                   <img 
                     src={item.coverImg.src || item.coverImg} 
                     alt={item.title} 
-                    className="w-full h-full object-cover filter grayscale-[30%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" 
+                    className="w-full h-full object-cover filter grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out" 
                   />
                 </div>
-                <div className="flex items-center gap-4 mb-4 text-[10px] uppercase tracking-widest text-secondary/50">
+                <div className="flex items-center gap-3 mb-3 text-[10px] uppercase tracking-widest font-semibold">
                   <span className="text-primary">{item.category}</span>
-                  <span>|</span>
-                  <span>{item.location}</span>
+                  <span className="text-secondary/30">•</span>
+                  <span className="text-secondary/60">{item.location}</span>
                 </div>
-                <h3 className="text-xl font-serif font-light text-secondary mb-4 group-hover:text-primary transition-colors line-clamp-2">
+                <h3 className="text-xl md:text-2xl font-serif font-light text-secondary group-hover:text-primary transition-colors line-clamp-1">
                   {item.title}
                 </h3>
               </Link>
@@ -154,7 +164,7 @@ export default function ProjectDetailClient({ project, nextProject }) {
         </div>
       </section>
 
-      {/* 6. CTA liên hệ */}
+      {/* CTA & Footer */}
       <HomeCTA />
       <Footer />
 

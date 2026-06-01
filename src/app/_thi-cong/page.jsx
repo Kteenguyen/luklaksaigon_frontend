@@ -1,6 +1,7 @@
 "use client";
 import { motion } from 'framer-motion';
-import Contact from "../../components/Contact";
+import HomeCTA from "../../components/HomeCTA";
+import Footer from "../../components/Footer";
 import ConstructionProjects from "../../components/ConstructionProjects";
 
 // Import images for timeline / standards
@@ -151,7 +152,8 @@ export default function ConstructionPage() {
 
       {/* Footer */}
       <div className="relative z-40 bg-secondary">
-        <Contact />
+        <HomeCTA />
+        <Footer />
       </div>
     </main>
   )

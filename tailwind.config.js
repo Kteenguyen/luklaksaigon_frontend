@@ -7,18 +7,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#D4AF37', // Vàng hoàng gia (Classic Gold) - Sáng hơn, nổi bật trên nền tối
-        'primary-dark': '#B06B3E', // Giữ lại màu cũ nếu cần dùng trên nền quá sáng
-        secondary: '#1C1B19', // Deep warm charcoal (wabi-sabi dark background)
-        'secondary-deep': '#121211', // Deeper black-charcoal for footer panels
-        background: '#F9F8F5', // Cream off-white
-        surface: '#FFFFFF',
-        'text-main': '#2C2B29', // Soft readable dark grey on light background
-        'text-muted': '#7E7B74', // Warm muted grey
+        primary: '#C95928',           // 1. Brick (Accent/Highlight)
+        'primary-dark': '#C95928',    // Map to Brick
+        secondary: '#201F1E',         // 2. Black (Primary Dark Background)
+        'secondary-deep': '#201F1E',  // Map to Black
+        background: '#FFFFFF',         // 3. White (Primary Light Background)
+        surface: '#FFFFFF',            // Map to White
+        beige: '#DED3B8',             // 4. Beige (Warm Neutral)
+        sandstone: '#797166',         // 5. Sandstone (Muted Mid-tone)
+        'text-main': '#201F1E',       // Map to Black
+        'text-muted': '#797166',       // Map to Sandstone
       },
       fontFamily: {
-        serif: ['"Playfair Display"', 'serif'],
-        sans: ['Inter', 'sans-serif'],
+        serif: ['Newsreader', 'serif'],
+        sans: ['"Work Sans"', 'sans-serif'],
       },
       keyframes: {
         'slow-pan': {

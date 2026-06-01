@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,12 +13,12 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  background-color: #F9F8F5;
+  background-color: #FFFFFF;
 }
 
 ::selection {
-  background-color: #D4AF37; /* Gold */
-  color: #1C1B19;            /* Charcoal */
+  background-color: #C95928; /* Brick */
+  color: #FFFFFF;            /* White */
 }
 
 /* ── Section Cohesion ──────────────────────────── */

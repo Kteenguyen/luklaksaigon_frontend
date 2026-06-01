@@ -55,6 +55,11 @@ export default function LeadershipPreview() {
   const scrollContainerRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [visibleRatio, setVisibleRatio] = useState(0.25);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const isDown = useRef(false);
+  const startX = useRef(0);
+  const startScrollLeft = useRef(0);
 
   const handleScroll = () => {
     const container = scrollContainerRef.current;
@@ -93,6 +98,35 @@ export default function LeadershipPreview() {
       left: target,
       behavior: 'smooth'
     });
+  };
+
+  const handleMouseDown = (e) => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    isDown.current = true;
+    setIsDragging(true);
+    startX.current = e.pageX - container.offsetLeft;
+    startScrollLeft.current = container.scrollLeft;
+  };
+
+  const handleMouseLeave = () => {
+    isDown.current = false;
+    setIsDragging(false);
+  };
+
+  const handleMouseUp = () => {
+    isDown.current = false;
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDown.current) return;
+    e.preventDefault();
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    const x = e.pageX - container.offsetLeft;
+    const walk = (x - startX.current) * 1.5; // Drag sensitivity
+    container.scrollLeft = startScrollLeft.current - walk;
   };
 
   return (
@@ -150,7 +184,13 @@ export default function LeadershipPreview() {
           {/* Scrollable grid of leaders */}
           <div 
             ref={scrollContainerRef}
-            className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth pb-4"
+            onMouseDown={handleMouseDown}
+            onMouseLeave={handleMouseLeave}
+            onMouseUp={handleMouseUp}
+            onMouseMove={handleMouseMove}
+            className={`flex gap-6 overflow-x-auto no-scrollbar pb-4 select-none ${
+              isDragging ? 'cursor-grabbing' : 'cursor-grab'
+            }`}
           >
             {leaders.map((leader, index) => (
               <div 

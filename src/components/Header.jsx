@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { Search, ChevronDown } from 'lucide-react';
@@ -25,10 +25,10 @@ const navItems = [
   },
   {
     name: 'Tin tức',
-    path: '/blog',
+    path: '/hoat-dong',
     dropdown: [
-      { label: 'Blog / Tin tức', path: '/blog' },
-      { label: 'Phong cách thiết kế', path: '/#design-styles' },
+      { label: 'Báo chí truyền thông', path: '/bao-chi-truyen-thong' },
+      { label: 'Hoạt động Luklak', path: '/hoat-dong' },
       { label: 'FAQs', path: '/faqs' }
     ]
   },
@@ -39,23 +39,36 @@ export default function Header() {
   const pathname = usePathname();
   const { scrollY } = useScroll();
   const [isAtTop, setIsAtTop] = useState(true);
+  const [isHidden, setIsHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [hoveredNav, setHoveredNav] = useState(null);
   const [activeMenuAccordion, setActiveMenuAccordion] = useState(null);
   const [headerTheme, setHeaderTheme] = useState('dark');
+  const lastScrollYRef = useRef(0);
+  const isMenuOrDropdownOpen = menuOpen || (hoveredNav && navItems.find(item => item.name === hoveredNav)?.dropdown);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsAtTop(latest <= 50);
+
+    const lastScrollY = lastScrollYRef.current;
+    if (latest > lastScrollY && latest > 150) {
+      if (!menuOpen) {
+        setIsHidden(true);
+      }
+    } else {
+      setIsHidden(false);
+    }
+    lastScrollYRef.current = latest;
   });
 
   useEffect(() => {
     const handleScroll = () => {
       const headerHeight = 80;
       const testY = headerHeight / 2; // Midpoint coordinate of the header
-      
+
       const themeElements = document.querySelectorAll('[data-theme]');
       let activeTheme = 'dark'; // Fallback to dark
-      
+
       themeElements.forEach((el) => {
         const rect = el.getBoundingClientRect();
         // If the coordinate overlaps with the element bounds
@@ -66,13 +79,13 @@ export default function Header() {
           }
         }
       });
-      
+
       setHeaderTheme(activeTheme);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
-    
+
     const timer = setTimeout(handleScroll, 100);
 
     return () => {
@@ -86,124 +99,95 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between transition-all duration-500 w-full ${
-          isAtTop || menuOpen
-            ? `h-28 px-8 md:px-16 bg-gradient-to-b ${
-                headerTheme === 'dark'
-                  ? 'from-secondary/80 via-secondary/40'
-                  : 'from-background/85 via-background/45'
-              } to-transparent`
-            : `h-20 px-6 md:px-12 backdrop-blur-md shadow-xl border-b ${
-                headerTheme === 'dark'
-                  ? 'bg-secondary/90 border-white/5'
-                  : 'bg-background/90 border-secondary/10'
-              }`
+        className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between transition-all duration-500 w-full bg-transparent transform-gpu will-change-transform ${
+          isHidden ? '-translate-y-full' : 'translate-y-0'
+        } ${isAtTop || menuOpen ? 'h-28 px-8 md:px-16' : 'h-20 px-6 md:px-12'} ${
+          !isMenuOrDropdownOpen ? 'mix-blend-difference' : ''
         }`}
       >
         {/* LOGO */}
-        <a href="/" className="cursor-pointer z-50 flex-shrink-0">
+        <a href="/" className="cursor-pointer z-50 flex-shrink-0 transform-gpu will-change-transform">
           <img
-            src={headerTheme === 'dark' ? (logoSrc.src || logoSrc) : (logoDarkSrc.src || logoDarkSrc)}
+            src={!isMenuOrDropdownOpen ? (logoSrc.src || logoSrc) : (headerTheme === 'dark' || menuOpen ? (logoSrc.src || logoSrc) : (logoDarkSrc.src || logoDarkSrc))}
             alt="LukLak Design & Build"
-            className="h-10 md:h-14 w-auto object-contain drop-shadow-lg transition-all duration-500"
+            className="h-10 md:h-14 w-auto object-contain transition-all duration-500"
           />
         </a>
 
-        {/* DESKTOP NAVIGATION (Center) */}
-        <AnimatePresence>
-          {(isAtTop || menuOpen) && (
-            <motion.nav
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="hidden lg:flex items-center justify-center gap-x-7 lg:gap-x-9 flex-1 px-4 relative"
+        {/* DESKTOP NAVIGATION (Center) - Always shown on desktop */}
+        <nav
+          className="hidden lg:flex items-center justify-center gap-x-7 lg:gap-x-9 flex-1 px-4 relative"
+        >
+          {navItems.map((item) => (
+            <div
+              key={item.name}
+              className="relative group py-6"
+              onMouseEnter={() => setHoveredNav(item.name)}
+              onMouseLeave={() => setHoveredNav(null)}
             >
-              {navItems.map((item) => (
-                <div
-                  key={item.name}
-                  className="relative group py-6"
-                  onMouseEnter={() => setHoveredNav(item.name)}
-                  onMouseLeave={() => setHoveredNav(null)}
-                >
-                  <a
-                    href={item.path}
-                    className={`flex items-center gap-2 text-[11px] lg:text-[12px] font-sans tracking-[0.2em] font-medium uppercase transition-colors ${
-                      headerTheme === 'dark'
-                        ? 'text-surface hover:text-primary'
-                        : 'text-secondary hover:text-primary'
-                    }`}
+              <a
+                href={item.path}
+                className={`flex items-center gap-2 text-[11px] lg:text-[12px] font-sans tracking-[0.2em] font-medium uppercase transition-colors duration-300 transform-gpu will-change-transform ${
+                  !isMenuOrDropdownOpen
+                    ? 'text-white hover:opacity-70 transition-opacity'
+                    : (headerTheme === 'dark' ? 'text-white hover:text-primary' : 'text-secondary hover:text-primary')
+                }`}
+              >
+                {item.name}
+                {item.dropdown && <ChevronDown size={12} className="opacity-100" />}
+              </a>
+
+              {/* Desktop Dropdown - Premium Panel */}
+              <AnimatePresence>
+                {item.dropdown && hoveredNav === item.name && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 15, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.98 }}
+                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                    className="absolute top-full left-1/2 -translate-x-1/2 mt-4 py-8 px-10 flex flex-col items-start gap-5 min-w-[260px] backdrop-blur-xl border rounded-sm shadow-2xl bg-secondary/95 border-white/10 mix-blend-normal"
                   >
-                    {item.name}
-                    {item.dropdown && <ChevronDown size={12} className="opacity-100" />}
-                  </a>
-
-                  {/* Desktop Dropdown - Premium Panel */}
-                  <AnimatePresence>
-                    {item.dropdown && hoveredNav === item.name && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 15, scale: 0.98 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 10, scale: 0.98 }}
-                        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                        className={`absolute top-full left-1/2 -translate-x-1/2 mt-4 py-8 px-10 flex flex-col items-start gap-5 min-w-[260px] backdrop-blur-xl border rounded-sm shadow-2xl ${
-                          headerTheme === 'dark'
-                            ? 'bg-secondary/95 border-white/10'
-                            : 'bg-background/95 border-secondary/10'
-                        }`}
+                    {item.dropdown.map((sub, idx) => (
+                      <motion.a
+                        key={idx}
+                        href={sub.path}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: idx * 0.05, duration: 0.4 }}
+                        className="group flex items-center gap-3 w-full"
                       >
-                        {item.dropdown.map((sub, idx) => (
-                          <motion.a
-                            key={idx}
-                            href={sub.path}
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: idx * 0.05, duration: 0.4 }}
-                            className="group flex items-center gap-3 w-full"
-                          >
-                            <span className="w-0 h-[1px] bg-primary transition-all duration-300 group-hover:w-4" />
-                            <span className={`text-[10px] lg:text-[11px] font-sans tracking-[0.2em] uppercase transition-colors whitespace-nowrap ${
-                              headerTheme === 'dark'
-                                ? 'text-surface/70 group-hover:text-primary'
-                                : 'text-secondary/70 group-hover:text-primary'
-                            }`}>
-                              {sub.label}
-                            </span>
-                          </motion.a>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              ))}
+                        <span className="w-0 h-[1px] bg-primary transition-all duration-300 group-hover:w-4" />
+                        <span className="text-[10px] lg:text-[11px] font-sans tracking-[0.2em] uppercase transition-colors whitespace-nowrap text-surface/70 group-hover:text-primary">
+                          {sub.label}
+                        </span>
+                      </motion.a>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          ))}
+        </nav>
 
-            </motion.nav>
-          )}
-        </AnimatePresence>
-
-        {/* RIGHT ACTION: MENU text + Search */}
-        <div className={`flex items-center justify-end flex-shrink-0 gap-8 z-50 transition-colors ${
-          headerTheme === 'dark' ? 'text-surface' : 'text-secondary'
+        {/* RIGHT ACTION: Search & Mobile Menu Button */}
+        <div className={`flex items-center justify-end flex-shrink-0 gap-8 z-50 transition-colors duration-300 transform-gpu will-change-transform ${
+          !isMenuOrDropdownOpen
+            ? 'text-white'
+            : (headerTheme === 'dark' || menuOpen ? 'text-white' : 'text-secondary')
         }`}>
+          {/* Menu button only shown on mobile */}
           <div
-            className="flex items-center cursor-pointer"
+            className="flex items-center cursor-pointer lg:hidden"
             onClick={() => setMenuOpen(!menuOpen)}
           >
-            <motion.span
-              animate={{ opacity: (!isAtTop || menuOpen) ? 1 : 0 }}
-              style={{ pointerEvents: (!isAtTop || menuOpen) ? 'auto' : 'none' }}
-              className={`text-[10px] tracking-[0.15em] font-medium uppercase hidden lg:block transition-colors hover:text-primary`}
+            <span
+              className="text-[10px] tracking-[0.15em] font-medium uppercase hover:opacity-75 transition-opacity"
             >
               {menuOpen ? 'Đóng' : 'Menu'}
-            </motion.span>
-            <motion.span
-              className={`text-[10px] tracking-[0.15em] font-medium uppercase lg:hidden transition-colors hover:text-primary`}
-            >
-              {menuOpen ? 'Đóng' : 'Menu'}
-            </motion.span>
+            </span>
           </div>
 
-          <button className={`transition-colors hover:text-primary`}>
+          <button className="hover:opacity-75 transition-opacity">
             <Search size={22} strokeWidth={1.2} />
           </button>
         </div>

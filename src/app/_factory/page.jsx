@@ -1,4 +1,5 @@
-import Contact from "../../components/Contact";
+import HomeCTA from "../../components/HomeCTA";
+import Footer from "../../components/Footer";
 import imgKienTruc from "../../assets/projectImage/Dự án thực tế/KC Villa/z7450164022320_7c5e9ff572be475288651b3a0f1be4a3.jpg";
 
 export default function FactoryPage() {
@@ -27,7 +28,8 @@ export default function FactoryPage() {
         </div>
       </div>
       
-      <Contact />
+      <HomeCTA />
+      <Footer />
     </main>
   )
 }

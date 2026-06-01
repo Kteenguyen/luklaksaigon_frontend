@@ -1,35 +1,44 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { projectsData, constructionProjectsData } from '../data/mockData';
+import { projectsData } from '../data/mockData';
 
 const CATEGORIES = [
   'Tất cả',
-  'Villa',
+  'Chung cư',
   'Nhà phố',
-  'Building',
-  'Căn hộ',
+  'Biệt thự',
   'Công trình dịch vụ',
-  'Công trình cảnh quan',
-  'Công trình thực tế'
+  'Công trình cảnh quan'
 ];
+
+const mapCategory = (cat) => {
+  if (cat === 'Villa') return 'Biệt thự';
+  if (cat === 'Căn hộ') return 'Chung cư';
+  if (cat === 'Building') return 'Công trình dịch vụ';
+  return cat;
+};
 
 export default function ProjectGallery() {
   const [activeCategory, setActiveCategory] = useState('Tất cả');
-  const [filteredProjects, setFilteredProjects] = useState(projectsData);
 
-  useEffect(() => {
-    if (activeCategory === 'Tất cả') {
-      // Hiển thị tất cả dự án thiết kế (loại trừ Công trình thực tế để đảm bảo tính phân tách)
-      setFilteredProjects(projectsData.filter(p => p.category !== 'Công trình thực tế'));
-    } else {
-      setFilteredProjects(projectsData.filter(p => p.category === activeCategory));
-    }
-  }, [activeCategory]);
+  // Pre-process and map categories
+  const mappedProjects = projectsData.map(project => ({
+    ...project,
+    mappedCategory: mapCategory(project.category)
+  }));
+
+  // Define valid categories to show on this page
+  const validCategories = ['Chung cư', 'Nhà phố', 'Biệt thự', 'Công trình dịch vụ', 'Công trình cảnh quan'];
+
+  // Filter projects based on active category
+  const filteredProjects = activeCategory === 'Tất cả'
+    ? mappedProjects.filter(p => validCategories.includes(p.mappedCategory))
+    : mappedProjects.filter(p => p.mappedCategory === activeCategory);
 
   return (
-    <section className="w-full bg-background pt-8 pb-32">
+    <section className="w-full bg-transparent pt-8 pb-32">
       <div className="max-w-[100rem] mx-auto px-8 md:px-16">
 
         {/* Filter Bar */}
@@ -38,8 +47,9 @@ export default function ProjectGallery() {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`text-sm md:text-base tracking-widest uppercase transition-all duration-300 relative pb-2 ${activeCategory === cat ? 'text-primary' : 'text-secondary/50 hover:text-secondary'
-                }`}
+              className={`text-sm md:text-base tracking-widest uppercase transition-all duration-300 relative pb-2 ${
+                activeCategory === cat ? 'text-primary font-medium' : 'text-secondary/50 hover:text-secondary'
+              }`}
             >
               {cat}
               {activeCategory === cat && (
@@ -57,7 +67,7 @@ export default function ProjectGallery() {
           layout
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          <AnimatePresence>
+          <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, i) => (
               <motion.div
                 layout
@@ -66,10 +76,10 @@ export default function ProjectGallery() {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
                 key={project.id}
-                className="relative group cursor-pointer overflow-hidden rounded-sm bg-secondary/5"
+                className="relative group cursor-pointer overflow-hidden rounded-lg bg-secondary/5 shadow-sm hover:shadow-xl transition-all duration-500"
               >
                 <Link href={`/du-an/${project.slug}`} className="block relative w-full h-full">
-                  <div className="relative w-full overflow-hidden aspect-[4/5]">
+                  <div className="relative w-full overflow-hidden aspect-[4/3]">
                     <motion.div
                       variants={{
                         hidden: { clipPath: "inset(100% 0 0 0)" },
@@ -86,20 +96,21 @@ export default function ProjectGallery() {
                       <img
                         src={project.coverImg.src || project.coverImg}
                         alt={project.title}
-                        className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out"
+                        className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 scale-100 group-hover:scale-105 transition-all duration-700 ease-out"
                       />
                     </motion.div>
                   </div>
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
-                    <span className="text-primary text-xs uppercase tracking-widest mb-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                      {project.category}
+                  {/* Overlay Reveal */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out flex flex-col justify-end p-6 md:p-8">
+                    <span className="text-primary text-xs uppercase tracking-[0.2em] font-medium mb-1 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out">
+                      {project.mappedCategory}
                     </span>
-                    <h3 className="text-white text-2xl md:text-3xl font-serif transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">
+                    <h3 className="text-white text-xl md:text-2xl font-serif font-light mb-2 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out delay-75">
                       {project.title}
                     </h3>
-                    <p className="text-white/60 text-sm mt-2 font-light transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100">
-                      {project.location} • {project.year}
+                    <p className="text-white/60 text-xs md:text-sm font-light transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out delay-100">
+                      {project.location} &bull; {project.year}
                     </p>
                   </div>
                 </Link>

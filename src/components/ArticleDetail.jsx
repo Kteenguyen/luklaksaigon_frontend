@@ -2,7 +2,8 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import Contact from "./Contact";
+import HomeCTA from "./HomeCTA";
+import Footer from "./Footer";
 
 export default function ArticleDetail({ article, relatedArticles, parentPath, parentName }) {
   
@@ -110,7 +111,8 @@ export default function ArticleDetail({ article, relatedArticles, parentPath, pa
 
       {/* Footer CTA */}
       <div className="relative z-40 bg-secondary">
-        <Contact />
+        <HomeCTA />
+        <Footer />
       </div>
     </main>
   );

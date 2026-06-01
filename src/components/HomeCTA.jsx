@@ -49,7 +49,7 @@ export default function HomeCTA() {
         >
           <a 
             href="/dang-ky-tu-van" 
-            className="inline-block border border-primary text-primary hover:bg-primary hover:text-secondary rounded-full px-12 py-5 text-xs md:text-sm tracking-widest uppercase font-medium transition-all duration-300 shadow-lg hover:shadow-primary/25"
+            className="inline-block border border-white text-white hover:bg-white hover:text-secondary px-10 py-4 text-xs tracking-[0.2em] uppercase font-medium transition-all duration-300 shadow-lg hover:shadow-white/25"
           >
             Đăng ký tư vấn ngay
           </a>

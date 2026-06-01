@@ -85,7 +85,7 @@ export default function ContactPage() {
               </p>
               <button 
                 onClick={() => setShowSuccessModal(false)}
-                className="w-full bg-primary text-secondary tracking-widest uppercase text-xs font-semibold py-4 hover:bg-white hover:text-secondary transition-colors duration-300 rounded-sm"
+                className="w-full bg-secondary text-white border border-transparent tracking-widest uppercase text-xs font-semibold py-4 hover:bg-white hover:text-secondary hover:border-secondary transition-colors duration-300 rounded-sm"
               >
                 Đóng
               </button>
@@ -207,7 +207,7 @@ export default function ContactPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="mt-4 bg-primary text-secondary uppercase tracking-widest text-sm font-medium py-5 px-10 rounded-sm hover:bg-secondary hover:text-surface transition-colors self-start disabled:opacity-50"
+              className="mt-4 bg-secondary text-surface border border-secondary uppercase tracking-widest text-sm font-medium py-5 px-10 rounded-sm hover:bg-white hover:text-secondary transition-colors self-start disabled:opacity-50"
             >
               {isSubmitting ? 'Đang gửi...' : 'Gửi yêu cầu'}
             </button>

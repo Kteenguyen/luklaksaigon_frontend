@@ -20,7 +20,7 @@ export default function Contact() {
             </p>
             <a 
               href="tel:0932478858" 
-              className="inline-block border border-white/30 rounded-full px-8 py-4 text-sm tracking-widest uppercase hover:bg-white hover:text-[#050f10] transition-colors duration-300"
+              className="inline-block border border-white/30 text-white px-10 py-4 text-xs tracking-[0.2em] uppercase hover:bg-white hover:text-secondary hover:border-white transition-colors duration-500 bg-transparent"
             >
               Liên hệ ngay
             </a>
