@@ -2,7 +2,8 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
-import HomeCTA from "./HomeCTA";
+import { stripHtml } from '../utils/helpers';
+import HomeContactForm from "./HomeContactForm";
 import Footer from "./Footer";
 import { projectsData } from '../data/mockData';
 
@@ -29,8 +30,9 @@ export default function ProjectDetailClient({ project, nextProject }) {
         <div className="absolute inset-0 z-0">
           <img 
             src={project.coverImg.src || project.coverImg} 
-            alt={project.title} 
-            className="w-full h-full object-cover filter brightness-[0.55] grayscale-[10%]"
+            alt={stripHtml(project.title)} 
+            title={stripHtml(project.title)} 
+            className="w-full h-full object-cover filter brightness-[0.55]"
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-black/20 z-10"></div>
@@ -52,7 +54,7 @@ export default function ProjectDetailClient({ project, nextProject }) {
       </section>
 
       {/* Section 2: Project Info & Description */}
-      <section className="py-20 md:py-24 bg-[#FAF9F6] px-8 md:px-16 border-b border-secondary/10">
+      <section className="py-20 md:py-24 bg-linen px-8 md:px-16 border-b border-secondary/10">
         <div className="max-w-[100rem] mx-auto w-full">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
             
@@ -111,13 +113,14 @@ export default function ProjectDetailClient({ project, nextProject }) {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="w-full max-h-[80vh] md:max-h-[85vh] overflow-hidden rounded-lg bg-neutral-100 flex justify-center items-center"
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              className="w-full max-h-[80vh] md:max-h-[85vh] overflow-hidden bg-neutral-100 flex justify-center items-center"
             >
               <img 
                 src={img.src || img} 
-                alt={`${project.title} - ${index + 1}`} 
-                className="w-full h-full max-h-[80vh] md:max-h-[85vh] object-cover filter grayscale-[15%] hover:grayscale-0 hover:scale-[1.01] transition-all duration-[1000ms] ease-out rounded-lg"
+                alt={`${stripHtml(project.title)} - ${index + 1}`} 
+                title={`${stripHtml(project.title)} - ${index + 1}`} 
+                className="w-full h-full max-h-[80vh] md:max-h-[85vh] object-cover hover:scale-[1.01] transition-all duration-[1000ms] ease-out"
               />
             </motion.div>
           ))}
@@ -143,11 +146,12 @@ export default function ProjectDetailClient({ project, nextProject }) {
                 key={index} 
                 className="group cursor-pointer flex flex-col h-full bg-background transition-all duration-500"
               >
-                <div className="w-full aspect-[3/2] rounded-lg overflow-hidden mb-6 bg-secondary/5">
+                <div className="w-full aspect-[3/2] overflow-hidden mb-6 bg-secondary/5">
                   <img 
                     src={item.coverImg.src || item.coverImg} 
-                    alt={item.title} 
-                    className="w-full h-full object-cover filter grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out" 
+                    alt={stripHtml(item.title)} 
+                    title={stripHtml(item.title)} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700 ease-out" 
                   />
                 </div>
                 <div className="flex items-center gap-3 mb-3 text-[10px] uppercase tracking-widest font-semibold">
@@ -165,7 +169,7 @@ export default function ProjectDetailClient({ project, nextProject }) {
       </section>
 
       {/* CTA & Footer */}
-      <HomeCTA />
+      <HomeContactForm />
       <Footer />
 
     </main>

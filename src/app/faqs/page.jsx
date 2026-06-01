@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import HomeCTA from "../../components/HomeCTA";
+import HomeContactForm from "../../components/HomeContactForm";
 import Footer from "../../components/Footer";
 
 const faqsData = {
@@ -176,7 +176,7 @@ export default function FAQsPage() {
 
       {/* Footer CTA */}
       <div className="relative z-40 bg-secondary">
-        <HomeCTA />
+        <HomeContactForm />
         <Footer />
       </div>
     </main>

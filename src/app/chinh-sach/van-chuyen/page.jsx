@@ -1,5 +1,5 @@
 "use client";
-import HomeCTA from "../../../components/HomeCTA";
+import HomeContactForm from "../../../components/HomeContactForm";
 import Footer from "../../../components/Footer";
 
 export default function ShippingPolicyPage() {
@@ -65,7 +65,7 @@ export default function ShippingPolicyPage() {
 
       </div>
 
-      <HomeCTA />
+      <HomeContactForm />
       <Footer />
     </main>
   );

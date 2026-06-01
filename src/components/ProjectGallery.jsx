@@ -65,7 +65,7 @@ export default function ProjectGallery() {
         {/* Project Grid */}
         <motion.div
           layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"
         >
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, i) => (
@@ -76,10 +76,10 @@ export default function ProjectGallery() {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
                 key={project.id}
-                className="relative group cursor-pointer overflow-hidden rounded-lg bg-secondary/5 shadow-sm hover:shadow-xl transition-all duration-500"
+                className="relative group cursor-pointer overflow-hidden bg-secondary/5 transition-all duration-500"
               >
                 <Link href={`/du-an/${project.slug}`} className="block relative w-full h-full">
-                  <div className="relative w-full overflow-hidden aspect-[4/3]">
+                  <div className="relative w-full overflow-hidden aspect-[2/1]">
                     <motion.div
                       variants={{
                         hidden: { clipPath: "inset(100% 0 0 0)" },
@@ -96,7 +96,7 @@ export default function ProjectGallery() {
                       <img
                         src={project.coverImg.src || project.coverImg}
                         alt={project.title}
-                        className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 scale-100 group-hover:scale-105 transition-all duration-700 ease-out"
+                        className="w-full h-full object-cover scale-100 group-hover:scale-105 transition-all duration-700 ease-out"
                       />
                     </motion.div>
                   </div>

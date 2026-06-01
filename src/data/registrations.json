@@ -1,0 +1,12 @@
+[
+  {
+    "id": "reg_1780340095380",
+    "name": "Nguyễn Văn Test",
+    "phone": "0909999999",
+    "email": "test.luklak@example.com",
+    "service": "Thiết kế kiến trúc",
+    "buildingType": "Villa",
+    "message": "Đây là tin nhắn tự động chạy thử nghiệm tích hợp trang liên hệ của Luklak Saigon.",
+    "createdAt": "2026-06-01T18:54:55.380Z"
+  }
+]

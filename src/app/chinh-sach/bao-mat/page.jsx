@@ -1,5 +1,5 @@
 "use client";
-import HomeCTA from "../../../components/HomeCTA";
+import HomeContactForm from "../../../components/HomeContactForm";
 import Footer from "../../../components/Footer";
 
 export default function PrivacyPolicyPage() {
@@ -61,7 +61,7 @@ export default function PrivacyPolicyPage() {
 
       </div>
 
-      <HomeCTA />
+      <HomeContactForm />
       <Footer />
     </main>
   );

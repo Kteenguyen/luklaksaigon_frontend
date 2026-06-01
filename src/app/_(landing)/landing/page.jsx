@@ -178,7 +178,7 @@ export default function LandingPage() {
           Để Luklak Saigon đồng hành tạo nên không gian sống đẳng cấp,
           phản ánh đúng cá tính và lối sống của bạn.
         </p>
-        <Link href="/dang-ky-tu-van" style={{
+        <Link href="/lien-he" style={{
           display: "inline-block", background: "#B06B3E", color: "#fff",
           padding: "18px 56px", fontSize: 12, letterSpacing: "0.3em",
           textTransform: "uppercase", textDecoration: "none",

@@ -1,10 +1,11 @@
 "use client";
 import { useState, useRef } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import HomeCTA from "./HomeCTA";
+import HomeContactForm from "./HomeContactForm";
 import Footer from "./Footer";
 import Image from 'next/image';
 import Link from 'next/link';
+import { stripHtml } from '../utils/helpers';
 import { projectsData } from "../data/mockData";
 
 export default function StyleTemplate({
@@ -44,7 +45,8 @@ export default function StyleTemplate({
         <div className="absolute inset-0 w-full h-full">
           <Image
             src={heroImg}
-            alt={title}
+            alt={stripHtml(title)}
+            title={stripHtml(title)}
             fill
             className="object-cover filter brightness-[0.7] scale-[1.02]"
             priority
@@ -66,7 +68,7 @@ export default function StyleTemplate({
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.7 }}
-            className="text-6xl md:text-8xl lg:text-[9rem] font-serif font-light text-white uppercase leading-[1] tracking-tighter"
+            className="text-6xl md:text-8xl lg:text-[9rem] font-serif font-light text-white uppercase leading-[1.18] tracking-tight pb-2"
           >
             {title}
           </motion.h1>
@@ -89,7 +91,7 @@ export default function StyleTemplate({
             {/* SLIDE 1: PHILOSOPHY */}
             <div className="w-screen h-screen flex-shrink-0 relative flex items-end pb-24 md:pb-32 px-8 md:px-24">
               {/* Ảnh sáng sủa, không phủ đen kịt */}
-              <Image src={philosophyImg} fill className="object-cover" alt="Philosophy" unoptimized />
+              <Image src={philosophyImg} fill className="object-cover" alt={`Triết lý thiết kế phong cách kiến trúc ${stripHtml(title)} của Luklak`} title={`Triết lý thiết kế phong cách ${stripHtml(title)}`} unoptimized />
 
               {/* Soft gradient chỉ ở phần chữ */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
@@ -120,7 +122,7 @@ export default function StyleTemplate({
 
               return (
                 <div key={idx} className="w-screen h-screen flex-shrink-0 relative flex items-center px-8 md:px-32">
-                  <Image src={bgImg} fill className="object-cover" alt={trait.title} unoptimized />
+                  <Image src={bgImg} fill className="object-cover" alt={stripHtml(trait.title)} title={stripHtml(trait.title)} unoptimized />
 
                   {/* Gradient hỗ trợ đọc chữ, thay đổi theo trái/phải */}
                   <div className={`absolute inset-0 bg-gradient-to-r ${isLeft ? 'from-black/80 via-black/30' : 'from-transparent via-black/30 to-black/80'} to-transparent pointer-events-none`} />
@@ -162,7 +164,8 @@ export default function StyleTemplate({
               >
                 <Image
                   src={hoveredProject.coverImg}
-                  alt={hoveredProject.title}
+                  alt={stripHtml(hoveredProject.title)}
+                  title={stripHtml(hoveredProject.title)}
                   fill
                   className="object-cover filter brightness-[0.6]"
                   unoptimized
@@ -214,7 +217,7 @@ export default function StyleTemplate({
 
       {/* 4. Contact CTA */}
       <div className="relative z-40 bg-secondary text-primary">
-        <HomeCTA />
+        <HomeContactForm />
         <Footer />
       </div>
     </main>

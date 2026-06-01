@@ -130,7 +130,7 @@ export default function LeadershipPreview() {
   };
 
   return (
-    <section className="w-full bg-[#FAF7F2] text-secondary py-24 md:py-32 px-6 md:px-12 lg:px-20 border-t border-secondary/5" data-theme="light">
+    <section className="w-full bg-cream text-secondary py-24 md:py-32 px-6 md:px-12 lg:px-20 border-t border-secondary/5" data-theme="light">
       {/* Scope a style block to hide scrollbars cleanly cross-browser */}
       <style dangerouslySetInnerHTML={{__html: `
         .no-scrollbar::-webkit-scrollbar {
@@ -200,8 +200,9 @@ export default function LeadershipPreview() {
                 <figure className="relative aspect-[3/4] overflow-hidden bg-secondary/5 rounded-sm">
                   <img
                     src={leader.image.src || leader.image}
-                    alt={leader.name}
-                    className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-[800ms] ease-out transform group-hover:scale-[1.02]"
+                    alt={`Chân dung ${leader.name} - ${leader.role} tại Luklak Architects`}
+                    title={`KTS ${leader.name} - ${leader.role}`}
+                    className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] transform group-hover:scale-[1.02]"
                   />
                   {/* Subtle hover gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { stripHtml } from '../utils/helpers';
 
 export default function FeaturedHorizontalScroll({ projects, title = "Dự án Nổi bật", subtitle = "Realities" }) {
   const scrollRef = useRef(null);
@@ -27,13 +28,13 @@ export default function FeaturedHorizontalScroll({ projects, title = "Dự án N
           {/* INTRO SLIDE */}
           <div className="w-screen h-screen flex-shrink-0 relative flex items-center justify-center px-8">
             <div className="absolute inset-0">
-              <Image src={projects[0].coverImg || projects[0].mainImage?.src} fill className="object-cover filter brightness-[0.3] scale-105" alt="Intro" unoptimized />
+              <Image src={projects[0].coverImg || projects[0].mainImage?.src} fill className="object-cover filter brightness-[0.3] scale-105" alt="Cận cảnh thực tế các công trình kiến trúc cao cấp do Luklak thực hiện" title="Các dự án tiêu biểu của Luklak" unoptimized />
             </div>
             <div className="relative z-10 text-center max-w-4xl mx-auto">
               <span className="text-primary text-xs md:text-sm tracking-[0.4em] uppercase mb-8 block font-medium">
                 {subtitle}
               </span>
-              <h2 className="text-6xl md:text-8xl lg:text-[7rem] font-serif font-light leading-[1.1] tracking-tighter uppercase mb-8">
+              <h2 className="text-6xl md:text-8xl lg:text-[7rem] font-serif font-light leading-[1.18] tracking-tight uppercase mb-8">
                 {title}
               </h2>
               <p className="mt-8 text-white/70 font-light text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
@@ -52,7 +53,7 @@ export default function FeaturedHorizontalScroll({ projects, title = "Dự án N
 
             return (
               <div key={idx} className="w-screen h-screen flex-shrink-0 relative flex items-center px-8 md:px-24">
-                <Image src={project.coverImg || project.mainImage?.src} fill className="object-cover filter brightness-[0.8]" alt={project.title} unoptimized />
+                <Image src={project.coverImg || project.mainImage?.src} fill className="object-cover filter brightness-[0.8]" alt={stripHtml(project.title)} title={stripHtml(project.title)} unoptimized />
 
                 {/* Gradient tạo tương phản cho chữ */}
                 <div className={`absolute inset-0 bg-gradient-to-r ${isLeft ? 'from-secondary/80 via-secondary/40' : 'from-transparent via-secondary/40 to-secondary/80'} to-transparent pointer-events-none`} />

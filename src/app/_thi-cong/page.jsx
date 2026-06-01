@@ -1,6 +1,6 @@
 "use client";
 import { motion } from 'framer-motion';
-import HomeCTA from "../../components/HomeCTA";
+import HomeContactForm from "../../components/HomeContactForm";
 import Footer from "../../components/Footer";
 import ConstructionProjects from "../../components/ConstructionProjects";
 
@@ -152,7 +152,7 @@ export default function ConstructionPage() {
 
       {/* Footer */}
       <div className="relative z-40 bg-secondary">
-        <HomeCTA />
+        <HomeContactForm />
         <Footer />
       </div>
     </main>
