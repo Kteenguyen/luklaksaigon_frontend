@@ -95,7 +95,7 @@ export default function FAQsPage() {
 
       {/* Header Space */}
       <div className="w-full pt-40 pb-16 bg-surface px-8 md:px-16 border-b border-text-muted/10">
-        <h1 className="text-4xl md:text-6xl font-serif font-light mb-4">Support & <span className="italic text-primary">FAQs</span></h1>
+        <h1 className="text-4xl md:text-6xl font-serif font-light mb-4">Hỗ trợ &amp; <span className="italic text-primary">Giải đáp</span></h1>
         <p className="text-text-muted font-light max-w-2xl text-lg">Tìm hiểu thêm về quy trình làm việc, tiêu chuẩn thiết kế và cách chúng tôi hiện thực hóa không gian sống của bạn.</p>
       </div>
 

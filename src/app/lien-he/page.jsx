@@ -108,23 +108,23 @@ export default function ContactPage() {
   });
 
   const serviceOptions = [
-    { value: "Thiết kế kiến trúc", label: "Architectural Design / Thiết kế kiến trúc" },
-    { value: "Thiết kế nội thất", label: "Interior Design / Thiết kế nội thất" },
-    { value: "Thiết kế cảnh quan", label: "Landscape Design / Thiết kế cảnh quan" },
-    { value: "Thi công xây dựng", label: "Construction / Thi công xây dựng" },
-    { value: "Thi công nội thất", label: "Interior Fit-out / Thi công nội thất" },
-    { value: "Quản lý dự án / Dịch vụ bảo trì", label: "Project Management / Quản lý dự án" },
-    { value: "Sản xuất sản phẩm nội thất / chiếu sáng", label: "Furniture & Lighting / Sản xuất nội thất" },
-    { value: "Thương mại & Trang trí (Decor)", label: "Decor & Styling / Thương mại & Trang trí" }
+    { value: "Thiết kế kiến trúc", label: "Thiết kế kiến trúc" },
+    { value: "Thiết kế nội thất", label: "Thiết kế nội thất" },
+    { value: "Thiết kế cảnh quan", label: "Thiết kế cảnh quan" },
+    { value: "Thi công xây dựng", label: "Thi công xây dựng" },
+    { value: "Thi công nội thất", label: "Thi công nội thất" },
+    { value: "Quản lý dự án / Dịch vụ bảo trì", label: "Quản lý dự án" },
+    { value: "Sản xuất sản phẩm nội thất / chiếu sáng", label: "Sản xuất nội thất & Thiết bị chiếu sáng" },
+    { value: "Thương mại & Trang trí (Decor)", label: "Thương mại & Trang trí (Decor)" }
   ];
 
   const buildingOptions = [
-    { value: "Villa", label: "Villa / Biệt thự" },
-    { value: "Nhà phố", label: "Townhouse / Nhà phố" },
-    { value: "Building", label: "Building / Tòa nhà văn phòng" },
-    { value: "Căn hộ", label: "Apartment / Căn hộ" },
-    { value: "Công trình dịch vụ", label: "Commercial & Hospitality / Công trình dịch vụ" },
-    { value: "Công trình cảnh quan / Công cộng", label: "Landscape & Public / Cảnh quan & Công cộng" }
+    { value: "Villa", label: "Biệt thự (Villa)" },
+    { value: "Nhà phố", label: "Nhà phố (Townhouse)" },
+    { value: "Building", label: "Tòa nhà văn phòng (Building)" },
+    { value: "Căn hộ", label: "Căn hộ (Apartment)" },
+    { value: "Công trình dịch vụ", label: "Công trình dịch vụ (Commercial)" },
+    { value: "Công trình cảnh quan / Công cộng", label: "Cảnh quan & Công cộng" }
   ];
 
   const handleSubmit = async (e) => {
@@ -224,7 +224,7 @@ export default function ContactPage() {
                 transition={{ duration: 0.6 }}
                 className="text-primary text-[10px] tracking-[0.4em] uppercase border-b border-secondary/15 pb-2 mb-6 inline-block font-semibold"
               >
-                Get in touch
+                Liên hệ
               </motion.span>
               <motion.h1 
                 initial={{ opacity: 0, y: 20 }}
@@ -250,7 +250,7 @@ export default function ContactPage() {
           <div className="lg:col-span-6 flex flex-col gap-6 text-left bg-white/40 backdrop-blur-sm p-8 md:p-10 border border-secondary/[0.06] rounded-[8px]">
             <div>
               <span className="text-primary text-[10px] md:text-xs tracking-[0.3em] uppercase font-semibold block mb-3">
-                Consultation Office
+                Văn phòng tư vấn
               </span>
               <h3 className="text-2xl md:text-3xl font-serif font-light text-secondary mb-3">
                 Văn phòng LUKLAK Sài Gòn
@@ -276,21 +276,21 @@ export default function ContactPage() {
                     </a>
                   </p>
                 </div>
-
+ 
                 <div className="flex flex-col gap-4 font-light text-secondary/90 text-sm md:text-base">
                   <div>
                     <span className="text-[9px] uppercase tracking-widest text-secondary/50 font-bold block mb-1">
-                      Working Hours
+                      Giờ làm việc
                     </span>
                     <p className="font-light text-secondary/90 text-sm leading-relaxed">
                       Thứ 2 &mdash; Thứ 7: 8:00 AM - 5:30 PM <br />
                       Chủ nhật: Hẹn trước
                     </p>
                   </div>
-
+ 
                   <div>
                     <span className="text-[9px] uppercase tracking-widest text-secondary/50 font-bold block mb-1">
-                      Follow Us
+                      Theo dõi chúng tôi
                     </span>
                     <div className="flex gap-4">
                       <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-secondary/85 hover:text-secondary text-xs tracking-wider uppercase transition-colors">Facebook</a>
@@ -413,7 +413,7 @@ export default function ContactPage() {
         <div className="max-w-[90rem] mx-auto px-8 md:px-16 lg:px-24">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-primary text-[10px] tracking-[0.3em] uppercase block mb-4">
-              Network
+              Mạng lưới chi nhánh
             </span>
             <h2 className="text-3xl md:text-4xl font-serif font-light text-secondary">
               Hệ thống Chi nhánh Toàn quốc

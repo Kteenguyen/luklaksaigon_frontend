@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, List, X } from 'lucide-react';
@@ -22,54 +22,93 @@ export default function ArticleDetail({ article, relatedArticles, parentPath, pa
   };
 
   // Generate headings list dynamically
-  const headings = [];
-  if (article && article.content) {
-    const lines = article.content.split('\n');
-    lines.forEach(line => {
-      const trimmed = line.trim();
-      if (trimmed.startsWith('## ')) {
-        const text = trimmed.replace(/^##\s+/, "").trim();
-        headings.push({ id: generateSlug(text), text, level: 2 });
-      } else if (trimmed.startsWith('### ')) {
-        const text = trimmed.replace(/^###\s+/, "").trim();
-        headings.push({ id: generateSlug(text), text, level: 3 });
+  const headings = useMemo(() => {
+    const list = [];
+    if (article && article.content) {
+      const lines = article.content.split('\n');
+      lines.forEach(line => {
+        const trimmed = line.trim();
+        if (trimmed.startsWith('## ')) {
+          const text = trimmed.replace(/^##\s+/, "").trim();
+          list.push({ id: generateSlug(text), text, level: 2 });
+        } else if (trimmed.startsWith('### ')) {
+          const text = trimmed.replace(/^###\s+/, "").trim();
+          list.push({ id: generateSlug(text), text, level: 3 });
+        }
+      });
+    }
+    return list;
+  }, [article]);
+
+  const structuredHeadings = useMemo(() => {
+    const list = [];
+    let currentParent = null;
+    headings.forEach(h => {
+      if (h.level === 2) {
+        currentParent = { ...h, children: [] };
+        list.push(currentParent);
+      } else if (h.level === 3) {
+        if (currentParent) {
+          currentParent.children.push(h);
+        } else {
+          list.push({ ...h, children: [] });
+        }
       }
     });
-  }
+    return list;
+  }, [headings]);
 
   useEffect(() => {
     if (headings.length === 0) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: '-15% 0px -50% 0px', threshold: 0.1 }
-    );
 
-    headings.forEach((h) => {
-      const el = document.getElementById(h.id);
-      if (el) observer.observe(el);
-    });
+    const handleScroll = () => {
+      const triggerLine = 150; // pixels from the top of the viewport
+      let currentActiveId = '';
+
+      for (let i = 0; i < headings.length; i++) {
+        const el = document.getElementById(headings[i].id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= triggerLine) {
+            currentActiveId = headings[i].id;
+          } else {
+            break;
+          }
+        }
+      }
+
+      if (!currentActiveId && headings.length > 0) {
+        currentActiveId = headings[0].id;
+      }
+
+      setActiveId(currentActiveId);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Run once on mount to establish the initial active heading
+    handleScroll();
 
     return () => {
-      headings.forEach((h) => {
-        const el = document.getElementById(h.id);
-        if (el) observer.unobserve(el);
-      });
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [headings]);
 
   const scrollToHeading = (id) => {
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      setTocOpen(false);
+      setActiveId(id); // Update active state instantly in the TOC list
+
+      // Perform smooth scrolling using Lenis or standard browser scroll
+      if (window.__lenis) {
+        window.__lenis.scrollTo(el, { offset: -100, duration: 1.2 });
+      } else {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+
+      setTocOpen(false); // Close the sidebar
     }
   };
+
 
   const parseMarkdown = (content) => {
     if (!content) return null;
@@ -79,9 +118,9 @@ export default function ArticleDetail({ article, relatedArticles, parentPath, pa
       if (trimmed.startsWith('## ')) {
         const text = trimmed.replace(/^##\s+/, "").trim();
         return (
-          <h2 
-            key={index} 
-            id={generateSlug(text)} 
+          <h2
+            key={index}
+            id={generateSlug(text)}
             className="text-2xl md:text-3.5xl font-serif text-secondary mt-12 mb-6 font-medium leading-tight scroll-mt-28"
           >
             {text}
@@ -91,9 +130,9 @@ export default function ArticleDetail({ article, relatedArticles, parentPath, pa
       if (trimmed.startsWith('### ')) {
         const text = trimmed.replace(/^###\s+/, "").trim();
         return (
-          <h3 
-            key={index} 
-            id={generateSlug(text)} 
+          <h3
+            key={index}
+            id={generateSlug(text)}
             className="text-xl md:text-2xl font-serif text-secondary mt-8 mb-4 font-medium leading-tight scroll-mt-28"
           >
             {text}
@@ -117,7 +156,7 @@ export default function ArticleDetail({ article, relatedArticles, parentPath, pa
       );
     });
   };
-  
+
   if (!article) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background text-secondary">
@@ -128,7 +167,7 @@ export default function ArticleDetail({ article, relatedArticles, parentPath, pa
 
   return (
     <main className="bg-background min-h-screen flex flex-col justify-between relative">
-      
+
       {/* Table of Contents Floating Button */}
       {headings.length > 0 && (
         <div className="fixed left-6 top-1/2 -translate-y-1/2 z-50 hidden md:block">
@@ -166,7 +205,7 @@ export default function ArticleDetail({ article, relatedArticles, parentPath, pa
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              exit={{ opacity: 0, transition: { duration: 0.15 } }}
               onClick={() => setTocOpen(false)}
               className="fixed inset-0 bg-secondary/20 backdrop-blur-sm z-[999] cursor-pointer"
             />
@@ -175,7 +214,7 @@ export default function ArticleDetail({ article, relatedArticles, parentPath, pa
             <motion.div
               initial={{ x: '-100%' }}
               animate={{ x: 0 }}
-              exit={{ x: '-100%' }}
+              exit={{ x: '-100%', transition: { type: 'tween', duration: 0.2, ease: 'easeOut' } }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
               className="fixed left-0 top-0 h-full w-[290px] md:w-[340px] bg-[#FAF7F2] shadow-2xl border-r border-secondary/5 z-[1000] p-8 flex flex-col justify-between"
             >
@@ -192,23 +231,53 @@ export default function ArticleDetail({ article, relatedArticles, parentPath, pa
 
                 <h3 className="text-2xl font-serif text-secondary mb-8 font-light uppercase tracking-tight">Nội Dung Bài Viết</h3>
 
-                <nav className="flex flex-col gap-4 overflow-y-auto max-h-[60vh] pr-2">
-                  {headings.map((item, idx) => {
-                    const isActive = activeId === item.id;
+                <nav className="flex flex-col gap-5 overflow-y-auto max-h-[60vh] pr-2">
+                  {structuredHeadings.map((parent, idx) => {
+                    const isParentActive = activeId === parent.id;
+                    const isChildActive = parent.children.some(c => c.id === activeId);
+                    const isExpanded = isParentActive || isChildActive;
+
                     return (
-                      <button
-                        key={idx}
-                        onClick={() => scrollToHeading(item.id)}
-                        className={`text-left transition-all duration-300 cursor-pointer ${
-                          item.level === 3 ? 'pl-4 text-xs md:text-sm' : 'text-sm md:text-base font-serif'
-                        } ${
-                          isActive 
-                            ? 'text-primary font-medium translate-x-1' 
-                            : 'text-secondary/60 hover:text-secondary hover:translate-x-0.5'
-                        }`}
-                      >
-                        {item.text}
-                      </button>
+                      <div key={idx} className="flex flex-col">
+                        <button
+                          onClick={() => scrollToHeading(parent.id)}
+                          className={`text-left transition-all duration-300 cursor-pointer text-sm md:text-base font-serif ${isParentActive
+                              ? 'text-primary font-medium translate-x-1'
+                              : 'text-secondary/60 hover:text-secondary hover:translate-x-0.5'
+                            }`}
+                        >
+                          {parent.text}
+                        </button>
+
+                        {/* Nested Sub-headings Accordion */}
+                        <AnimatePresence initial={false}>
+                          {isExpanded && parent.children.length > 0 && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                              className="pl-4 flex flex-col gap-2.5 overflow-hidden border-l border-primary/20 ml-2 mt-2"
+                            >
+                              {parent.children.map((child, cIdx) => {
+                                const isSelfActive = activeId === child.id;
+                                return (
+                                  <button
+                                    key={cIdx}
+                                    onClick={() => scrollToHeading(child.id)}
+                                    className={`text-left text-xs md:text-sm transition-all duration-300 cursor-pointer ${isSelfActive
+                                        ? 'text-primary font-medium translate-x-1'
+                                        : 'text-secondary/50 hover:text-secondary hover:translate-x-0.5'
+                                      }`}
+                                  >
+                                    {child.text}
+                                  </button>
+                                );
+                              })}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
                     );
                   })}
                 </nav>
@@ -229,17 +298,17 @@ export default function ArticleDetail({ article, relatedArticles, parentPath, pa
         <Link href={parentPath} className="flex items-center gap-2 text-secondary/50 hover:text-primary transition-colors uppercase tracking-widest text-[10px] font-medium mb-12 w-max">
           <ArrowLeft className="w-3 h-3" /> Quay lại {parentName}
         </Link>
-        
+
         <div className="flex items-center gap-4 mb-6 text-xs uppercase tracking-widest text-secondary/60">
           <span className="text-primary font-medium">{article.category}</span>
           <span>|</span>
           <span>{article.date}</span>
         </div>
-        
+
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-light text-secondary mb-12 leading-tight">
           {article.title}
         </h1>
-        
+
         <div className="flex items-center gap-4 border-t border-secondary/10 pt-6">
           <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary/50 font-serif italic">
             {article.author.charAt(0)}
@@ -254,9 +323,9 @@ export default function ArticleDetail({ article, relatedArticles, parentPath, pa
       {/* Article Cover */}
       <section className="px-4 md:px-8 max-w-[100rem] mx-auto w-full mb-16 md:mb-24">
         <div className="w-full aspect-[16/9] md:aspect-[21/9] rounded-sm overflow-hidden">
-          <img 
-            src={article.coverImg.src || article.coverImg} 
-            alt={article.title} 
+          <img
+            src={article.coverImg.src || article.coverImg}
+            alt={article.title}
             className="w-full h-full object-cover"
           />
         </div>
@@ -269,7 +338,7 @@ export default function ArticleDetail({ article, relatedArticles, parentPath, pa
             {parseMarkdown(article.content)}
           </div>
         </div>
-        
+
         {/* Share & Tags mock */}
         <div className="mt-16 pt-8 border-t border-secondary/10 flex flex-wrap justify-between items-center gap-4">
           <div className="flex gap-2">
@@ -292,7 +361,7 @@ export default function ArticleDetail({ article, relatedArticles, parentPath, pa
               Xem tất cả
             </Link>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {relatedArticles.slice(0, 3).map((item, index) => (
               <Link href={`${parentPath}/${item.slug}`} key={index} className="group cursor-pointer flex flex-col h-full">
@@ -305,7 +374,7 @@ export default function ArticleDetail({ article, relatedArticles, parentPath, pa
                   <span>{item.date}</span>
                 </div>
                 <h3 className="text-xl font-serif font-light text-secondary mb-4 group-hover:text-primary transition-colors line-clamp-2">{item.title}</h3>
-                
+
                 <div className="mt-auto flex items-center gap-2 text-primary uppercase text-[10px] tracking-widest font-medium pt-4">
                   Đọc tiếp <ArrowRight className="w-3 h-3 group-hover:translate-x-2 transition-transform" />
                 </div>

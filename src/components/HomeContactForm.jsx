@@ -103,23 +103,23 @@ export default function HomeContactForm() {
   });
 
   const serviceOptions = [
-    { value: "Thiết kế kiến trúc", label: "Architecture Design / Thiết kế kiến trúc" },
-    { value: "Thiết kế nội thất", label: "Interior Design / Thiết kế nội thất" },
-    { value: "Thiết kế cảnh quan", label: "Landscape Design / Thiết kế cảnh quan" },
-    { value: "Thi công xây dựng", label: "Construction / Thi công xây dựng" },
-    { value: "Thi công nội thất", label: "Interior Fit-out / Thi công nội thất" },
-    { value: "Quản lý dự án / Dịch vụ bảo trì", label: "Project Management / Quản lý dự án" },
-    { value: "Sản xuất sản phẩm nội thất / chiếu sáng", label: "Furniture & Lighting / Sản xuất nội thất" },
-    { value: "Thương mại & Trang trí (Decor)", label: "Decor & Styling / Thương mại & Trang trí" }
+    { value: "Thiết kế kiến trúc", label: "Thiết kế kiến trúc" },
+    { value: "Thiết kế nội thất", label: "Thiết kế nội thất" },
+    { value: "Thiết kế cảnh quan", label: "Thiết kế cảnh quan" },
+    { value: "Thi công xây dựng", label: "Thi công xây dựng" },
+    { value: "Thi công nội thất", label: "Thi công nội thất" },
+    { value: "Quản lý dự án / Dịch vụ bảo trì", label: "Quản lý dự án" },
+    { value: "Sản xuất sản phẩm nội thất / chiếu sáng", label: "Sản xuất nội thất & Thiết bị chiếu sáng" },
+    { value: "Thương mại & Trang trí (Decor)", label: "Thương mại & Trang trí (Decor)" }
   ];
 
   const buildingOptions = [
-    { value: "Villa", label: "Villa / Biệt thự" },
-    { value: "Nhà phố", label: "Townhouse / Nhà phố" },
-    { value: "Building", label: "Building / Tòa nhà văn phòng" },
-    { value: "Căn hộ", label: "Apartment / Căn hộ" },
-    { value: "Công trình dịch vụ", label: "Commercial & Hospitality / Công trình dịch vụ" },
-    { value: "Công trình cảnh quan / Công cộng", label: "Landscape & Public / Cảnh quan & Công cộng" }
+    { value: "Villa", label: "Biệt thự (Villa)" },
+    { value: "Nhà phố", label: "Nhà phố (Townhouse)" },
+    { value: "Building", label: "Tòa nhà văn phòng (Building)" },
+    { value: "Căn hộ", label: "Căn hộ (Apartment)" },
+    { value: "Công trình dịch vụ", label: "Công trình dịch vụ (Commercial)" },
+    { value: "Công trình cảnh quan / Công cộng", label: "Cảnh quan & Công cộng" }
   ];
 
   const handleSubmit = async (e) => {
@@ -212,15 +212,15 @@ export default function HomeContactForm() {
         {/* Left Side: Call to Action content */}
         <div className="lg:col-span-5 flex flex-col items-start gap-6 pt-2">
           <span className="text-white/40 text-[10px] md:text-xs tracking-[0.4em] uppercase font-medium">
-            CONSULTATION
+            Đăng ký tư vấn
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-[46px] lg:leading-[1.2] font-serif font-light text-white tracking-tight">
-            Share your brief and LUKLAK Saigon will respond with a suitable direction for your project.
+            Hãy chia sẻ tóm tắt yêu cầu của bạn và LUKLAK Sài Gòn sẽ phản hồi phương án thiết kế phù hợp nhất cho dự án.
           </h2>
           
           <div className="flex flex-col gap-2 text-[11px] md:text-xs text-white/45 font-light mt-16 md:mt-32 lg:mt-48">
-            <p>43R/10 Ho Van Hue, Duc Nhuan Ward, Phu Nhuan, Ho Chi Minh City</p>
-            <p>+84 93 247 88 58 &middot; info@luklaksg.vn</p>
+            <p>43R/10 Hồ Văn Huê, Phường 9, Quận Phú Nhuận, TP. Hồ Chí Minh</p>
+            <p>093 247 88 58 &middot; info@luklaksg.vn</p>
           </div>
         </div>
 
@@ -233,7 +233,7 @@ export default function HomeContactForm() {
               <input 
                 type="text" 
                 required 
-                placeholder="Full name"
+                placeholder="Họ và tên"
                 value={formData.name}
                 onChange={(e) => setFormData({...formData, name: e.target.value})}
                 className="w-full h-14 px-5 bg-[#201E1D] border border-white/10 rounded-[6px] text-white placeholder:text-white/30 text-sm md:text-base outline-none focus:border-[#DED3B8]/60 transition-all"
@@ -241,7 +241,7 @@ export default function HomeContactForm() {
               <input 
                 type="tel" 
                 required 
-                placeholder="Phone number"
+                placeholder="Số điện thoại"
                 value={formData.phone}
                 onChange={(e) => setFormData({...formData, phone: e.target.value})}
                 className="w-full h-14 px-5 bg-[#201E1D] border border-white/10 rounded-[6px] text-white placeholder:text-white/30 text-sm md:text-base outline-none focus:border-[#DED3B8]/60 transition-all"
@@ -252,7 +252,7 @@ export default function HomeContactForm() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <input 
                 type="email" 
-                placeholder="Email address"
+                placeholder="Địa chỉ Email"
                 value={formData.email}
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
                 className="w-full h-14 px-5 bg-[#201E1D] border border-white/10 rounded-[6px] text-white placeholder:text-white/30 text-sm md:text-base outline-none focus:border-[#DED3B8]/60 transition-all"
@@ -260,7 +260,7 @@ export default function HomeContactForm() {
               <CustomSelect 
                 value={formData.service} 
                 onChange={(val) => setFormData({...formData, service: val})} 
-                placeholder="Select service" 
+                placeholder="Chọn dịch vụ" 
                 options={serviceOptions} 
               />
             </div>
@@ -269,7 +269,7 @@ export default function HomeContactForm() {
             <CustomSelect 
               value={formData.buildingType} 
               onChange={(val) => setFormData({...formData, buildingType: val})} 
-              placeholder="Select building type" 
+              placeholder="Chọn loại hình công trình" 
               options={buildingOptions} 
             />
 
@@ -277,7 +277,7 @@ export default function HomeContactForm() {
             <textarea 
               required 
               rows="5" 
-              placeholder="Short project description"
+              placeholder="Mô tả ngắn gọn về dự án (diện tích, địa điểm, yêu cầu thiết kế...)"
               value={formData.message}
               onChange={(e) => setFormData({...formData, message: e.target.value})}
               className="w-full p-5 bg-[#201E1D] border border-white/10 rounded-[6px] text-white placeholder:text-white/30 text-sm md:text-base outline-none focus:border-[#DED3B8]/60 resize-none transition-all"
@@ -285,7 +285,7 @@ export default function HomeContactForm() {
 
             {/* Bottom note */}
             <p className="text-[10px] md:text-[11px] text-white/40 leading-relaxed font-light mt-1">
-              Your information is used only so LUKLAK Saigon can advise on scope, schedule and a suitable delivery direction.
+              Thông tin của bạn được cam kết bảo mật và chỉ sử dụng cho mục đích tư vấn phương án thiết kế và thi công bởi LUKLAK Sài Gòn.
             </p>
 
             {/* Submit Button */}
@@ -294,7 +294,7 @@ export default function HomeContactForm() {
               disabled={isSubmitting}
               className="w-full bg-[#FAF7F2] text-secondary hover:bg-white transition-all duration-300 font-bold uppercase tracking-[0.2em] text-[11px] md:text-xs py-4 md:py-5 rounded-none flex items-center justify-center gap-2 mt-4 disabled:opacity-50"
             >
-              {isSubmitting ? 'SUBMITTING...' : 'SUBMIT INQUIRY'}
+              {isSubmitting ? 'ĐANG GỬI...' : 'GỬI ĐĂNG KÝ TƯ VẤN'}
               <span className="text-sm font-semibold relative top-[-1px] ml-1">↗</span>
             </button>
           </form>

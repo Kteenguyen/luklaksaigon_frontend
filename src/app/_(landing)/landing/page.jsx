@@ -131,7 +131,7 @@ export default function LandingPage() {
               letterSpacing: "0.45em", textTransform: "uppercase",
               display: "block", marginBottom: 8,
             }}>
-              Scroll
+              Cuộn
             </span>
             <div style={{
               width: 1, height: 40, margin: "0 auto",

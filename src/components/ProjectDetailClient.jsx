@@ -1,13 +1,34 @@
 "use client";
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ZoomIn } from 'lucide-react';
 import { stripHtml } from '../utils/helpers';
 import HomeContactForm from "./HomeContactForm";
 import Footer from "./Footer";
 import { projectsData } from '../data/mockData';
 
 export default function ProjectDetailClient({ project, nextProject }) {
+  const [selectedImg, setSelectedImg] = useState(null);
+
+  const openLightbox = (index) => {
+    setSelectedImg(index);
+  };
+
+  const closeLightbox = () => {
+    setSelectedImg(null);
+  };
+
+  const nextImage = (e) => {
+    e.stopPropagation();
+    setSelectedImg((prev) => (prev + 1) % project.images.length);
+  };
+
+  const prevImage = (e) => {
+    e.stopPropagation();
+    setSelectedImg((prev) => (prev - 1 + project.images.length) % project.images.length);
+  };
+
   // Find related projects of the same category, excluding the current one
   const relatedProjects = projectsData
     .filter(p => p.category === project.category && p.id !== project.id)
@@ -21,6 +42,21 @@ export default function ProjectDetailClient({ project, nextProject }) {
       .slice(0, 3 - relatedProjects.length);
     relatedProjects.push(...fillProjects);
   }
+
+  const getLayoutClasses = (index) => {
+    const rem = index % 5;
+    if (rem === 0) {
+      return "col-span-1 md:col-span-2 aspect-[16/10] md:aspect-[21/9] w-full";
+    } else if (rem === 1) {
+      return "col-span-1 aspect-[3/4] w-full md:translate-y-8";
+    } else if (rem === 2) {
+      return "col-span-1 aspect-[3/4] w-full md:-translate-y-8";
+    } else if (rem === 3) {
+      return "col-span-1 md:col-span-2 max-w-[70rem] mx-auto w-full aspect-[16/10] my-12";
+    } else {
+      return "col-span-1 md:col-span-2 aspect-[16/10] md:aspect-[21/9] w-full";
+    }
+  };
 
   return (
     <main className="bg-background min-h-screen flex flex-col justify-between overflow-hidden">
@@ -104,24 +140,41 @@ export default function ProjectDetailClient({ project, nextProject }) {
         </div>
       </section>
 
-      {/* Section 3: Project Image Gallery (Height Constraint) */}
-      <section className="py-16 md:py-24 max-w-[90rem] mx-auto w-full px-4 md:px-8 bg-background">
-        <div className="flex flex-col gap-8 md:gap-12">
+      {/* Section 3: Project Image Gallery (Wow Staggered Layout) */}
+      <section className="py-24 md:py-36 max-w-[90rem] mx-auto w-full px-8 md:px-16 bg-background">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-24 md:gap-y-36 items-center">
           {project.images.map((img, index) => (
             <motion.div 
               key={index}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full max-h-[80vh] md:max-h-[85vh] overflow-hidden bg-neutral-100 flex justify-center items-center"
+              onClick={() => openLightbox(index)}
+              className={`group relative overflow-hidden bg-neutral-100 flex justify-center items-center cursor-zoom-in rounded-sm shadow-sm ${getLayoutClasses(index)}`}
             >
               <img 
                 src={img.src || img} 
                 alt={`${stripHtml(project.title)} - ${index + 1}`} 
                 title={`${stripHtml(project.title)} - ${index + 1}`} 
-                className="w-full h-full max-h-[80vh] md:max-h-[85vh] object-cover hover:scale-[1.01] transition-all duration-[1000ms] ease-out"
+                className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.03]"
               />
+              
+              {/* Premium Luxury Overlay */}
+              <div className="absolute inset-0 bg-secondary/0 group-hover:bg-secondary/20 transition-colors duration-500 flex items-center justify-center">
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileHover={{ opacity: 1, scale: 1 }}
+                  className="bg-background/90 text-secondary backdrop-blur-sm p-4 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none"
+                >
+                  <ZoomIn size={20} strokeWidth={1.5} className="text-primary" />
+                </motion.div>
+              </div>
+
+              {/* Number and logo tag */}
+              <div className="absolute bottom-4 left-4 text-white/50 text-[9px] uppercase tracking-widest font-mono mix-blend-difference">
+                {String(index + 1).padStart(2, '0')} / {String(project.images.length).padStart(2, '0')}
+              </div>
             </motion.div>
           ))}
         </div>
@@ -171,6 +224,64 @@ export default function ProjectDetailClient({ project, nextProject }) {
       {/* CTA & Footer */}
       <HomeContactForm />
       <Footer />
+
+      {/* Lightbox Modal */}
+      <AnimatePresence>
+        {selectedImg !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeLightbox}
+            className="fixed inset-0 z-[1000] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 md:p-12 cursor-zoom-out select-none pointer-events-auto"
+          >
+            {/* Close Button */}
+            <button
+              onClick={closeLightbox}
+              className="absolute top-6 right-6 z-sticky-header p-3 text-white/60 hover:text-white transition-colors hover:bg-white/10 rounded-full cursor-pointer pointer-events-auto"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </button>
+
+            {/* Left Button */}
+            <button
+              onClick={prevImage}
+              className="absolute left-6 top-1/2 -translate-y-1/2 z-sticky-header p-4 text-white/60 hover:text-white transition-colors hover:bg-white/10 rounded-full cursor-pointer pointer-events-auto"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-left"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+
+            {/* Image Container */}
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 28 }}
+              className="relative max-w-full max-h-full flex items-center justify-center pointer-events-none"
+            >
+              <img
+                src={project.images[selectedImg].src || project.images[selectedImg]}
+                alt={`${stripHtml(project.title)} - Fullscreen`}
+                className="max-w-[90vw] max-h-[80vh] object-contain rounded-sm pointer-events-auto shadow-2xl"
+              />
+            </motion.div>
+
+            {/* Right Button */}
+            <button
+              onClick={nextImage}
+              className="absolute right-6 top-1/2 -translate-y-1/2 z-sticky-header p-4 text-white/60 hover:text-white transition-colors hover:bg-white/10 rounded-full cursor-pointer pointer-events-auto"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+
+            {/* Image Counter & Title */}
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-center text-white/60 text-xs tracking-widest uppercase">
+              <p className="font-serif font-light text-sm text-white/80 mb-1" dangerouslySetInnerHTML={{ __html: project.title }} />
+              <span>{selectedImg + 1} / {project.images.length}</span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </main>
   );

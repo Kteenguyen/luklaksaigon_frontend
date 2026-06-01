@@ -46,7 +46,7 @@ export default function About() {
           viewport={{ once: true }}
           transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
           src={aboutBanner.src || aboutBanner}
-          alt="Luklak About Banner"
+          alt="Về chúng tôi - Luklak"
           className="w-full h-full object-cover"
         />
       </div>

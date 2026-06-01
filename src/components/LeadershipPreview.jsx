@@ -38,7 +38,7 @@ const leaders = [
   {
     id: 5,
     name: "Khúc Văn Hiển",
-    role: "Partner & Co-Founder",
+    role: "Đồng sáng lập & Đối tác",
     location: "LUKLAK | SAIGON",
     image: imgHien,
   },
@@ -151,7 +151,7 @@ export default function LeadershipPreview() {
               Ban Điều Hành
             </span>
             <h2 className="text-4xl md:text-5xl lg:text-[54px] font-serif font-light text-secondary uppercase leading-[1.1] tracking-tight">
-              Leadership<br />team
+              Đội ngũ<br />lãnh đạo
             </h2>
           </div>
 

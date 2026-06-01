@@ -873,141 +873,141 @@ function LeadershipSection() {
   const teamCards = [
     {
       type: 'text',
-      title: 'Founder & Board',
+      title: 'Sáng lập & Điều hành',
       number: '01'
     },
     {
       type: 'photo',
       name: 'Khúc Văn Hiển',
-      role: 'Founder & CEO',
+      role: 'Sáng lập & Giám đốc điều hành (CEO)',
       img: imgHien
     },
     {
       type: 'photo',
       name: 'Nguyễn Lâm Vũ',
-      role: 'Design Director',
+      role: 'Giám đốc thiết kế',
       img: imgToan
     },
     {
       type: 'text',
-      title: 'Accounting & HR',
+      title: 'Tài chính & Nhân sự',
       number: '02'
     },
     {
       type: 'photo',
       name: 'Hoàng Phúc',
-      role: 'Chief Accountant',
+      role: 'Kế toán trưởng',
       img: imgPhuc
     },
     {
       type: 'photo',
       name: 'Thanh Thảo',
-      role: 'HR Specialist',
+      role: 'Chuyên viên nhân sự',
       img: imgPhuc
     },
     {
       type: 'text',
-      title: 'Architecture & Concept',
+      title: 'Thiết kế & Ý tưởng',
       number: '03'
     },
     {
       type: 'photo',
       name: 'Lê Hưng',
-      role: 'Concept Architect',
+      role: 'KTS Ý tưởng',
       img: imgHung
     },
     {
       type: 'photo',
       name: 'Phạm Minh Tuấn',
-      role: 'Senior Architect',
+      role: 'KTS Cấp cao',
       img: imgToan
     },
     {
       type: 'photo',
       name: 'Trần Thu Hà',
-      role: 'Interior Designer',
+      role: 'NTK Nội thất',
       img: imgHung
     },
     {
       type: 'photo',
       name: 'Nguyễn Hoàng Long',
-      role: 'Concept Architect',
+      role: 'KTS Ý tưởng',
       img: imgHung
     },
     {
       type: 'photo',
       name: 'Đỗ Thùy Linh',
-      role: '3D & Visualizer',
+      role: 'Diễn họa 3D',
       img: imgPhuc
     },
     {
       type: 'text',
-      title: 'Project & BD',
+      title: 'Quản lý dự án & BD',
       number: '04'
     },
     {
       type: 'photo',
       name: 'Nguyễn Thế Toàn',
-      role: 'Senior Project Manager',
+      role: 'Quản lý dự án cấp cao',
       img: imgToan
     },
     {
       type: 'photo',
       name: 'Thu Hương',
-      role: 'Project Coordinator',
+      role: 'Điều phối viên dự án',
       img: imgHung
     },
     {
       type: 'photo',
       name: 'Minh Khang',
-      role: 'BD Manager',
+      role: 'Trưởng phòng phát triển kinh doanh',
       img: imgPhuc
     },
     {
       type: 'photo',
       name: 'Văn Quân',
-      role: 'BD Executive',
+      role: 'Chuyên viên phát triển kinh doanh',
       img: imgHung
     },
     {
       type: 'photo',
       name: 'Nguyễn Tiến Dũng',
-      role: 'Procurement Specialist',
+      role: 'Chuyên viên thu mua',
       img: imgToan
     },
     {
       type: 'text',
-      title: 'Construction & Site',
+      title: 'Kỹ thuật & Công trường',
       number: '05'
     },
     {
       type: 'photo',
       name: 'Trần Anh Tuấn',
-      role: 'Site Lead Engineer',
+      role: 'Kỹ sư trưởng công trường',
       img: imgToan
     },
     {
       type: 'photo',
       name: 'Lê Huy Hoàng',
-      role: 'ME Engineer',
+      role: 'Kỹ sư Cơ điện (M&E)',
       img: imgHung
     },
     {
       type: 'photo',
       name: 'Nguyễn Văn Đức',
-      role: 'Construction Supervisor',
+      role: 'Giám sát thi công',
       img: imgPhuc
     },
     {
       type: 'photo',
       name: 'Phan Văn Nam',
-      role: 'Site Supervisor',
+      role: 'Giám sát công trường',
       img: imgToan
     },
     {
       type: 'photo',
       name: 'Bùi Quốc Khánh',
-      role: 'QS Engineer',
+      role: 'Kỹ sư khối lượng (QS)',
       img: imgPhuc
     }
   ];
@@ -1025,7 +1025,7 @@ function LeadershipSection() {
               Nhân sự
             </span>
             <h2 className="text-4xl md:text-5xl font-sans font-black tracking-tight text-white uppercase">
-              MEET OUR TEAM
+              Đội ngũ của chúng tôi
             </h2>
           </div>
           <p className="text-white/60 font-light max-w-md text-sm md:text-base leading-relaxed">

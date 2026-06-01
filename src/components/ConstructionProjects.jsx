@@ -48,7 +48,7 @@ export default function ConstructionProjects() {
         {/* Header & Tabs */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-24 gap-8 border-b border-white/10 pb-8">
           <div>
-            <span className="text-primary text-[10px] tracking-[0.3em] uppercase mb-4 inline-block">Realities</span>
+            <span className="text-primary text-[10px] tracking-[0.3em] uppercase mb-4 inline-block">Thực tế</span>
             <h2 className="text-4xl md:text-5xl font-serif font-light text-white">Dự án <span className="text-primary italic">Thực tế</span></h2>
           </div>
 

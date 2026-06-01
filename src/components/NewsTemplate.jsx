@@ -17,7 +17,7 @@ export default function NewsTemplate({
       {/* Page Header */}
       <section className="pt-40 pb-16 px-8 md:px-16 text-center max-w-4xl mx-auto">
         <span className="text-primary text-[10px] tracking-[0.3em] uppercase border-b border-secondary/20 pb-2 mb-8 inline-block">
-          Luklak Journal
+          Tạp chí Luklak
         </span>
         <h1 className="text-5xl md:text-7xl font-serif font-light text-secondary mb-8">
           {title}

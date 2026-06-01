@@ -58,7 +58,7 @@ export default function Footer() {
 
         {/* Footer Bottom (Copyright & Socials) */}
         <div className="w-full flex flex-col md:flex-row justify-between items-center text-[10px] uppercase tracking-widest text-white/30 pointer-events-auto border-t border-white/5 pt-6 max-w-7xl mx-auto z-10">
-          <span>&copy; {new Date().getFullYear()} Luklak Architects Sài Gòn. All rights reserved.</span>
+          <span>&copy; {new Date().getFullYear()} Luklak Architects Sài Gòn. Bản quyền đã được bảo hộ.</span>
           <div className="flex gap-8 mt-4 md:mt-0">
             <a href="#" className="hover:text-white transition-colors duration-300">Facebook</a>
             <a href="#" className="hover:text-white transition-colors duration-300">Instagram</a>
