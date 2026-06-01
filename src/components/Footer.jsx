@@ -4,10 +4,10 @@ import logoSrc from '../assets/logo/PNG/Logo_Light_1 copy.png';
 
 export default function Footer() {
   return (
-    <section className="relative w-full bg-secondary text-white overflow-hidden h-[60vh] md:h-[50vh]" style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }} data-theme="dark">
+    <section className="relative w-full bg-secondary text-white overflow-hidden h-[70vh] md:h-[55vh]" style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }} data-theme="dark">
       
       {/* Sticky Footer Panel */}
-      <div className="fixed bottom-0 w-full h-[60vh] md:h-[50vh] flex flex-col justify-between pt-20 pb-8 px-8 md:px-16 pointer-events-none bg-secondary-deep">
+      <div className="fixed bottom-0 w-full h-[70vh] md:h-[55vh] flex flex-col justify-between pt-20 pb-8 px-8 md:px-16 pointer-events-none bg-secondary-deep">
         
         {/* Footer Top Content */}
         <div className="flex flex-col md:flex-row justify-between items-start w-full pointer-events-auto max-w-7xl mx-auto z-10">
@@ -40,8 +40,24 @@ export default function Footer() {
 
         </div>
 
+        {/* Footer Middle (Policy links row) */}
+        <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-6 text-[9px] uppercase tracking-wider text-white/40 border-t border-white/5 pt-8 pb-4 max-w-7xl mx-auto z-10 pointer-events-auto">
+          <a href="/chinh-sach/van-chuyen" className="hover:text-primary transition-colors duration-300">
+            &bull; Chính sách vận chuyển &amp; giao nhận
+          </a>
+          <a href="/chinh-sach/bao-hanh" className="hover:text-primary transition-colors duration-300">
+            &bull; Chính sách hỗ trợ &amp; bảo hành
+          </a>
+          <a href="/chinh-sach/bao-mat" className="hover:text-primary transition-colors duration-300">
+            &bull; Chính sách bảo mật thông tin
+          </a>
+          <a href="/chinh-sach/thanh-toan" className="hover:text-primary transition-colors duration-300">
+            &bull; Quy định hình thức thanh toán
+          </a>
+        </div>
+
         {/* Footer Bottom (Copyright & Socials) */}
-        <div className="w-full flex flex-col md:flex-row justify-between items-center text-[10px] uppercase tracking-widest text-white/30 pointer-events-auto border-t border-white/5 pt-8 max-w-7xl mx-auto z-10">
+        <div className="w-full flex flex-col md:flex-row justify-between items-center text-[10px] uppercase tracking-widest text-white/30 pointer-events-auto border-t border-white/5 pt-6 max-w-7xl mx-auto z-10">
           <span>&copy; {new Date().getFullYear()} Luklak Architects Sài Gòn. All rights reserved.</span>
           <div className="flex gap-8 mt-4 md:mt-0">
             <a href="#" className="hover:text-white transition-colors duration-300">Facebook</a>

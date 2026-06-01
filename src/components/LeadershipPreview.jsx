@@ -1,93 +1,201 @@
 "use client";
+import { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
 import imgHien from "../assets/hr/Khúc Văn Hiển_Giám đốc Luklak Sài Gòn.webp";
 import imgToan from "../assets/hr/NGuyễn Thế Toàn_Chủ trì dự án.png";
+import imgPhuc from "../assets/hr/Hoàng Phúc_xxx.png";
+import imgHung from "../assets/hr/Hưng lê__.png";
+
+const leaders = [
+  {
+    id: 1,
+    name: "Khúc Văn Hiển",
+    role: "Giám đốc Luklak Sài Gòn",
+    location: "LUKLAK | SAIGON",
+    image: imgHien,
+  },
+  {
+    id: 2,
+    name: "Nguyễn Thế Toàn",
+    role: "Chủ trì thiết kế",
+    location: "LUKLAK | SAIGON",
+    image: imgToan,
+  },
+  {
+    id: 3,
+    name: "Hoàng Phúc",
+    role: "Kiến trúc sư dự án",
+    location: "LUKLAK | SAIGON",
+    image: imgPhuc,
+  },
+  {
+    id: 4,
+    name: "Hưng Lê",
+    role: "Kỹ sư trưởng thi công",
+    location: "LUKLAK | SAIGON",
+    image: imgHung,
+  },
+  {
+    id: 5,
+    name: "Khúc Văn Hiển",
+    role: "Partner & Co-Founder",
+    location: "LUKLAK | SAIGON",
+    image: imgHien,
+  },
+  {
+    id: 6,
+    name: "Nguyễn Thế Toàn",
+    role: "Giám đốc sáng tạo",
+    location: "LUKLAK | SAIGON",
+    image: imgToan,
+  },
+];
 
 export default function LeadershipPreview() {
+  const scrollContainerRef = useRef(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [visibleRatio, setVisibleRatio] = useState(0.25);
+
+  const handleScroll = () => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    const maxScroll = container.scrollWidth - container.clientWidth;
+    if (maxScroll <= 0) {
+      setScrollProgress(0);
+      setVisibleRatio(1);
+      return;
+    }
+    setScrollProgress(container.scrollLeft / maxScroll);
+    setVisibleRatio(container.clientWidth / container.scrollWidth);
+  };
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (container) {
+      container.addEventListener('scroll', handleScroll, { passive: true });
+      // Initial check after render
+      const timer = setTimeout(handleScroll, 150);
+      window.addEventListener('resize', handleScroll);
+      return () => {
+        container.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('resize', handleScroll);
+        clearTimeout(timer);
+      };
+    }
+  }, []);
+
+  const scroll = (direction) => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    const scrollAmount = container.clientWidth * 0.6;
+    const target = container.scrollLeft + (direction === 'left' ? -scrollAmount : scrollAmount);
+    container.scrollTo({
+      left: target,
+      behavior: 'smooth'
+    });
+  };
+
   return (
-    <section className="w-full bg-background text-secondary py-32 px-8 md:px-16 border-t border-secondary/10" data-theme="light">
-      <div className="max-w-7xl mx-auto">
-        {/* Section Title */}
-        <div className="mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8">
+    <section className="w-full bg-[#FAF7F2] text-secondary py-24 md:py-32 px-6 md:px-12 lg:px-20 border-t border-secondary/5" data-theme="light">
+      {/* Scope a style block to hide scrollbars cleanly cross-browser */}
+      <style dangerouslySetInnerHTML={{__html: `
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}} />
+
+      <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row gap-12 md:gap-16 lg:gap-24 items-stretch">
+        
+        {/* Left Column: Heading and Custom Navigation Controls */}
+        <div className="w-full md:w-[260px] lg:w-[320px] flex-shrink-0 flex flex-col justify-between py-2">
           <div>
-            <span className="text-primary text-[10px] tracking-[0.3em] uppercase border-b border-secondary/20 pb-2 mb-6 inline-block">
+            <span className="text-primary text-[10px] tracking-[0.3em] uppercase mb-4 block font-medium">
               Ban Điều Hành
             </span>
-            <h2 className="text-4xl md:text-6xl font-serif font-light text-secondary">
-              Leadership
+            <h2 className="text-4xl md:text-5xl lg:text-[54px] font-serif font-light text-secondary uppercase leading-[1.1] tracking-tight">
+              Leadership<br />team
             </h2>
           </div>
-          <Link 
-            href="/ve-chung-toi" 
-            className="text-xs uppercase tracking-widest text-primary hover:text-secondary border-b border-primary/40 hover:border-secondary transition-all duration-300 pb-1 self-start md:self-auto"
-          >
-            Xem tất cả nhân sự &rarr;
-          </Link>
+
+          {/* Nav arrows positioned at bottom of left column on desktop, side-by-side on mobile */}
+          <div className="flex gap-3 mt-8 md:mt-auto">
+            <button 
+              onClick={() => scroll('left')}
+              className="w-12 h-12 rounded-full border border-secondary/20 flex items-center justify-center text-secondary hover:bg-secondary hover:text-white hover:border-secondary transition-all duration-300 cursor-pointer"
+              aria-label="Scroll left"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M19 12H5M5 12L12 19M5 12L12 5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+            <button 
+              onClick={() => scroll('right')}
+              className="w-12 h-12 rounded-full border border-secondary/20 flex items-center justify-center text-secondary hover:bg-secondary hover:text-white hover:border-secondary transition-all duration-300 cursor-pointer"
+              aria-label="Scroll right"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+          </div>
         </div>
 
-        {/* Directors grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
-          {/* Mr Hien */}
-          <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col"
+        {/* Right Column: Horizontal scroll container and scroll indicator */}
+        <div className="flex-grow overflow-hidden flex flex-col justify-between">
+          
+          {/* Scrollable grid of leaders */}
+          <div 
+            ref={scrollContainerRef}
+            className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth pb-4"
           >
-            <div className="relative aspect-[4/5] overflow-hidden rounded-sm group mb-8 shadow-xl bg-secondary/5">
-              <motion.img
-                whileHover={{ scale: 1.03 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                src={imgHien.src || imgHien}
-                alt="Khúc Văn Hiển - Director"
-                className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-1000"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-secondary/80 via-transparent to-transparent opacity-60" />
-              <div className="absolute bottom-0 left-0 p-8">
-                <h3 className="text-3xl font-serif text-white font-light">Khúc Văn Hiển</h3>
-                <p className="text-primary tracking-widest uppercase text-[10px] mt-2">Giám đốc Luklak Sài Gòn</p>
+            {leaders.map((leader, index) => (
+              <div 
+                key={`${leader.id}-${index}`}
+                className="w-[240px] md:w-[280px] lg:w-[320px] flex-shrink-0 group cursor-pointer"
+              >
+                <figure className="relative aspect-[3/4] overflow-hidden bg-secondary/5 rounded-sm">
+                  <img
+                    src={leader.image.src || leader.image}
+                    alt={leader.name}
+                    className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-[800ms] ease-out transform group-hover:scale-[1.02]"
+                  />
+                  {/* Subtle hover gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                </figure>
+                
+                {/* Meta details */}
+                <div className="mt-4">
+                  <span className="text-[9px] md:text-[10px] tracking-[0.2em] text-secondary/40 uppercase block font-medium">
+                    {leader.location}
+                  </span>
+                  <h3 className="text-base md:text-lg font-serif text-secondary mt-1 font-light block leading-tight group-hover:text-primary transition-colors duration-300">
+                    {leader.name}
+                  </h3>
+                  <p className="text-xs md:text-sm text-secondary/50 font-light mt-0.5 block">
+                    {leader.role}
+                  </p>
+                </div>
               </div>
-            </div>
-            <p className="text-secondary/70 font-light leading-relaxed italic border-l border-primary pl-6 mb-4">
-              “Với kiến trúc, không có gì là ngẫu nhiên. Tất cả bắt đầu từ một lựa chọn.”
-            </p>
-            <p className="text-secondary/60 font-light text-sm leading-relaxed max-w-lg">
-              Định hướng sự phát triển của Luklak Saigon bằng cách tập trung vào chiều sâu công năng kết hợp hoàn hảo cùng mỹ thuật và trải nghiệm sống của từng gia chủ.
-            </p>
-          </motion.div>
+            ))}
+          </div>
 
-          {/* Mr Toan */}
-          <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col lg:mt-24"
-          >
-            <div className="relative aspect-[4/5] overflow-hidden rounded-sm group mb-8 shadow-xl bg-secondary/5">
-              <motion.img
-                whileHover={{ scale: 1.03 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                src={imgToan.src || imgToan}
-                alt="Nguyễn Thế Toàn - Design Lead"
-                className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-1000"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-secondary/80 via-transparent to-transparent opacity-60" />
-              <div className="absolute bottom-0 left-0 p-8">
-                <h3 className="text-3xl font-serif text-white font-light">Nguyễn Thế Toàn</h3>
-                <p className="text-primary tracking-widest uppercase text-[10px] mt-2">Chủ trì dự án</p>
-              </div>
-            </div>
-            <p className="text-secondary/70 font-light leading-relaxed italic border-l border-primary pl-6 mb-4">
-              “Không gian chính là ngôn ngữ kể câu chuyện tâm hồn của gia chủ.”
-            </p>
-            <p className="text-secondary/60 font-light text-sm leading-relaxed max-w-lg">
-              Chủ trì các dự án thiết kế cao cấp, luôn tìm tòi những cách biểu đạt vật liệu mới và sự giao thoa ánh sáng để khơi dậy linh hồn của mỗi công trình.
-            </p>
-          </motion.div>
+          {/* Premium Scroll Progress Ticker */}
+          <div className="relative w-full h-[1px] bg-secondary/10 mt-6 md:mt-10 overflow-hidden">
+            <div 
+              className="absolute top-0 h-full bg-secondary/60 transition-all duration-75"
+              style={{ 
+                width: `${visibleRatio * 100}%`,
+                left: `${scrollProgress * (1 - visibleRatio) * 100}%`
+              }}
+            />
+          </div>
+
         </div>
+
       </div>
     </section>
   );

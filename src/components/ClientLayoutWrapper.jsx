@@ -1,28 +1,33 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 import IntroLoader from './IntroLoader';
 
 export default function ClientLayoutWrapper({ children }) {
   const [showIntro, setShowIntro] = useState(true);
-
-  useEffect(() => {
-    // If intro was already shown in this browser session, we can skip it,
-    // or we can play it every load. Let's play it on first load per session.
-    const hasLoaded = sessionStorage.getItem('luklak-intro-loaded');
-    if (hasLoaded) {
-      setShowIntro(false);
-    }
-  }, []);
+  const pathname = usePathname();
 
   const handleIntroComplete = () => {
-    sessionStorage.setItem('luklak-intro-loaded', 'true');
     setShowIntro(false);
   };
 
   return (
     <>
       {showIntro && <IntroLoader onComplete={handleIntroComplete} />}
-      {children}
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={pathname}
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -15 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="w-full"
+        >
+          {children}
+        </motion.div>
+      </AnimatePresence>
     </>
   );
 }
