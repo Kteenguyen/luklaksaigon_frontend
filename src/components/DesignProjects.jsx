@@ -6,13 +6,16 @@ import { stripHtml } from '../utils/helpers';
 import { useSearchParams } from 'next/navigation';
 import { projectsData } from '../data/mockData';
 
-const categories = ['Tất cả', 'Villa', 'Nhà phố', 'Căn hộ', 'Building', 'Công trình dịch vụ'];
+const categories = ['Tất cả', 'Villa', 'Nhà phố', 'Căn hộ', 'Tòa nhà', 'Công trình dịch vụ'];
 
 function ProjectFilter({ activeTab, setActiveTab }) {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const categoryQuery = searchParams.get('category');
+    let categoryQuery = searchParams.get('category');
+    if (categoryQuery === 'Building') {
+      categoryQuery = 'Tòa nhà';
+    }
     if (categoryQuery && categories.includes(categoryQuery)) {
       setActiveTab(categoryQuery);
     }
@@ -28,7 +31,10 @@ export default function DesignProjects({ hideViewAll = false }) {
   // Filter out any "Công trình thực tế" if 'Tất cả' is selected, matching standard Portfolio
   const filteredProjects = activeTab === 'Tất cả'
     ? projectsData.filter(p => p.category !== 'Công trình thực tế')
-    : projectsData.filter(p => p.category === activeTab);
+    : projectsData.filter(p => {
+        const cat = p.category === 'Building' ? 'Tòa nhà' : p.category;
+        return cat === activeTab;
+      });
 
   const displayedProjects = filteredProjects.slice(0, visibleCount);
 

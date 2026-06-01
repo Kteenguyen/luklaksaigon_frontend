@@ -35,7 +35,7 @@ export default function ConstructionPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-primary text-[10px] tracking-[0.4em] uppercase border-b border-white/20 pb-2 mb-8 inline-block"
           >
-            Construction Excellence
+            Thi công Chuẩn mực
           </motion.span>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}

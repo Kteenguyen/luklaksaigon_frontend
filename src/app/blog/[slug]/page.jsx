@@ -17,7 +17,7 @@ export default function BlogPostDetail({ params }) {
       article={article} 
       relatedArticles={relatedArticles} 
       parentPath="/blog" 
-      parentName="Blog" 
+      parentName="Tạp chí &amp; Blog" 
     />
   );
 }

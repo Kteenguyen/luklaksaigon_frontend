@@ -16,7 +16,7 @@ const navItems = [
     dropdown: [
       { label: 'Villa', path: '/du-an?category=Villa' },
       { label: 'Nhà phố', path: '/du-an?category=Nhà phố' },
-      { label: 'Building', path: '/du-an?category=Building' },
+      { label: 'Tòa nhà', path: '/du-an?category=Building' },
       { label: 'Căn hộ', path: '/du-an?category=Căn hộ' },
       { label: 'Công trình dịch vụ', path: '/du-an?category=Công trình dịch vụ' },
       { label: 'Công trình cảnh quan', path: '/du-an?category=Công trình cảnh quan' },
@@ -27,7 +27,6 @@ const navItems = [
     name: 'Tin tức',
     path: '/hoat-dong',
     dropdown: [
-      { label: 'Tạp chí & Blog', path: '/blog' },
       { label: 'Báo chí truyền thông', path: '/bao-chi-truyen-thong' },
       { label: 'Hoạt động Luklak', path: '/hoat-dong' },
       { label: 'FAQs', path: '/faqs' }
@@ -110,7 +109,7 @@ export default function Header() {
         <a href="/" className="cursor-pointer z-50 flex-shrink-0 transform-gpu will-change-transform">
           <img
             src={!menuOpen ? (logoSrc.src || logoSrc) : (headerTheme === 'dark' || menuOpen ? (logoSrc.src || logoSrc) : (logoDarkSrc.src || logoDarkSrc))}
-            alt="LukLak Design & Build"
+            alt="LukLak Thiết kế & Thi công"
             className="h-10 md:h-14 w-auto object-contain transition-all duration-500"
           />
         </a>

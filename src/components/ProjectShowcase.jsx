@@ -105,7 +105,7 @@ export default function ProjectShowcase({ project = defaultProject, isFirst = fa
           {/* Left Text Block */}
           <div className="relative z-10 flex flex-col items-start mt-auto w-full md:w-[60%] p-4">
             <span className="text-primary text-xs md:text-sm tracking-[0.4em] uppercase mb-6 block font-medium">
-              Featured Key Project
+              Dự án tiêu biểu
             </span>
             <h2
               className="text-4xl md:text-5xl lg:text-6xl font-serif text-white uppercase tracking-wide font-light leading-tight drop-shadow-2xl"
