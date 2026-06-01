@@ -13,12 +13,12 @@ export default function RootLayout({ children }) {
     <html lang="vi">
       <body>
         <SmoothScrollProvider>
-          <ClientLayoutWrapper>
-            <div className="min-h-screen font-sans bg-secondary text-text-main">
-              <Header />
+          <div className="min-h-screen font-sans bg-secondary text-text-main">
+            <Header />
+            <ClientLayoutWrapper>
               {children}
-            </div>
-          </ClientLayoutWrapper>
+            </ClientLayoutWrapper>
+          </div>
         </SmoothScrollProvider>
       </body>
     </html>

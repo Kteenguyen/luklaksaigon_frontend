@@ -3,28 +3,9 @@ import { useState, useEffect, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
+import { projectsData } from '../data/mockData';
 
-// Mock Data
-import img1 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450163862634_83a0f94c7430897270c93b1b0a7bcfd6.jpg';
-import img2 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450163989369_be1b80a76e84bb7dc5b88bc685725aee.jpg';
-import img3 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450164007724_768e2f7d26c3ae5ab581260ed9f2a55b.jpg';
-import img4 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450164022320_7c5e9ff572be475288651b3a0f1be4a3.jpg';
-
-const categories = ['Tất cả', 'Biệt thự', 'Căn hộ', 'Nhà phố', 'Thương mại'];
-
-const projectsData = [
-  { id: 1, title: 'The Landmark', category: 'Căn hộ', img: img1 },
-  { id: 2, title: 'Ocean Villa', category: 'Biệt thự', img: img2 },
-  { id: 3, title: 'Minimalist Townhouse', category: 'Nhà phố', img: img3 },
-  { id: 4, title: 'Zen Cafe', category: 'Thương mại', img: img4 },
-  { id: 5, title: 'Sky Penthouse', category: 'Căn hộ', img: img1 },
-  { id: 6, title: 'Riverside Mansion', category: 'Biệt thự', img: img2 },
-  { id: 7, title: 'Urban Loft', category: 'Căn hộ', img: img3 },
-  { id: 8, title: 'Boutique Hotel', category: 'Thương mại', img: img4 },
-  { id: 9, title: 'Green Oasis', category: 'Nhà phố', img: img1 },
-  { id: 10, title: 'Sunset Villa', category: 'Biệt thự', img: img2 },
-  { id: 11, title: 'Modern Studio', category: 'Căn hộ', img: img3 },
-];
+const categories = ['Tất cả', 'Villa', 'Nhà phố', 'Căn hộ', 'Building', 'Công trình dịch vụ'];
 
 function ProjectFilter({ activeTab, setActiveTab }) {
   const searchParams = useSearchParams();
@@ -44,10 +25,9 @@ export default function DesignProjects({ hideViewAll = false }) {
   const [activeTab, setActiveTab] = useState('Tất cả');
   const [visibleCount, setVisibleCount] = useState(9);
 
-  
-
+  // Filter out any "Công trình thực tế" if 'Tất cả' is selected, matching standard Portfolio
   const filteredProjects = activeTab === 'Tất cả'
-    ? projectsData
+    ? projectsData.filter(p => p.category !== 'Công trình thực tế')
     : projectsData.filter(p => p.category === activeTab);
 
   const displayedProjects = filteredProjects.slice(0, visibleCount);
@@ -59,12 +39,11 @@ export default function DesignProjects({ hideViewAll = false }) {
   const handleTabChange = (cat) => {
     setActiveTab(cat);
     setVisibleCount(9);
-    // Optionally update URL when clicking tab (without refreshing)
     router.push(cat === 'Tất cả' ? '/du-an' : `/du-an?category=${cat}`, { scroll: false });
   };
 
   return (
-    <section className="w-full bg-background text-secondary py-24 md:py-32" data-theme="light">
+    <section className="w-full bg-[#FAF7F2] text-secondary py-24 md:py-32" data-theme="light">
       <Suspense fallback={null}>
         <ProjectFilter activeTab={activeTab} setActiveTab={setActiveTab} />
       </Suspense>
@@ -115,36 +94,43 @@ export default function DesignProjects({ hideViewAll = false }) {
                 key={project.id}
                 className="group relative overflow-hidden rounded-sm cursor-pointer aspect-[4/5]"
               >
-                {/* Ảnh có hiệu ứng zoom khi hover */}
-                <motion.div
-                  className="w-full h-full"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
-                >
-                  <img
-                    src={project.img.src || project.img}
-                    alt={project.title}
-                    className="w-full h-full object-cover"
-                  />
-                </motion.div>
+                <Link href={`/du-an/${project.slug}`} className="block w-full h-full relative">
+                  {/* Photo container */}
+                  <motion.div
+                    className="w-full h-full"
+                    whileHover={{ scale: 1.04 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                  >
+                    <img
+                      src={project.coverImg.src || project.coverImg}
+                      alt={project.title}
+                      className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700"
+                    />
+                  </motion.div>
 
-                {/* Overlay thông tin */}
-                <div className="absolute inset-0 bg-gradient-to-t from-secondary/90 via-secondary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute bottom-0 left-0 w-full p-8 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
-                  <span className="text-primary/90 text-[10px] uppercase tracking-widest mb-3 block">
-                    {project.category}
-                  </span>
-                  <h3 className="text-surface text-2xl md:text-3xl font-serif font-light">
-                    {project.title}
-                  </h3>
-                </div>
+                  {/* Elegant Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  
+                  {/* Information Overlay */}
+                  <div className="absolute bottom-0 left-0 w-full p-8 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                    <span className="text-primary text-[10px] uppercase tracking-widest mb-3 block font-medium">
+                      {project.category}
+                    </span>
+                    <h3 className="text-white text-2xl md:text-3xl font-serif font-light">
+                      {project.title}
+                    </h3>
+                    <p className="text-white/60 text-xs mt-2 font-light">
+                      {project.location} &bull; {project.area}
+                    </p>
+                  </div>
+                </Link>
 
               </motion.div>
             ))}
           </AnimatePresence>
         </motion.div>
 
-        {/* Nút Xem Thêm / Xem Tất Cả */}
+        {/* Action Buttons */}
         <div className="mt-16 md:mt-24 flex flex-col sm:flex-row justify-center gap-6 items-center">
           {filteredProjects.length > visibleCount && (
             <button

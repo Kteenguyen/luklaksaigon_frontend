@@ -20,7 +20,7 @@ export default function DesignStyles() {
   const [active, setActive] = useState(styles[0].id);
 
   return (
-    <section id="design-styles" className="w-full bg-background text-secondary py-24 md:py-32" data-theme="light">
+    <section id="design-styles" className="w-full bg-[#FAF7F2] text-secondary py-24 md:py-32" data-theme="light">
 
       <div className="px-8 md:px-16 mb-16">
         <span className="text-[10px] md:text-xs tracking-[0.3em] uppercase text-primary border-b border-secondary/20 pb-2">
