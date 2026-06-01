@@ -112,49 +112,82 @@ export default function ArticleDetail({ article, relatedArticles, parentPath, pa
 
   const parseMarkdown = (content) => {
     if (!content) return null;
-    const blocks = content.split('\n\n');
-    return blocks.map((block, index) => {
-      const trimmed = block.trim();
+    const lines = content.split('\n');
+    const elements = [];
+    let currentParagraphLines = [];
+    let currentListItems = [];
+
+    const flushParagraph = (key) => {
+      if (currentParagraphLines.length > 0) {
+        const text = currentParagraphLines.join('\n').trim();
+        if (text) {
+          elements.push(
+            <p key={key} className="text-secondary/70 font-light leading-relaxed mb-6 font-serif text-base md:text-lg text-justify whitespace-pre-line">
+              {text}
+            </p>
+          );
+        }
+        currentParagraphLines = [];
+      }
+    };
+
+    const flushList = (key) => {
+      if (currentListItems.length > 0) {
+        elements.push(
+          <ul key={key} className="list-disc pl-6 my-6 flex flex-col gap-2 text-secondary/70 font-light leading-relaxed font-sans text-base md:text-lg">
+            {currentListItems.map((item, idx) => (
+              <li key={idx}>{item}</li>
+            ))}
+          </ul>
+        );
+        currentListItems = [];
+      }
+    };
+
+    lines.forEach((line, index) => {
+      const trimmed = line.trim();
       if (trimmed.startsWith('## ')) {
+        flushParagraph(`p-${index}`);
+        flushList(`ul-${index}`);
         const text = trimmed.replace(/^##\s+/, "").trim();
-        return (
+        elements.push(
           <h2
-            key={index}
+            key={`h2-${index}`}
             id={generateSlug(text)}
             className="text-2xl md:text-3.5xl font-serif text-secondary mt-12 mb-6 font-medium leading-tight scroll-mt-28"
           >
             {text}
           </h2>
         );
-      }
-      if (trimmed.startsWith('### ')) {
+      } else if (trimmed.startsWith('### ')) {
+        flushParagraph(`p-${index}`);
+        flushList(`ul-${index}`);
         const text = trimmed.replace(/^###\s+/, "").trim();
-        return (
+        elements.push(
           <h3
-            key={index}
+            key={`h3-${index}`}
             id={generateSlug(text)}
             className="text-xl md:text-2xl font-serif text-secondary mt-8 mb-4 font-medium leading-tight scroll-mt-28"
           >
             {text}
           </h3>
         );
+      } else if (trimmed.startsWith('- ')) {
+        flushParagraph(`p-${index}`);
+        currentListItems.push(trimmed.replace(/^- /, "").trim());
+      } else {
+        flushList(`ul-${index}`);
+        if (trimmed) {
+          currentParagraphLines.push(trimmed);
+        } else {
+          flushParagraph(`p-${index}`);
+        }
       }
-      if (trimmed.startsWith('- ')) {
-        const items = trimmed.split('\n').filter(line => line.trim().startsWith('- '));
-        return (
-          <ul key={index} className="list-disc pl-6 my-6 flex flex-col gap-2 text-secondary/70 font-light leading-relaxed font-sans text-base md:text-lg">
-            {items.map((item, idx) => (
-              <li key={idx}>{item.replace(/^- /, "").trim()}</li>
-            ))}
-          </ul>
-        );
-      }
-      return (
-        <p key={index} className="text-secondary/70 font-light leading-relaxed mb-6 font-serif text-base md:text-lg text-justify whitespace-pre-line">
-          {trimmed}
-        </p>
-      );
     });
+
+    flushParagraph(`p-final`);
+    flushList(`ul-final`);
+    return elements;
   };
 
   if (!article) {
@@ -242,8 +275,8 @@ export default function ArticleDetail({ article, relatedArticles, parentPath, pa
                         <button
                           onClick={() => scrollToHeading(parent.id)}
                           className={`text-left transition-all duration-300 cursor-pointer text-sm md:text-base font-serif ${isParentActive
-                              ? 'text-primary font-medium translate-x-1'
-                              : 'text-secondary/60 hover:text-secondary hover:translate-x-0.5'
+                            ? 'text-primary font-medium translate-x-1'
+                            : 'text-secondary/60 hover:text-secondary hover:translate-x-0.5'
                             }`}
                         >
                           {parent.text}
@@ -266,8 +299,8 @@ export default function ArticleDetail({ article, relatedArticles, parentPath, pa
                                     key={cIdx}
                                     onClick={() => scrollToHeading(child.id)}
                                     className={`text-left text-xs md:text-sm transition-all duration-300 cursor-pointer ${isSelfActive
-                                        ? 'text-primary font-medium translate-x-1'
-                                        : 'text-secondary/50 hover:text-secondary hover:translate-x-0.5'
+                                      ? 'text-primary font-medium translate-x-1'
+                                      : 'text-secondary/50 hover:text-secondary hover:translate-x-0.5'
                                       }`}
                                   >
                                     {child.text}

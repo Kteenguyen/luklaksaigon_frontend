@@ -44,6 +44,20 @@ export default function ConstructionDetail() {
   const currentIndex = constructionProjectsData.findIndex(p => p.slug === slug);
   const nextProject = constructionProjectsData[(currentIndex + 1) % constructionProjectsData.length];
 
+  const getLayoutClasses = (index) => {
+    const rem = index % 4;
+    if (rem === 0) {
+      return "col-span-1 md:col-span-2 aspect-[3/2] w-full";
+    } else if (rem === 1) {
+      return "col-span-1 aspect-[4/5] w-full";
+    } else if (rem === 2) {
+      return "col-span-1 aspect-[4/5] w-full";
+    } else {
+      return "col-span-1 md:col-span-2 aspect-[3/2] w-full";
+    }
+  };
+
+
   return (
     <main className="bg-secondary min-h-screen flex flex-col justify-between overflow-hidden text-surface">
 
@@ -104,11 +118,11 @@ export default function ConstructionDetail() {
       </section>
 
       {/* Construction Gallery Grid (Wow Staggered Layout) */}
-      <section className="py-24 px-8 md:px-16 max-w-[100rem] mx-auto w-full">
-        <div className="flex justify-between items-end mb-20 px-4">
-          <h2 className="text-4xl font-serif font-light text-white">Hình ảnh <span className="text-primary italic">Công trường</span></h2>
+      <section className="py-12 md:py-16 max-w-[80rem] mx-auto w-full px-6 md:px-12 bg-secondary">
+        <div className="flex justify-between items-end mb-12 px-2">
+          <h2 className="text-3xl md:text-4xl font-serif font-light text-white">Hình ảnh <span className="text-primary italic">Công trường</span></h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-24 md:gap-y-36 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-center">
           {project.gallery.map((img, index) => (
             <motion.div
               key={index}
@@ -117,13 +131,7 @@ export default function ConstructionDetail() {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
               onClick={() => openLightbox(index)}
-              className={`group relative overflow-hidden bg-background/5 rounded-sm flex justify-center items-center cursor-zoom-in shadow-lg ${
-                index % 3 === 0 
-                  ? "col-span-1 md:col-span-2 aspect-[16/10] md:aspect-[21/9] w-full"
-                  : index % 3 === 1
-                  ? "col-span-1 aspect-[3/4] w-full md:translate-y-8"
-                  : "col-span-1 aspect-[3/4] w-full md:-translate-y-8"
-              }`}
+              className={`group relative overflow-hidden bg-background/5 rounded-sm flex justify-center items-center cursor-zoom-in shadow-lg ${getLayoutClasses(index)}`}
             >
               <img
                 src={img.src || img}

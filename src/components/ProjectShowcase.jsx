@@ -80,7 +80,7 @@ export default function ProjectShowcase({ project = defaultProject, isFirst = fa
               style={{ y: parallaxTransforms[i] || 0 }}
               className={`w-full md:w-[60%] lg:w-[50%] ${i % 2 === 0 ? 'ml-auto mr-0' : 'mr-auto ml-0'}`}
             >
-              <figure className="relative w-full aspect-[4/3] md:aspect-video overflow-hidden shadow-2xl p-3 bg-white border border-neutral-100 rounded-none">
+              <figure className="relative w-full aspect-[4/3] md:aspect-video overflow-hidden shadow-2xl bg-white rounded-none">
                 <img
                   src={slide.src || slide}
                   alt={`${stripHtml(project.title)} details`}
