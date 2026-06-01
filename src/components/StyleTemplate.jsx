@@ -62,7 +62,7 @@ export default function StyleTemplate({
             transition={{ duration: 1, delay: 0.5 }}
             className={`${accentColor} text-xs md:text-sm tracking-[0.4em] uppercase mb-8 block font-medium`}
           >
-            The Architecture of
+            Kiến trúc phong cách
           </motion.span>
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -98,7 +98,7 @@ export default function StyleTemplate({
 
               <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col md:flex-row gap-12 md:gap-32 items-end">
                 <div className="w-full md:w-1/2">
-                  <span className={`${accentColor} text-xs tracking-[0.3em] uppercase mb-6 block drop-shadow-md`}>Philosophy</span>
+                  <span className={`${accentColor} text-xs tracking-[0.3em] uppercase mb-6 block drop-shadow-md`}>Triết lý thiết kế</span>
                   <h2 className="text-4xl md:text-6xl lg:text-7xl font-serif font-light mb-8 text-white drop-shadow-lg leading-tight">
                     {philosophyTitle}
                   </h2>
@@ -177,7 +177,7 @@ export default function StyleTemplate({
 
           <div className="relative z-10 max-w-[90rem] mx-auto px-6 md:px-16 flex flex-col items-center">
             <span className={`text-[10px] md:text-xs tracking-[0.4em] uppercase mb-20 block transition-colors duration-500 ${hoveredProject ? 'text-white/80' : accentColor}`}>
-              Featured Works
+              Dự án tiêu biểu
             </span>
 
             <div className="flex flex-col w-full border-t border-white/10">
@@ -191,7 +191,7 @@ export default function StyleTemplate({
                 >
                   <div className={`flex flex-col md:flex-row items-center justify-between gap-6 transition-colors duration-500 ${hoveredProject ? (hoveredProject.id === project.id ? 'text-white' : 'text-white/30') : 'text-white/90'}`}>
                     <span className="text-xs md:text-sm tracking-[0.2em] uppercase opacity-60 hidden md:block w-1/5 text-left">
-                      {project.category}
+                      {project.category === 'Building' ? 'Tòa nhà' : project.category}
                     </span>
 
                     <h3 className="text-4xl md:text-5xl lg:text-7xl font-serif font-light uppercase tracking-tight text-center flex-1 group-hover:scale-[1.03] transition-transform duration-500">
@@ -208,7 +208,7 @@ export default function StyleTemplate({
 
             <div className="mt-24">
               <Link href="/du-an" className={`text-xs uppercase tracking-[0.3em] transition-all border-b pb-2 inline-block ${hoveredProject ? 'text-white border-white/50 hover:border-white' : 'text-white/50 border-white/20 hover:text-white hover:border-white/50'}`}>
-                Explore All Projects
+                Khám phá tất cả dự án
               </Link>
             </div>
           </div>

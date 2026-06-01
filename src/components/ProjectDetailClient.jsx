@@ -44,19 +44,22 @@ export default function ProjectDetailClient({ project, nextProject }) {
   }
 
   const getLayoutClasses = (index) => {
-    const rem = index % 5;
+    const rem = index % 4;
     if (rem === 0) {
-      return "col-span-1 md:col-span-2 aspect-[16/10] md:aspect-[21/9] w-full";
+      // Landscape, spans 2 columns
+      return "col-span-1 md:col-span-2 aspect-[3/2] w-full";
     } else if (rem === 1) {
-      return "col-span-1 aspect-[3/4] w-full md:translate-y-8";
+      // Portrait, spans 1 column
+      return "col-span-1 aspect-[4/5] w-full";
     } else if (rem === 2) {
-      return "col-span-1 aspect-[3/4] w-full md:-translate-y-8";
-    } else if (rem === 3) {
-      return "col-span-1 md:col-span-2 max-w-[70rem] mx-auto w-full aspect-[16/10] my-12";
+      // Portrait, spans 1 column
+      return "col-span-1 aspect-[4/5] w-full";
     } else {
-      return "col-span-1 md:col-span-2 aspect-[16/10] md:aspect-[21/9] w-full";
+      // Landscape, spans 2 columns
+      return "col-span-1 md:col-span-2 aspect-[3/2] w-full";
     }
   };
+
 
   return (
     <main className="bg-background min-h-screen flex flex-col justify-between overflow-hidden">
@@ -116,7 +119,7 @@ export default function ProjectDetailClient({ project, nextProject }) {
                 </div>
                 <div>
                   <span className="block text-secondary/40 text-[11px] uppercase tracking-wider mb-2 font-semibold">Quy mô</span>
-                  <span className="text-secondary font-light text-base md:text-lg">{project.category}</span>
+                  <span className="text-secondary font-light text-base md:text-lg">{project.category === 'Building' ? 'Tòa nhà' : project.category}</span>
                 </div>
                 <div>
                   <span className="block text-secondary/40 text-[11px] uppercase tracking-wider mb-2 font-semibold">Tư vấn Thiết kế</span>
@@ -141,8 +144,8 @@ export default function ProjectDetailClient({ project, nextProject }) {
       </section>
 
       {/* Section 3: Project Image Gallery (Wow Staggered Layout) */}
-      <section className="py-24 md:py-36 max-w-[90rem] mx-auto w-full px-8 md:px-16 bg-background">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-24 md:gap-y-36 items-center">
+      <section className="py-12 md:py-16 max-w-[80rem] mx-auto w-full px-6 md:px-12 bg-background">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-center">
           {project.images.map((img, index) => (
             <motion.div 
               key={index}
@@ -208,7 +211,7 @@ export default function ProjectDetailClient({ project, nextProject }) {
                   />
                 </div>
                 <div className="flex items-center gap-3 mb-3 text-[10px] uppercase tracking-widest font-semibold">
-                  <span className="text-primary">{item.category}</span>
+                  <span className="text-primary">{item.category === 'Building' ? 'Tòa nhà' : item.category}</span>
                   <span className="text-secondary/30">•</span>
                   <span className="text-secondary/60">{item.location}</span>
                 </div>
