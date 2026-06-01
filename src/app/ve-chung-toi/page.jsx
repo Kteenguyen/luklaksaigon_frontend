@@ -1,9 +1,8 @@
 "use client";
 import { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform, animate } from 'framer-motion';
-import Contact from "../../components/Contact";
-import Services from "../../components/Services";
-import DesignProjects from "../../components/DesignProjects";
+import HomeCTA from "../../components/HomeCTA";
+import Footer from "../../components/Footer";
 import { ShieldCheck, HeartHandshake, Award, Lightbulb, Zap, Users } from 'lucide-react';
 
 // Assets
@@ -24,7 +23,7 @@ function AboutHero() {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   return (
-    <section className="relative w-full h-screen overflow-hidden bg-secondary flex items-center justify-center">
+    <section className="relative w-full h-screen overflow-hidden bg-secondary flex items-center justify-center" data-theme="dark">
       <motion.div style={{ y, opacity }} className="absolute inset-0 z-0">
         <img
           src={imgKienTruc.src || imgKienTruc}
@@ -94,7 +93,7 @@ function ScrubbingText({ text }) {
 
 function GroupSection() {
   return (
-    <section className="w-full bg-background text-secondary py-32 px-8 md:px-16 overflow-hidden">
+    <section className="w-full bg-background text-secondary py-32 px-8 md:px-16 overflow-hidden" data-theme="light">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 lg:gap-24 items-center">
 
         {/* Left: Image Split */}
@@ -148,6 +147,110 @@ function GroupSection() {
 }
 
 /* =====================================================================
+   2.5 SƠ ĐỒ HỆ THỐNG (System/Org Diagram)
+   ===================================================================== */
+function SystemDiagramSection() {
+  const divisions = [
+    {
+      title: "Lĩnh Vực Thiết Kế",
+      icon: "01",
+      items: ["Thiết kế kiến trúc", "Thiết kế nội thất", "Thiết kế cảnh quan"]
+    },
+    {
+      title: "Lĩnh Vực Thi Công",
+      icon: "02",
+      items: ["Thi công xây dựng", "Thi công nội thất", "Quản lý dự án", "Dịch vụ bảo trì"]
+    },
+    {
+      title: "Lĩnh Vực Sản Xuất",
+      icon: "03",
+      items: ["Sản xuất sản phẩm nội thất", "Sản xuất sản phẩm chiếu sáng"]
+    },
+    {
+      title: "Lĩnh Vực Thương Mại",
+      icon: "04",
+      items: ["Luklak lighting", "Luklak ceramic", "Luklak decor"]
+    }
+  ];
+
+  return (
+    <section className="w-full bg-secondary text-white py-32 px-8 md:px-16 border-t border-white/10 relative overflow-hidden" data-theme="dark">
+      <div className="max-w-7xl mx-auto">
+        
+        {/* Title */}
+        <div className="mb-24 flex flex-col items-center text-center">
+          <span className="text-primary text-[10px] tracking-[0.3em] uppercase border-b border-white/20 pb-2 mb-6 inline-block">
+            Mô hình hệ thống
+          </span>
+          <h2 className="text-4xl md:text-6xl font-serif font-light text-white leading-tight">
+            Sơ Đồ Hệ Thống <br /><span className="text-primary italic">Ecosystem Chart</span>
+          </h2>
+          <p className="text-white/50 text-sm font-light mt-6 max-w-xl leading-relaxed">
+            Luklak Group vận hành một chuỗi liên kết chặt chẽ từ thiết kế, thi công, sản xuất đến thương mại bán lẻ nhằm đảm bảo chất lượng công trình khép kín tối ưu nhất.
+          </p>
+        </div>
+
+        {/* Central Hub Flow Diagram */}
+        <div className="flex flex-col items-center relative w-full">
+          
+          {/* Main Core Node */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="px-12 py-6 border border-primary/50 bg-background text-secondary rounded-sm shadow-2xl relative z-10 hover:bg-primary hover:text-white transition-colors duration-500 mb-20"
+          >
+            <h3 className="text-xl font-sans tracking-[0.3em] font-medium uppercase text-center">
+              LUKLAK GROUP
+            </h3>
+          </motion.div>
+
+          {/* Grid connecting lines */}
+          <div className="hidden lg:block absolute top-[4.5rem] bottom-[16rem] w-[1px] bg-white/10 left-1/2 -translate-x-1/2 z-0" />
+          <div className="hidden lg:block absolute top-[9rem] w-3/4 h-[1px] bg-white/10 left-1/2 -translate-x-1/2 z-0" />
+
+          {/* Core Divisions Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full relative z-10">
+            {divisions.map((div, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
+                className="p-8 border border-white/10 rounded-sm bg-white/[0.02] hover:bg-white/[0.05] hover:border-primary/50 transition-all duration-500 flex flex-col items-center text-center group min-h-[300px]"
+              >
+                {/* Connecting branch marker */}
+                <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-6 text-xs text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-500 font-sans font-medium">
+                  {div.icon}
+                </div>
+
+                <h4 className="text-xl font-serif text-white mb-6 tracking-wide group-hover:text-primary transition-colors duration-300">
+                  {div.title}
+                </h4>
+
+                <div className="w-8 h-[1px] bg-white/10 group-hover:w-16 group-hover:bg-primary/50 transition-all duration-500 mb-6" />
+
+                <ul className="flex flex-col gap-4 text-xs font-light text-white/50 w-full group-hover:text-white/80 transition-colors duration-500">
+                  {div.items.map((item, itemIdx) => (
+                    <li key={itemIdx} className="hover:text-primary transition-colors py-1 border-b border-white/[0.03] last:border-0">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+/* =====================================================================
    3. SỨ MỆNH & TẦM NHÌN (Bento Grid + Counter)
    ===================================================================== */
 function AnimatedCounter({ from, to, duration = 2 }) {
@@ -179,7 +282,7 @@ function AnimatedCounter({ from, to, duration = 2 }) {
 
 function VisionMissionSection() {
   return (
-    <section className="w-full bg-background text-secondary py-32 px-8 md:px-16 border-t border-secondary/10">
+    <section className="w-full bg-background text-secondary py-32 px-8 md:px-16 border-t border-secondary/10" data-theme="light">
       <div className="max-w-7xl mx-auto">
 
         {/* TOP: Sticky Split Layout for Mission & Vision */}
@@ -288,7 +391,7 @@ const values = [
 
 function CoreValuesSection() {
   return (
-    <section className="relative w-full bg-background text-secondary py-32 px-8 md:px-16 overflow-hidden">
+    <section className="relative w-full bg-background text-secondary py-32 px-8 md:px-16 overflow-hidden" data-theme="light">
       {/* Subtle Background Image */}
       <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none">
         <img src={imgKienTruc.src || imgKienTruc} alt="Background" className="w-full h-full object-cover grayscale mix-blend-multiply" />
@@ -335,7 +438,7 @@ function CoreValuesSection() {
    ===================================================================== */
 function LeadershipSection() {
   return (
-    <section className="w-full bg-background text-secondary py-32 px-8 md:px-16 border-t border-secondary/10">
+    <section className="w-full bg-background text-secondary py-32 px-8 md:px-16 border-t border-secondary/10" data-theme="light">
       <div className="max-w-7xl mx-auto">
         <span className="text-primary text-[10px] tracking-[0.3em] uppercase border-b border-secondary/20 pb-2 mb-16 inline-block">
           Nhân sự
@@ -526,12 +629,12 @@ export default function AboutPage() {
     <main>
       <AboutHero />
       <GroupSection />
+      <SystemDiagramSection />
       <VisionMissionSection />
-      <LeadershipSection />
       <CoreValuesSection />
-      <DesignProjects />
-      <Services />
-      <Contact />
+      <LeadershipSection />
+      <HomeCTA />
+      <Footer />
     </main>
   );
 }

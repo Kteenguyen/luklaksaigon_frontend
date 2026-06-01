@@ -27,7 +27,7 @@ export const projectsData = [
     id: 1,
     title: 'Biệt thự KC Villa',
     slug: 'biet-thu-kc-villa',
-    category: 'Biệt thự',
+    category: 'Villa',
     location: 'Đồng Nai',
     area: '450m2',
     style: 'Modern Luxury',
@@ -66,7 +66,7 @@ export const projectsData = [
     id: 4,
     title: 'Zen Cafe Boutique',
     slug: 'zen-cafe-boutique',
-    category: 'Thương mại',
+    category: 'Công trình dịch vụ',
     location: 'Q.2, TP.HCM',
     area: '300m2',
     style: 'Mid-Century',
@@ -92,7 +92,7 @@ export const projectsData = [
     id: 6,
     title: 'The Raw Studio',
     slug: 'the-raw-studio',
-    category: 'Văn phòng',
+    category: 'Building',
     location: 'Q.3, TP.HCM',
     area: '180m2',
     style: 'Wabi-sabi',
@@ -105,7 +105,7 @@ export const projectsData = [
     id: 7,
     title: 'Retro Villa',
     slug: 'retro-villa',
-    category: 'Biệt thự',
+    category: 'Villa',
     location: 'Bình Dương',
     area: '500m2',
     style: 'Mid-Century',
@@ -131,7 +131,7 @@ export const projectsData = [
     id: 9,
     title: 'Pine Hill Retreat',
     slug: 'pine-hill-retreat',
-    category: 'Biệt thự',
+    category: 'Công trình cảnh quan',
     location: 'Đà Lạt',
     area: '800m2',
     style: 'Farmhouse',
@@ -373,3 +373,22 @@ export const hoatDongData = [
     coverImg: img2
   }
 ];
+
+// Tự động đồng bộ các công trình thực tế vào mảng projectsData để hỗ trợ xem chi tiết tại /du-an/[slug]
+constructionProjectsData.forEach(c => {
+  if (!projectsData.some(p => p.slug === c.slug)) {
+    projectsData.push({
+      id: c.id,
+      title: c.title,
+      slug: c.slug,
+      category: 'Công trình thực tế',
+      location: c.location,
+      area: c.timeline || 'Đang cập nhật',
+      style: 'Thi công hoàn thiện',
+      year: c.status || '2024',
+      overview: c.overview,
+      coverImg: c.coverImg,
+      images: c.gallery || [c.coverImg]
+    });
+  }
+});

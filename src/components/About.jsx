@@ -33,7 +33,7 @@ function ScrubbingText({ text }) {
 
 export default function About() {
   return (
-    <section id="about" className="relative w-full bg-background text-secondary py-32 md:py-48 px-8 md:px-16 overflow-hidden">
+    <section id="about" className="relative w-full bg-background text-secondary py-32 md:py-48 px-8 md:px-16 overflow-hidden" data-theme="light">
       
       <div className="max-w-7xl mx-auto">
         {/* Tiêu đề góc nhỏ */}

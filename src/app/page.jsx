@@ -5,8 +5,10 @@ import ProjectShowcase from '../components/ProjectShowcase'
 import DesignProjects from '../components/DesignProjects'
 import FeaturedHorizontalScroll from '../components/FeaturedHorizontalScroll'
 import { constructionProjectsData } from '../data/mockData'
-import Journal from '../components/Journal'
-import Contact from '../components/Contact'
+import HomeCTA from '../components/HomeCTA'
+import Partners from '../components/Partners'
+import Footer from '../components/Footer'
+import LeadershipPreview from '../components/LeadershipPreview'
 
 // Mock Data cho 3 ProjectShowcase nổi bật nhất
 import img1 from '../assets/projectImage/Dự án thực tế/KC Villa/z7450163862634_83a0f94c7430897270c93b1b0a7bcfd6.jpg';
@@ -59,7 +61,7 @@ export default function Home() {
       <DesignStyles />
 
       {/* 4. Dự Án Thiết Kế Nổi Bật (3 lần duplicate) */}
-      <div className="relative z-10 bg-secondary">
+      <div className="relative z-10 bg-secondary" data-theme="dark">
         {featuredProjects.map((proj, idx) => (
           <ProjectShowcase key={idx} project={proj} />
         ))}
@@ -74,11 +76,17 @@ export default function Home() {
         title="Dự án Thực tế"
       />
 
-      {/* 7. Tin Tức & Cảm Hứng */}
-      <Journal />
+      {/* 7. Ban Điều Hành (Leadership) */}
+      <LeadershipPreview />
 
-      {/* 8. Liên Hệ & Footer */}
-      <Contact />
+      {/* 8. CTA Liên Hệ */}
+      <HomeCTA />
+
+      {/* 9. Đối Tác Chiến Lược */}
+      <Partners />
+
+      {/* 10. Footer Thông Tin Công Ty */}
+      <Footer />
     </main>
   )
 }

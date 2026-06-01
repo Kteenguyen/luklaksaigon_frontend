@@ -90,7 +90,7 @@ export default function FAQsPage() {
   }, [activeCategory]);
 
   return (
-    <main className="bg-surface min-h-screen text-text-main flex flex-col justify-between">
+    <main className="bg-surface min-h-screen text-text-main flex flex-col justify-between" data-theme="light">
 
       {/* Header Space */}
       <div className="w-full pt-40 pb-16 bg-surface px-8 md:px-16 border-b border-text-muted/10">

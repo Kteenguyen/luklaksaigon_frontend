@@ -55,7 +55,7 @@ export default function Hero() {
   };
 
   return (
-    <section ref={sectionRef} className="relative w-full h-screen overflow-hidden bg-secondary">
+    <section ref={sectionRef} className="relative w-full h-screen overflow-hidden bg-secondary" data-theme="dark">
 
       {/* ── Video Layer: parallax drift ── */}
       <motion.div

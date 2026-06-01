@@ -2,9 +2,18 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { projectsData } from '../data/mockData';
+import { projectsData, constructionProjectsData } from '../data/mockData';
 
-const CATEGORIES = ['Tất cả', ...Array.from(new Set(projectsData.map(p => p.category)))];
+const CATEGORIES = [
+  'Tất cả',
+  'Villa',
+  'Nhà phố',
+  'Building',
+  'Căn hộ',
+  'Công trình dịch vụ',
+  'Công trình cảnh quan',
+  'Công trình thực tế'
+];
 
 export default function ProjectGallery() {
   const [activeCategory, setActiveCategory] = useState('Tất cả');
@@ -12,7 +21,8 @@ export default function ProjectGallery() {
 
   useEffect(() => {
     if (activeCategory === 'Tất cả') {
-      setFilteredProjects(projectsData);
+      // Hiển thị tất cả dự án thiết kế (loại trừ Công trình thực tế để đảm bảo tính phân tách)
+      setFilteredProjects(projectsData.filter(p => p.category !== 'Công trình thực tế'));
     } else {
       setFilteredProjects(projectsData.filter(p => p.category === activeCategory));
     }

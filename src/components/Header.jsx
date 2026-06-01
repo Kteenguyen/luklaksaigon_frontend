@@ -1,47 +1,39 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { Search, ChevronDown } from 'lucide-react';
 import logoSrc from '../assets/logo/PNG/Logo_Light_1 copy.png';
+import logoDarkSrc from '../assets/logo/PNG/Logo_Dark_1.png';
 
 const navItems = [
   { name: 'Trang chủ', path: '/' },
   { name: 'Về chúng tôi', path: '/ve-chung-toi' },
+  { name: 'Dịch vụ', path: '/dich-vu' },
   {
     name: 'Dự án',
     path: '/du-an',
     dropdown: [
-      { label: 'Biệt thự', path: '/du-an?category=Biệt thự' },
-      { label: 'Căn hộ', path: '/du-an?category=Căn hộ' },
+      { label: 'Villa', path: '/du-an?category=Villa' },
       { label: 'Nhà phố', path: '/du-an?category=Nhà phố' },
-      { label: 'Thương mại', path: '/du-an?category=Thương mại' }
+      { label: 'Building', path: '/du-an?category=Building' },
+      { label: 'Căn hộ', path: '/du-an?category=Căn hộ' },
+      { label: 'Công trình dịch vụ', path: '/du-an?category=Công trình dịch vụ' },
+      { label: 'Công trình cảnh quan', path: '/du-an?category=Công trình cảnh quan' },
+      { label: 'Công trình thực tế', path: '/du-an?category=Công trình thực tế' }
     ]
   },
-  { name: 'Thi công', path: '/thi-cong' },
-  { name: 'Đăng ký tư vấn', path: '/dang-ky-tu-van' },
-  {
-    name: 'Phong cách thiết kế',
-    path: '#',
-    dropdown: [
-      { label: 'Japandi', path: '/japandi' },
-      { label: 'Mid-Century', path: '/mid-century' },
-      { label: 'Farmhouse', path: '/farmhouse' },
-      { label: 'Wabisabi', path: '/wabisabi' },
-      { label: 'Modern', path: '/modern' }
-    ]
-  },
-  { name: 'FAQs', path: '/faqs' },
   {
     name: 'Tin tức',
-    path: '#',
+    path: '/blog',
     dropdown: [
-      { label: 'Blog', path: '/blog' },
-      { label: 'Hoạt động', path: '/hoat-dong' }
+      { label: 'Blog / Tin tức', path: '/blog' },
+      { label: 'Phong cách thiết kế', path: '/#design-styles' },
+      { label: 'FAQs', path: '/faqs' }
     ]
-  }
+  },
+  { name: 'Đăng ký tư vấn', path: '/dang-ky-tu-van' }
 ];
-
 
 export default function Header() {
   const pathname = usePathname();
@@ -50,24 +42,71 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [hoveredNav, setHoveredNav] = useState(null);
   const [activeMenuAccordion, setActiveMenuAccordion] = useState(null);
+  const [headerTheme, setHeaderTheme] = useState('dark');
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsAtTop(latest <= 50);
   });
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const headerHeight = 80;
+      const testY = headerHeight / 2; // Midpoint coordinate of the header
+      
+      const themeElements = document.querySelectorAll('[data-theme]');
+      let activeTheme = 'dark'; // Fallback to dark
+      
+      themeElements.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        // If the coordinate overlaps with the element bounds
+        if (rect.top <= testY && rect.bottom >= testY) {
+          const theme = el.getAttribute('data-theme');
+          if (theme === 'light' || theme === 'dark') {
+            activeTheme = theme;
+          }
+        }
+      });
+      
+      setHeaderTheme(activeTheme);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    
+    const timer = setTimeout(handleScroll, 100);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(timer);
+    };
+  }, [pathname]);
 
   if (pathname === '/landing') return null;
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between transition-all duration-700 w-full ${isAtTop || menuOpen
-          ? 'h-28 px-8 md:px-16 bg-gradient-to-b from-secondary/80 via-secondary/40 to-transparent'
-          : 'h-20 px-6 md:px-12 bg-secondary/95 backdrop-blur-md shadow-xl border-b border-surface/10'
-          }`}
+        className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between transition-all duration-500 w-full ${
+          isAtTop || menuOpen
+            ? `h-28 px-8 md:px-16 bg-gradient-to-b ${
+                headerTheme === 'dark'
+                  ? 'from-secondary/80 via-secondary/40'
+                  : 'from-background/85 via-background/45'
+              } to-transparent`
+            : `h-20 px-6 md:px-12 backdrop-blur-md shadow-xl border-b ${
+                headerTheme === 'dark'
+                  ? 'bg-secondary/90 border-white/5'
+                  : 'bg-background/90 border-secondary/10'
+              }`
+        }`}
       >
         {/* LOGO */}
         <a href="/" className="cursor-pointer z-50 flex-shrink-0">
-          <img src={logoSrc.src || logoSrc} alt="LukLak Design & Build" className="h-10 md:h-14 w-auto object-contain drop-shadow-lg" />
+          <img
+            src={headerTheme === 'dark' ? (logoSrc.src || logoSrc) : (logoDarkSrc.src || logoDarkSrc)}
+            alt="LukLak Design & Build"
+            className="h-10 md:h-14 w-auto object-contain drop-shadow-lg transition-all duration-500"
+          />
         </a>
 
         {/* DESKTOP NAVIGATION (Center) */}
@@ -89,7 +128,11 @@ export default function Header() {
                 >
                   <a
                     href={item.path}
-                    className="flex items-center gap-2 text-[11px] lg:text-[12px] font-sans tracking-[0.2em] font-medium text-surface hover:text-primary transition-colors uppercase"
+                    className={`flex items-center gap-2 text-[11px] lg:text-[12px] font-sans tracking-[0.2em] font-medium uppercase transition-colors ${
+                      headerTheme === 'dark'
+                        ? 'text-surface hover:text-primary'
+                        : 'text-secondary hover:text-primary'
+                    }`}
                   >
                     {item.name}
                     {item.dropdown && <ChevronDown size={12} className="opacity-100" />}
@@ -103,7 +146,11 @@ export default function Header() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.98 }}
                         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                        className="absolute top-full left-1/2 -translate-x-1/2 mt-4 py-8 px-10 flex flex-col items-start gap-5 min-w-[260px] bg-secondary/95 backdrop-blur-xl border border-surface/10 rounded-sm shadow-2xl"
+                        className={`absolute top-full left-1/2 -translate-x-1/2 mt-4 py-8 px-10 flex flex-col items-start gap-5 min-w-[260px] backdrop-blur-xl border rounded-sm shadow-2xl ${
+                          headerTheme === 'dark'
+                            ? 'bg-secondary/95 border-white/10'
+                            : 'bg-background/95 border-secondary/10'
+                        }`}
                       >
                         {item.dropdown.map((sub, idx) => (
                           <motion.a
@@ -115,7 +162,11 @@ export default function Header() {
                             className="group flex items-center gap-3 w-full"
                           >
                             <span className="w-0 h-[1px] bg-primary transition-all duration-300 group-hover:w-4" />
-                            <span className="text-[10px] lg:text-[11px] font-sans tracking-[0.2em] text-surface/70 group-hover:text-primary uppercase transition-colors whitespace-nowrap">
+                            <span className={`text-[10px] lg:text-[11px] font-sans tracking-[0.2em] uppercase transition-colors whitespace-nowrap ${
+                              headerTheme === 'dark'
+                                ? 'text-surface/70 group-hover:text-primary'
+                                : 'text-secondary/70 group-hover:text-primary'
+                            }`}>
                               {sub.label}
                             </span>
                           </motion.a>
@@ -131,7 +182,9 @@ export default function Header() {
         </AnimatePresence>
 
         {/* RIGHT ACTION: MENU text + Search */}
-        <div className="flex items-center justify-end flex-shrink-0 gap-8 z-50 text-surface">
+        <div className={`flex items-center justify-end flex-shrink-0 gap-8 z-50 transition-colors ${
+          headerTheme === 'dark' ? 'text-surface' : 'text-secondary'
+        }`}>
           <div
             className="flex items-center cursor-pointer"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -139,18 +192,18 @@ export default function Header() {
             <motion.span
               animate={{ opacity: (!isAtTop || menuOpen) ? 1 : 0 }}
               style={{ pointerEvents: (!isAtTop || menuOpen) ? 'auto' : 'none' }}
-              className={`text-[10px] tracking-[0.15em] font-medium uppercase hidden lg:block transition-colors ${menuOpen && isAtTop ? 'text-surface hover:text-primary' : 'text-surface hover:text-primary'}`}
+              className={`text-[10px] tracking-[0.15em] font-medium uppercase hidden lg:block transition-colors hover:text-primary`}
             >
               {menuOpen ? 'Đóng' : 'Menu'}
             </motion.span>
             <motion.span
-              className={`text-[10px] tracking-[0.15em] font-medium uppercase lg:hidden transition-colors text-surface hover:text-primary`}
+              className={`text-[10px] tracking-[0.15em] font-medium uppercase lg:hidden transition-colors hover:text-primary`}
             >
               {menuOpen ? 'Đóng' : 'Menu'}
             </motion.span>
           </div>
 
-          <button className={`transition-colors text-surface hover:text-primary`}>
+          <button className={`transition-colors hover:text-primary`}>
             <Search size={22} strokeWidth={1.2} />
           </button>
         </div>
@@ -178,7 +231,7 @@ export default function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-x-0 top-20 z-40 lg:hidden flex flex-col items-center pt-8 pb-12 overflow-y-auto max-h-[calc(100vh-5rem)] [&::-webkit-scrollbar]:hidden"
+            className="fixed inset-x-0 top-20 z-40 lg:hidden flex flex-col items-center pt-8 pb-12 overflow-y-auto max-h-[calc(100vh-5rem)] [&::-webkit-scrollbar]:hidden bg-secondary/95 backdrop-blur-xl"
           >
             <nav className="flex flex-col gap-8 w-full px-8">
               {navItems.map((item, i) => (

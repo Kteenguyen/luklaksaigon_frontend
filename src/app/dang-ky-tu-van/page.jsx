@@ -1,24 +1,99 @@
 "use client";
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import Contact from "../../components/Contact";
+import { motion, AnimatePresence } from 'framer-motion';
+import Footer from "../../components/Footer";
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    service: '',
+    buildingType: '',
+    message: ''
+  });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
-      alert('Cảm ơn bạn đã liên hệ! LUKLAK Group sẽ phản hồi trong thời gian sớm nhất.');
+
+    try {
+      const response = await fetch('/api/dang-ky', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json();
+      
+      if (response.ok && data.success) {
+        // Backup client-side log
+        localStorage.setItem('luklak_last_registration', JSON.stringify(data.registration));
+        
+        setIsSubmitting(false);
+        setShowSuccessModal(true);
+        setFormData({
+          name: '',
+          phone: '',
+          email: '',
+          service: '',
+          buildingType: '',
+          message: ''
+        });
+      } else {
+        alert(data.error || 'Có lỗi xảy ra, vui lòng thử lại sau.');
+        setIsSubmitting(false);
+      }
+    } catch (err) {
+      console.error("Lỗi kết nối API:", err);
+      alert('Không thể kết nối đến máy chủ. Vui lòng kiểm tra lại mạng.');
       setIsSubmitting(false);
-      e.target.reset();
-    }, 1000);
+    }
   };
 
   return (
-    <main className="bg-background text-secondary min-h-screen">
+    <main className="bg-background text-secondary min-h-screen relative" data-theme="light">
+      
+      {/* Success Modal */}
+      <AnimatePresence>
+        {showSuccessModal && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[9999] flex items-center justify-center p-6 bg-secondary/80 backdrop-blur-md"
+          >
+            <motion.div 
+              initial={{ scale: 0.95, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 20 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="bg-secondary text-white max-w-lg w-full p-10 rounded-sm border border-primary/40 shadow-2xl flex flex-col items-center text-center"
+            >
+              <div className="w-16 h-16 rounded-full border border-primary flex items-center justify-center mb-8">
+                <span className="text-primary text-2xl">✓</span>
+              </div>
+              <h3 className="text-3xl font-serif font-light text-white mb-4">
+                Đăng ký thành công
+              </h3>
+              <p className="text-white/60 font-light text-sm leading-relaxed mb-8">
+                Một email xác nhận tự động đã được gửi đến hòm thư của bạn. Đội ngũ Kiến trúc sư trưởng của LUKLAK sẽ liên hệ trực tiếp để trao đổi phương án thiết kế trong thời gian sớm nhất.
+              </p>
+              <button 
+                onClick={() => setShowSuccessModal(false)}
+                className="w-full bg-primary text-secondary tracking-widest uppercase text-xs font-semibold py-4 hover:bg-white hover:text-secondary transition-colors duration-300 rounded-sm"
+              >
+                Đóng
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Hero Section */}
       <div className="pt-40 pb-24 px-8 md:px-16 text-center max-w-4xl mx-auto">
         <span className="text-primary text-[10px] tracking-[0.3em] uppercase border-b border-secondary/20 pb-2 mb-8 inline-block">
@@ -38,34 +113,97 @@ export default function ContactPage() {
         <div className="order-2 lg:order-1">
           <h3 className="text-3xl font-serif mb-12 text-secondary">Gửi thông tin cho chúng tôi</h3>
           <form onSubmit={handleSubmit} className="flex flex-col gap-10">
+            
+            {/* Họ tên */}
             <div className="flex flex-col border-b border-secondary/20 pb-3 focus-within:border-primary transition-colors">
-              <label className="text-[10px] uppercase tracking-widest text-secondary/50 mb-2">Họ và tên *</label>
-              <input type="text" required className="bg-transparent text-secondary outline-none placeholder:text-secondary/20 font-light text-xl" placeholder="Nhập họ tên của bạn" />
+              <label className="text-[10px] uppercase tracking-widest text-secondary/50 mb-2">Họ tên *</label>
+              <input 
+                type="text" 
+                required 
+                value={formData.name}
+                onChange={(e) => setFormData({...formData, name: e.target.value})}
+                className="bg-transparent text-secondary outline-none placeholder:text-secondary/20 font-light text-xl" 
+                placeholder="Nhập họ tên của bạn" 
+              />
             </div>
+            
+            {/* SĐT + Email */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div className="flex flex-col border-b border-secondary/20 pb-3 focus-within:border-primary transition-colors">
                 <label className="text-[10px] uppercase tracking-widest text-secondary/50 mb-2">Số điện thoại *</label>
-                <input type="tel" required className="bg-transparent text-secondary outline-none placeholder:text-secondary/20 font-light text-xl" placeholder="Nhập số điện thoại" />
+                <input 
+                  type="tel" 
+                  required 
+                  value={formData.phone}
+                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                  className="bg-transparent text-secondary outline-none placeholder:text-secondary/20 font-light text-xl" 
+                  placeholder="Nhập số điện thoại" 
+                />
               </div>
               <div className="flex flex-col border-b border-secondary/20 pb-3 focus-within:border-primary transition-colors">
                 <label className="text-[10px] uppercase tracking-widest text-secondary/50 mb-2">Email</label>
-                <input type="email" className="bg-transparent text-secondary outline-none placeholder:text-secondary/20 font-light text-xl" placeholder="Nhập email (tuỳ chọn)" />
+                <input 
+                  type="email" 
+                  value={formData.email}
+                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  className="bg-transparent text-secondary outline-none placeholder:text-secondary/20 font-light text-xl" 
+                  placeholder="Nhập email (tuỳ chọn)" 
+                />
               </div>
             </div>
+            
+            {/* Dịch vụ */}
             <div className="flex flex-col border-b border-secondary/20 pb-3 focus-within:border-primary transition-colors">
-              <label className="text-[10px] uppercase tracking-widest text-secondary/50 mb-2">Loại hình dịch vụ quan tâm</label>
-              <select className="bg-transparent text-secondary outline-none font-light text-xl cursor-pointer">
-                <option value="">Chọn dịch vụ...</option>
-                <option value="Tư vấn thiết kế">Tư vấn thiết kế</option>
-                <option value="Thi công nội thất">Thi công nội thất</option>
-                <option value="Sản xuất đồ gỗ">Sản xuất đồ gỗ nội thất</option>
-                <option value="Chìa khóa trao tay">Chìa khóa trao tay (Design & Build)</option>
+              <label className="text-[10px] uppercase tracking-widest text-secondary/50 mb-2">Dịch vụ</label>
+              <select 
+                value={formData.service}
+                onChange={(e) => setFormData({...formData, service: e.target.value})}
+                className="bg-transparent text-secondary outline-none font-light text-xl cursor-pointer"
+              >
+                <option value="" className="text-secondary bg-background">Chọn dịch vụ...</option>
+                <option value="Thiết kế kiến trúc" className="text-secondary bg-background">Thiết kế kiến trúc</option>
+                <option value="Thiết kế nội thất" className="text-secondary bg-background">Thiết kế nội thất</option>
+                <option value="Thiết kế cảnh quan" className="text-secondary bg-background">Thiết kế cảnh quan</option>
+                <option value="Thi công xây dựng" className="text-secondary bg-background">Thi công xây dựng</option>
+                <option value="Thi công nội thất" className="text-secondary bg-background">Thi công nội thất</option>
+                <option value="Quản lý dự án / Dịch vụ bảo trì" className="text-secondary bg-background">Quản lý dự án / Dịch vụ bảo trì</option>
+                <option value="Sản xuất sản phẩm nội thất / chiếu sáng" className="text-secondary bg-background">Sản xuất sản phẩm nội thất / chiếu sáng</option>
+                <option value="Thương mại & Trang trí (Decor)" className="text-secondary bg-background">Thương mại & Trang trí (Decor)</option>
               </select>
             </div>
+
+            {/* Loại công trình */}
             <div className="flex flex-col border-b border-secondary/20 pb-3 focus-within:border-primary transition-colors">
-              <label className="text-[10px] uppercase tracking-widest text-secondary/50 mb-2">Nội dung / Ghi chú *</label>
-              <textarea required rows="3" className="bg-transparent text-secondary outline-none placeholder:text-secondary/20 font-light text-xl resize-none" placeholder="Chi tiết yêu cầu của bạn (diện tích, phong cách, vị trí, ngân sách...)"></textarea>
+              <label className="text-[10px] uppercase tracking-widest text-secondary/50 mb-2">Loại công trình *</label>
+              <select 
+                required
+                value={formData.buildingType}
+                onChange={(e) => setFormData({...formData, buildingType: e.target.value})}
+                className="bg-transparent text-secondary outline-none font-light text-xl cursor-pointer"
+              >
+                <option value="" className="text-secondary bg-background">Chọn loại công trình...</option>
+                <option value="Villa" className="text-secondary bg-background">Villa</option>
+                <option value="Nhà phố" className="text-secondary bg-background">Nhà phố</option>
+                <option value="Building" className="text-secondary bg-background">Building</option>
+                <option value="Căn hộ" className="text-secondary bg-background">Căn hộ</option>
+                <option value="Công trình dịch vụ" className="text-secondary bg-background">Công trình dịch vụ</option>
+                <option value="Công trình cảnh quan / Công cộng" className="text-secondary bg-background">Công trình cảnh quan / Công cộng</option>
+              </select>
             </div>
+
+            {/* Lời nhắn */}
+            <div className="flex flex-col border-b border-secondary/20 pb-3 focus-within:border-primary transition-colors">
+              <label className="text-[10px] uppercase tracking-widest text-secondary/50 mb-2">Lời nhắn *</label>
+              <textarea 
+                required 
+                rows="3" 
+                value={formData.message}
+                onChange={(e) => setFormData({...formData, message: e.target.value})}
+                className="bg-transparent text-secondary outline-none placeholder:text-secondary/20 font-light text-xl resize-none" 
+                placeholder="Lời nhắn của bạn (diện tích, phong cách, vị trí, ngân sách, hoặc yêu cầu cụ thể...)"
+              ></textarea>
+            </div>
+            
             <button
               type="submit"
               disabled={isSubmitting}
@@ -141,9 +279,7 @@ export default function ContactPage() {
       </div>
 
       {/* Global Footer Curtain */}
-      <div className="relative z-40 bg-secondary">
-        <Contact />
-      </div>
+      <Footer />
     </main>
   );
 }
