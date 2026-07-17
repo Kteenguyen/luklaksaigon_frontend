@@ -170,7 +170,7 @@ export default function HomeContactForm() {
   };
 
   return (
-    <section id="contact-form" className="w-full bg-[#151413] text-white py-24 md:py-32 px-8 md:px-16 lg:px-24 relative overflow-hidden" data-theme="dark">
+    <section id="contact-form" className="w-full bg-[#151413] text-white py-12 md:py-32 px-6 md:px-16 lg:px-24 relative overflow-hidden" data-theme="dark">
       {/* Smooth transition from preceding section */}
       <div className="absolute top-0 left-0 w-full h-[10vh] bg-gradient-to-b from-transparent to-transparent z-10 pointer-events-none" />
 
@@ -207,18 +207,18 @@ export default function HomeContactForm() {
         )}
       </AnimatePresence>
 
-      <div className="max-w-[90rem] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start relative z-20">
+      <div className="max-w-[90rem] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-24 items-start relative z-20">
         
         {/* Left Side: Call to Action content */}
-        <div className="lg:col-span-5 flex flex-col items-start gap-6 pt-2">
-          <span className="text-white/40 text-[10px] md:text-xs tracking-[0.4em] uppercase font-medium">
+        <div className="lg:col-span-5 flex flex-col items-start gap-3 lg:gap-6 pt-0 lg:pt-2">
+          <span className="text-white/40 text-[10px] tracking-[0.4em] uppercase font-medium">
             Đăng ký tư vấn
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-[46px] lg:leading-[1.2] font-serif font-light text-white tracking-tight">
+          <h2 className="text-[22px] md:text-3xl lg:text-[46px] leading-[1.3] lg:leading-[1.2] font-serif font-light text-white tracking-tight">
             Hãy chia sẻ tóm tắt yêu cầu của bạn và LUKLAK Sài Gòn sẽ phản hồi phương án thiết kế phù hợp nhất cho dự án.
           </h2>
           
-          <div className="flex flex-col gap-2 text-[11px] md:text-xs text-white/45 font-light mt-16 md:mt-32 lg:mt-48">
+          <div className="flex flex-col gap-1.5 text-[10px] md:text-xs text-white/45 font-light mt-4 md:mt-32 lg:mt-48">
             <p>43R/10 Hồ Văn Huê, Phường 9, Quận Phú Nhuận, TP. Hồ Chí Minh</p>
             <p>093 247 88 58 &middot; info@luklaksg.vn</p>
           </div>
@@ -226,17 +226,17 @@ export default function HomeContactForm() {
 
         {/* Right Side: Form styled like screenshot */}
         <div className="lg:col-span-7 w-full">
-          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3.5 md:gap-5">
             
             {/* Row 1: Full name and Phone number */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-2 gap-3.5 md:gap-5">
               <input 
                 type="text" 
                 required 
                 placeholder="Họ và tên"
                 value={formData.name}
                 onChange={(e) => setFormData({...formData, name: e.target.value})}
-                className="w-full h-14 px-5 bg-[#201E1D] border border-white/10 rounded-[6px] text-white placeholder:text-white/30 text-sm md:text-base outline-none focus:border-[#DED3B8]/60 transition-all"
+                className="w-full h-11 md:h-14 px-3.5 md:px-5 bg-[#201E1D] border border-white/10 rounded-[6px] text-white placeholder:text-white/30 text-xs md:text-base outline-none focus:border-[#DED3B8]/60 transition-all"
               />
               <input 
                 type="tel" 
@@ -244,18 +244,18 @@ export default function HomeContactForm() {
                 placeholder="Số điện thoại"
                 value={formData.phone}
                 onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                className="w-full h-14 px-5 bg-[#201E1D] border border-white/10 rounded-[6px] text-white placeholder:text-white/30 text-sm md:text-base outline-none focus:border-[#DED3B8]/60 transition-all"
+                className="w-full h-11 md:h-14 px-3.5 md:px-5 bg-[#201E1D] border border-white/10 rounded-[6px] text-white placeholder:text-white/30 text-xs md:text-base outline-none focus:border-[#DED3B8]/60 transition-all"
               />
             </div>
 
             {/* Row 2: Email address and Select service */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-2 gap-3.5 md:gap-5">
               <input 
                 type="email" 
                 placeholder="Địa chỉ Email"
                 value={formData.email}
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
-                className="w-full h-14 px-5 bg-[#201E1D] border border-white/10 rounded-[6px] text-white placeholder:text-white/30 text-sm md:text-base outline-none focus:border-[#DED3B8]/60 transition-all"
+                className="w-full h-11 md:h-14 px-3.5 md:px-5 bg-[#201E1D] border border-white/10 rounded-[6px] text-white placeholder:text-white/30 text-xs md:text-base outline-none focus:border-[#DED3B8]/60 transition-all"
               />
               <CustomSelect 
                 value={formData.service} 
@@ -276,15 +276,15 @@ export default function HomeContactForm() {
             {/* Row 4: Short project description */}
             <textarea 
               required 
-              rows="5" 
+              rows={3} 
               placeholder="Mô tả ngắn gọn về dự án (diện tích, địa điểm, yêu cầu thiết kế...)"
               value={formData.message}
               onChange={(e) => setFormData({...formData, message: e.target.value})}
-              className="w-full p-5 bg-[#201E1D] border border-white/10 rounded-[6px] text-white placeholder:text-white/30 text-sm md:text-base outline-none focus:border-[#DED3B8]/60 resize-none transition-all"
+              className="w-full p-3.5 md:p-5 bg-[#201E1D] border border-white/10 rounded-[6px] text-white placeholder:text-white/30 text-xs md:text-base outline-none focus:border-[#DED3B8]/60 resize-none transition-all"
             ></textarea>
 
             {/* Bottom note */}
-            <p className="text-[10px] md:text-[11px] text-white/40 leading-relaxed font-light mt-1">
+            <p className="text-[9px] md:text-[11px] text-white/40 leading-relaxed font-light mt-0.5">
               Thông tin của bạn được cam kết bảo mật và chỉ sử dụng cho mục đích tư vấn phương án thiết kế và thi công bởi LUKLAK Sài Gòn.
             </p>
 
@@ -292,7 +292,7 @@ export default function HomeContactForm() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-[#FAF7F2] text-secondary hover:bg-white transition-all duration-300 font-bold uppercase tracking-[0.2em] text-[11px] md:text-xs py-4 md:py-5 rounded-none flex items-center justify-center gap-2 mt-4 disabled:opacity-50"
+              className="w-full bg-[#FAF7F2] text-secondary hover:bg-white transition-all duration-300 font-bold uppercase tracking-[0.2em] text-[10px] md:text-xs py-3.5 md:py-5 rounded-none flex items-center justify-center gap-2 mt-2 disabled:opacity-50"
             >
               {isSubmitting ? 'ĐANG GỬI...' : 'GỬI ĐĂNG KÝ TƯ VẤN'}
               <span className="text-sm font-semibold relative top-[-1px] ml-1">↗</span>
