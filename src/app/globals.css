@@ -63,3 +63,26 @@ img {
   background: linear-gradient(to right, transparent, #2D2C2A20, transparent);
   width: 100%;
 }
+
+/* ── Global Mobile Side Padding (10px) ──────────────── */
+@media (max-width: 767px) {
+  .px-6:not(button):not(a),
+  .px-8:not(button):not(a),
+  .px-12:not(button):not(a),
+  .px-16:not(button):not(a),
+  .px-20:not(button):not(a),
+  .px-24:not(button):not(a),
+  .px-32:not(button):not(a) {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+}
+
+/* ── No Scrollbar Utility ─────────────────────────── */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

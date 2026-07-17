@@ -118,13 +118,13 @@ function GroupSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}
-          className="w-full overflow-hidden rounded-sm bg-neutral-100"
+          className="w-full overflow-x-auto no-scrollbar rounded-sm bg-neutral-100 cursor-grab active:cursor-grabbing select-none"
         >
           <img 
             src={imgTeam.src || imgTeam} 
             alt="Đội ngũ nhân sự LUKLAK GROUP VIỆT NAM" 
             title="Tập thể nhân sự Luklak" 
-            className="w-full h-auto object-cover filter brightness-[0.98] hover:scale-[1.02] transition-transform duration-[2s] ease-out" 
+            className="min-w-[640px] md:min-w-0 w-full h-[220px] md:h-auto object-cover object-center filter brightness-[0.98] md:hover:scale-[1.02] transition-transform duration-[2s] ease-out" 
           />
         </motion.div>
 
