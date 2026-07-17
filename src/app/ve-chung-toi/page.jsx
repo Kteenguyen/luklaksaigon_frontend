@@ -484,13 +484,22 @@ function AnimatedCounter({ from, to, duration = 2 }) {
 
 function VisionMissionSection() {
   const bannerRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: bannerRef,
     offset: ["start end", "end start"]
   });
 
-  const yBg = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
-  const yText = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const yBg = useTransform(scrollYProgress, [0, 1], isMobile ? ["0%", "0%"] : ["-12%", "12%"]);
+  const yText = useTransform(scrollYProgress, [0, 1], isMobile ? [0, 0] : [100, -100]);
   const opacityText = useTransform(scrollYProgress, [0, 0.35, 0.65, 1], [0.4, 1, 1, 0.4]);
 
   const stats = [
@@ -586,7 +595,7 @@ function VisionMissionSection() {
             {/* Parallax Overlay Text */}
             <motion.div 
               style={{ y: yText, opacity: opacityText }}
-              className="absolute inset-0 z-10 flex flex-col justify-center items-center text-center px-6 md:px-12 pb-16 md:pb-24 pointer-events-none"
+              className="absolute inset-0 z-10 flex flex-col justify-center items-center text-center px-6 md:px-12 pb-4 md:pb-24 pointer-events-none"
             >
               <span className="text-primary text-[10px] md:text-xs tracking-[0.3em] uppercase mb-4 font-semibold">
                 Luklak Group
@@ -597,33 +606,33 @@ function VisionMissionSection() {
             </motion.div>
           </div>
 
-          {/* Stats Grid directly below it - Floating & Overlapping */}
-          <div className="relative z-20 px-4 md:px-8 lg:px-12 -mt-12 md:-mt-20 lg:-mt-28">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          {/* Stats Grid directly below it - Floating on desktop, clean grid on mobile */}
+          <div className="relative z-20 px-4 md:px-8 lg:px-12 mt-8 md:-mt-20 lg:-mt-28">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto">
               {stats.map((stat, idx) => (
                 <motion.div
                   key={idx}
-                  initial={{ opacity: 0, y: 40 }}
+                  initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.8, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
                   whileHover={{ y: -8 }}
-                  className="bg-white/95 backdrop-blur-md border border-secondary/[0.08] hover:border-primary/25 p-8 md:p-10 rounded-[8px] flex flex-col justify-start group transition-all duration-500 shadow-[0_15px_40px_-20px_rgba(0,0,0,0.06)] hover:shadow-[0_30px_60px_-15px_rgba(201,89,40,0.1)]"
+                  className="bg-transparent md:bg-white/95 md:backdrop-blur-md border-b border-secondary/10 md:border md:border-secondary/[0.08] hover:border-primary/25 p-4 md:p-10 rounded-[8px] flex flex-col justify-start group transition-all duration-500 md:shadow-[0_15px_40px_-20px_rgba(0,0,0,0.06)] hover:shadow-[0_30px_60px_-15px_rgba(201,89,40,0.1)]"
                 >
-                  <span className="text-5xl lg:text-6.5xl font-serif text-primary tracking-tight font-light mb-3 block">
+                  <span className="text-4xl md:text-5xl lg:text-6.5xl font-serif text-primary tracking-tight font-light mb-2 block">
                     {stat.prefix}
                     <AnimatedCounter from={stat.from} to={stat.to} duration={2.5} />
                     {stat.suffix}
                   </span>
                   
-                  <h4 className="text-xs uppercase tracking-widest text-secondary/80 mb-2.5 font-bold">
+                  <h4 className="text-[10px] md:text-xs uppercase tracking-widest text-secondary/80 mb-2 font-bold">
                     {stat.label}
                   </h4>
                   
                   {/* Decorative Expandable Horizontal Line */}
-                  <div className="w-6 h-[1.5px] bg-primary/30 group-hover:w-16 group-hover:bg-primary transition-all duration-500 mb-4" />
+                  <div className="w-6 h-[1.5px] bg-primary/30 group-hover:w-16 group-hover:bg-primary transition-all duration-500 mb-3" />
                   
-                  <p className="text-xs md:text-sm font-light text-secondary/70 leading-relaxed font-sans text-left">
+                  <p className="text-[11px] md:text-sm font-light text-secondary/70 leading-relaxed font-sans text-left">
                     {stat.desc}
                   </p>
                 </motion.div>
