@@ -267,6 +267,33 @@ function SystemDiagramSection() {
 
           {/* Right Column */}
           <div className="lg:col-span-7 relative w-full flex flex-col items-center">
+            
+            {/* Mobile View: Tab selector directly above the map */}
+            <div className="w-full flex flex-col gap-4 mb-6 md:hidden px-4">
+              <div className="flex justify-center border border-secondary/15 rounded-sm overflow-hidden bg-white/50 p-1">
+                {[
+                  { id: 'hanoi', label: 'Hà Nội' },
+                  { id: 'danang', label: 'Đà Nẵng' },
+                  { id: 'hcmc', label: 'TP.HCM' }
+                ].map((tab) => {
+                  const isActive = activeBranch === tab.id;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveBranch(tab.id)}
+                      className={`flex-1 text-center py-2 text-[10px] tracking-[0.15em] uppercase transition-all duration-300 font-medium ${
+                        isActive 
+                          ? 'bg-secondary text-white rounded-sm font-semibold shadow-sm' 
+                          : 'text-secondary/60 hover:text-secondary'
+                      }`}
+                    >
+                      {tab.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
             {/* Map Container */}
             <div className="relative w-full max-w-[500px] lg:max-w-none aspect-[3/4] md:h-[650px] lg:h-[750px] bg-transparent flex items-center justify-center p-4">
               
@@ -416,32 +443,6 @@ function SystemDiagramSection() {
                 <p className="text-[9px] md:text-xs text-secondary/60 font-semibold">Hotline: 097 634 7664</p>
               </div>
 
-            </div>
-
-            {/* Mobile View: Tab selector directly below the map */}
-            <div className="w-full flex flex-col gap-4 mt-6 md:hidden px-4">
-              <div className="flex justify-center border border-secondary/15 rounded-sm overflow-hidden bg-white/50 p-1">
-                {[
-                  { id: 'hanoi', label: 'Hà Nội' },
-                  { id: 'danang', label: 'Đà Nẵng' },
-                  { id: 'hcmc', label: 'TP.HCM' }
-                ].map((tab) => {
-                  const isActive = activeBranch === tab.id;
-                  return (
-                    <button
-                      key={tab.id}
-                      onClick={() => setActiveBranch(tab.id)}
-                      className={`flex-1 text-center py-2 text-[10px] tracking-[0.15em] uppercase transition-all duration-300 font-medium ${
-                        isActive 
-                          ? 'bg-secondary text-white rounded-sm font-semibold shadow-sm' 
-                          : 'text-secondary/60 hover:text-secondary'
-                      }`}
-                    >
-                      {tab.label}
-                    </button>
-                  );
-                })}
-              </div>
             </div>
 
           </div>
