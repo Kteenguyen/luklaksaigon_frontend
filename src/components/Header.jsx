@@ -94,6 +94,28 @@ export default function Header() {
     };
   }, [pathname]);
 
+  // Lock scroll when mobile menu is open
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (menuOpen) {
+        document.body.style.overflow = 'hidden';
+        if (window.__lenis) {
+          window.__lenis.stop();
+        }
+      } else {
+        document.body.style.overflow = '';
+        if (window.__lenis) {
+          window.__lenis.start();
+        }
+      }
+    }
+    return () => {
+      if (typeof window !== 'undefined') {
+        document.body.style.overflow = '';
+      }
+    };
+  }, [menuOpen]);
+
   if (pathname === '/landing') return null;
 
   return (

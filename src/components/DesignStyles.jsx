@@ -41,10 +41,11 @@ export default function DesignStyles() {
               key={style.id}
               layout // Kích hoạt hiệu ứng biến đổi layout mượt mà
               onMouseEnter={() => setActive(style.id)}
-              className="relative cursor-pointer overflow-hidden border-b md:border-b-0 md:border-r border-secondary/10 last:border-0 flex items-end md:items-start"
+              onClick={() => setActive(style.id)} // Cho phép click/tap trên mobile
+              className="relative cursor-pointer overflow-hidden border-b md:border-b-0 md:border-r border-secondary/10 last:border-0 flex items-center md:items-start"
               // Trên mobile: dãn chiều cao. Trên desktop: dãn chiều ngang.
               style={{
-                flex: isActive ? 4 : 1, // Kích thước phình to khi active
+                flex: isActive ? 3 : 1, // Kích thước phình to khi active (giảm nhẹ tỉ lệ trên mobile để tránh vỡ ảnh)
                 transition: "flex 0.6s cubic-bezier(0.16, 1, 0.3, 1)"
               }}
             >
@@ -53,7 +54,7 @@ export default function DesignStyles() {
               <AnimatePresence>
                 {isActive && (
                   <motion.div
-                    initial={{ opacity: 0, scale: 1.1 }}
+                    initial={{ opacity: 0, scale: 1.05 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
@@ -76,10 +77,9 @@ export default function DesignStyles() {
                 </span>
               </div>
 
-              {/* Chữ khi active */}
-              <div className={`relative z-20 p-6 md:p-12 w-full transition-opacity duration-500 delay-200 ${isActive ? 'opacity-100' : 'opacity-0 md:opacity-0'}`}>
-                {/* Trên mobile, luôn hiện chữ cho rõ */}
-                <h3 className={`text-2xl md:text-5xl font-serif font-light text-surface ${!isActive && 'opacity-100 md:opacity-0'}`}>
+              {/* Chữ khi active (hoặc nhãn hiển thị trên mobile) */}
+              <div className={`relative z-20 p-5 md:p-12 w-full transition-opacity duration-500 md:delay-200 ${isActive ? 'opacity-100' : 'opacity-100 md:opacity-0'}`}>
+                <h3 className={`text-xl md:text-5xl font-serif font-light transition-colors duration-300 ${isActive ? 'text-white' : 'text-secondary/70 md:text-white'}`}>
                   {style.title}
                 </h3>
               </div>
