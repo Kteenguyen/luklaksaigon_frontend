@@ -66,7 +66,7 @@ export default function IntroLoader({ onComplete }) {
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    const numStars = 280;
+    const numStars = 140;
     const stars = [];
     const colors = ['#FFFFFF', '#FAF7F2', '#DED3B8', '#C95928'];
 
@@ -103,6 +103,11 @@ export default function IntroLoader({ onComplete }) {
       // Smoothly transition speed
       speed += (targetSpeed - speed) * 0.08;
 
+      // Group draw calls for high-performance batch rendering
+      const orangeLines = [];
+      const whiteLines = [];
+      const circleGroups = {};
+
       for (let i = 0; i < numStars; i++) {
         const star = stars[i];
         star.z -= speed;
@@ -123,26 +128,56 @@ export default function IntroLoader({ onComplete }) {
         if (x3d >= 0 && x3d <= canvas.width && y3d >= 0 && y3d <= canvas.height) {
           const size = (1 - star.z / 2000) * 2.5;
 
-          ctx.beginPath();
           if (phase >= 2 && star.px !== 0 && star.py !== 0) {
-            // Draw warp lines
-            ctx.strokeStyle = star.color === '#C95928' 
-              ? `rgba(201, 89, 40, ${Math.min(1, (1 - star.z / 2000) * 1.5)})`
-              : `rgba(255, 255, 255, ${Math.min(0.8, (1 - star.z / 2000) * 1.2)})`;
-            ctx.lineWidth = size * 0.6;
-            ctx.moveTo(star.px, star.py);
-            ctx.lineTo(x3d, y3d);
-            ctx.stroke();
+            if (star.color === '#C95928') {
+              orangeLines.push({ x1: star.px, y1: star.py, x2: x3d, y2: y3d, size });
+            } else {
+              whiteLines.push({ x1: star.px, y1: star.py, x2: x3d, y2: y3d, size });
+            }
           } else {
-            // Draw star point
-            ctx.fillStyle = star.color;
-            ctx.arc(x3d, y3d, size, 0, Math.PI * 2);
-            ctx.fill();
+            if (!circleGroups[star.color]) {
+              circleGroups[star.color] = [];
+            }
+            circleGroups[star.color].push({ x: x3d, y: y3d, size });
           }
         }
 
         star.px = x3d;
         star.py = y3d;
+      }
+
+      // 1. Draw circles (Phase 1)
+      Object.keys(circleGroups).forEach(color => {
+        ctx.fillStyle = color;
+        circleGroups[color].forEach(circle => {
+          ctx.beginPath();
+          ctx.arc(circle.x, circle.y, circle.size, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      });
+
+      // 2. Draw Orange warp lines
+      if (orangeLines.length > 0) {
+        ctx.beginPath();
+        orangeLines.forEach(line => {
+          ctx.moveTo(line.x1, line.y1);
+          ctx.lineTo(line.x2, line.y2);
+        });
+        ctx.strokeStyle = `rgba(201, 89, 40, ${phase === 2 ? 0.8 : 0.4})`;
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+      }
+
+      // 3. Draw White/Neutral warp lines
+      if (whiteLines.length > 0) {
+        ctx.beginPath();
+        whiteLines.forEach(line => {
+          ctx.moveTo(line.x1, line.y1);
+          ctx.lineTo(line.x2, line.y2);
+        });
+        ctx.strokeStyle = `rgba(255, 255, 255, ${phase === 2 ? 0.65 : 0.3})`;
+        ctx.lineWidth = 1.0;
+        ctx.stroke();
       }
 
       animationFrameId = requestAnimationFrame(render);
@@ -181,13 +216,11 @@ export default function IntroLoader({ onComplete }) {
                       ? { 
                           scale: 18, 
                           opacity: [1, 0.8, 0], 
-                          filter: 'blur(12px)',
                           transition: { duration: 1.4, ease: [0.85, 0, 0.15, 1] } 
                         }
                       : { 
                           scale: 1, 
                           opacity: 1,
-                          filter: 'blur(0px)',
                           transition: { duration: 1.6, ease: [0.16, 1, 0.3, 1] } 
                         }
                   }
