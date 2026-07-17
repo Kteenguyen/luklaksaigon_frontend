@@ -878,44 +878,57 @@ function CoreValuesSection() {
         </div>
 
         {/* Mobile Tactile Card Carousel (Hidden on Desktop) */}
-        <div className="lg:hidden flex flex-col gap-6 px-2">
-          {values.map((v, idx) => (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: idx * 0.05 }}
-              key={idx}
-              className="bg-white border border-secondary/[0.08] rounded-xl overflow-hidden shadow-[0_15px_45px_rgba(0,0,0,0.02)] p-6 md:p-8 flex flex-col gap-6 relative"
-            >
-              {/* Top Row: Index, Icon, Title */}
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-4">
-                  <span className="font-serif text-sm text-primary">0{idx + 1}</span>
-                  <h3 className="text-xl md:text-2xl font-serif text-secondary font-medium">{v.title}</h3>
+        <div className="lg:hidden flex flex-col gap-8 px-4 overflow-hidden">
+          {values.map((v, idx) => {
+            const rotations = ["-rotate-1", "rotate-[1.2deg]", "-rotate-[0.8deg]", "rotate-[1deg]", "-rotate-[1.2deg]", "rotate-[0.8deg]"];
+            const currentRotation = rotations[idx % rotations.length];
+            
+            return (
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-30px" }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                key={idx}
+                className={`bg-white shadow-[0_20px_50px_rgba(0,0,0,0.06),0_10px_20px_rgba(0,0,0,0.02)] border border-secondary/5 p-4 pb-6 flex flex-col gap-4 relative rounded-none transform ${currentRotation} transition-transform duration-500 hover:rotate-0`}
+              >
+                {/* Photo Frame Container (Featured on top) */}
+                <div className="w-full aspect-[4/3] bg-neutral-50 relative overflow-hidden rounded-none border border-secondary/5">
+                  <img 
+                    src={v.image.src || v.image} 
+                    alt={`Giá trị cốt lõi di động - ${v.title}`} 
+                    title={`Giá trị cốt lõi di động: ${v.title}`}
+                    className="w-full h-full object-cover filter brightness-[0.96] contrast-[1.02]" 
+                  />
+                  {/* Subtle diagonal sheen highlight */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/0 pointer-events-none" />
                 </div>
-                
-                <div className="w-10 h-10 rounded-lg bg-primary/5 border border-primary/10 flex items-center justify-center">
-                  <v.icon stroke="url(#warm-accent-gradient)" size={18} strokeWidth={1.3} />
+
+                {/* Details Block below the photo */}
+                <div className="flex flex-col gap-2">
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-3">
+                      <span className="font-serif text-xs text-primary font-medium">0{idx + 1}</span>
+                      <h3 className="text-lg font-serif text-secondary font-medium">{v.title}</h3>
+                    </div>
+                    
+                    <div className="w-8 h-8 rounded-full bg-primary/[0.04] border border-primary/10 flex items-center justify-center">
+                      <v.icon stroke="url(#warm-accent-gradient)" size={15} strokeWidth={1.3} />
+                    </div>
+                  </div>
+
+                  <p className="text-xs font-light text-secondary/70 leading-relaxed font-sans pl-0.5">
+                    {v.desc}
+                  </p>
+
+                  {/* Printed catalog caption at the bottom */}
+                  <span className="text-[8px] uppercase tracking-[0.2em] font-mono text-secondary/35 mt-2 border-t border-secondary/5 pt-2 pl-0.5">
+                    {v.caption}
+                  </span>
                 </div>
-              </div>
-
-              {/* Description */}
-              <p className="text-secondary/70 font-light text-sm md:text-base leading-relaxed pl-1">
-                {v.desc}
-              </p>
-
-              {/* Inlined Project Image mimicking Polaroid print */}
-              <div className="w-full aspect-[16/9] bg-neutral-100 relative overflow-hidden rounded-[6px] border border-secondary/5 shadow-inner">
-                <img 
-                  src={v.image.src || v.image} 
-                  alt={`Giá trị cốt lõi di động - ${v.title}`} 
-                  title={`Giá trị cốt lõi di động: ${v.title}`}
-                  className="w-full h-full object-cover filter brightness-[0.95]" 
-                />
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
 
       </div>
