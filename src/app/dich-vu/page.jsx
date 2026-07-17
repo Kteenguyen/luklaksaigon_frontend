@@ -81,15 +81,18 @@ export default function ServicesPage() {
   const commerceItems = [
     {
       name: "LUKLAK LIGHTING",
-      desc: "Phân phối các dòng đèn trang trí cao cấp, đèn ray nam châm thông minh định hình kịch bản ánh sáng sang trọng."
+      desc: "Phân phối các dòng đèn trang trí cao cấp, đèn ray nam châm thông minh định hình kịch bản ánh sáng sang trọng.",
+      image: imgProductLighting
     },
     {
       name: "LUKLAK DÉCOR",
-      desc: "Tuyển chọn đồ thủ công mỹ nghệ, tranh ảnh, thảm trải sàn và các phụ kiện trang trí có gu tinh tế."
+      desc: "Tuyển chọn đồ thủ công mỹ nghệ, tranh ảnh, thảm trải sàn và các phụ kiện trang trí có gu tinh tế.",
+      image: imgDesignInterior
     },
     {
       name: "LUKLAK CERAMIC",
-      desc: "Cung cấp các sản phẩm gốm sứ nghệ thuật thủ công độc bản được chế tác bởi nghệ nhân Việt Nam."
+      desc: "Cung cấp các sản phẩm gốm sứ nghệ thuật thủ công độc bản được chế tác bởi nghệ nhân Việt Nam.",
+      image: imgCommerce
     }
   ];
 
@@ -430,7 +433,7 @@ export default function ServicesPage() {
                 {/* Visual Image container with different focus filters */}
                 <div className="w-full h-[280px] md:h-[350px] overflow-hidden bg-secondary relative">
                   <img 
-                    src={imgCommerce.src || imgCommerce} 
+                    src={item.image.src || item.image} 
                     alt={`Trưng bày sản phẩm decor nghệ thuật ${item.name}`} 
                     title={`Sản phẩm thương mại ${item.name} - Luklak Decor`} 
                     className={`w-full h-full object-cover filter brightness-[85%] grayscale-[20%] group-hover:scale-105 group-hover:filter group-hover:brightness-100 group-hover:grayscale-0 transition-all duration-[1.2s] ease-out ${
