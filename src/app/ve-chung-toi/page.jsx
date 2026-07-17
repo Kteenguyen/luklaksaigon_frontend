@@ -321,6 +321,46 @@ function SystemDiagramSection() {
                 />
               </svg>
 
+              {/* Mobile SVG Connection Lines (Visible on mobile only when active) */}
+              <svg className="absolute inset-0 w-full h-full pointer-events-none md:hidden" viewBox="0 0 100 100" preserveAspectRatio="none">
+                {activeBranch === 'hanoi' && (
+                  <motion.path 
+                    d="M 28 20 L 42 24" 
+                    stroke="#C95928" 
+                    strokeWidth="1.2" 
+                    strokeDasharray="4 4" 
+                    fill="none" 
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 0.5 }}
+                  />
+                )}
+                {activeBranch === 'danang' && (
+                  <motion.path 
+                    d="M 28 48 L 58 48" 
+                    stroke="#C95928" 
+                    strokeWidth="1.2" 
+                    strokeDasharray="4 4" 
+                    fill="none" 
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 0.5 }}
+                  />
+                )}
+                {activeBranch === 'hcmc' && (
+                  <motion.path 
+                    d="M 28 82 L 50 75" 
+                    stroke="#C95928" 
+                    strokeWidth="1.2" 
+                    strokeDasharray="4 4" 
+                    fill="none" 
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 0.5 }}
+                  />
+                )}
+              </svg>
+
               {/* Dots & Cards Overlay */}
               {/* 1. Hanoi */}
               <div 
@@ -330,18 +370,15 @@ function SystemDiagramSection() {
                 <span className={`absolute inline-flex h-4 w-4 rounded-full bg-primary opacity-75 ${activeBranch === 'hanoi' ? 'animate-ping' : ''}`}></span>
                 <span className={`relative inline-flex rounded-full h-4 w-4 bg-primary border-2 border-white shadow-sm transition-transform duration-300 ${activeBranch === 'hanoi' ? 'scale-125' : 'group-hover:scale-125'}`}></span>
               </div>
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -4, boxShadow: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)" }}
-                transition={{ duration: 0.3 }}
-                className="absolute hidden md:block top-[12%] left-[5%] w-[220px] lg:w-[240px] bg-white/95 backdrop-blur-sm p-4 rounded-sm shadow-xl border border-primary/10 transition-all duration-300"
+              <div 
+                className={`absolute top-[12%] left-[4%] md:left-[5%] w-[165px] md:w-[220px] lg:w-[240px] bg-white/95 backdrop-blur-sm p-2.5 md:p-4 rounded-sm shadow-xl border border-primary/10 transition-all duration-500 z-20 transform-gpu ${
+                  activeBranch === 'hanoi' ? 'block opacity-100 translate-y-0' : 'hidden md:block md:opacity-100 md:translate-y-0'
+                }`}
               >
-                <h4 className="text-xs font-sans tracking-[0.2em] font-medium uppercase text-primary mb-2">LUKLAK HÀ NỘI</h4>
-                <p className="text-xs text-secondary/80 font-light mb-1 leading-relaxed">Số 1, Phạm Huy Thông, Ba Đình, Hà Nội</p>
-                <p className="text-xs text-secondary/60 font-medium">Hotline: 024 6687 6661</p>
-              </motion.div>
+                <h4 className="text-[10px] md:text-xs font-sans tracking-[0.2em] font-semibold uppercase text-primary mb-1 md:mb-2">LUKLAK HÀ NỘI</h4>
+                <p className="text-[9px] md:text-xs text-secondary/80 font-light mb-1 md:mb-2 leading-relaxed">Số 1, Phạm Huy Thông, Ba Đình, Hà Nội</p>
+                <p className="text-[9px] md:text-xs text-secondary/60 font-semibold">Hotline: 024 6687 6661</p>
+              </div>
 
               {/* 2. Danang */}
               <div 
@@ -351,18 +388,15 @@ function SystemDiagramSection() {
                 <span className={`absolute inline-flex h-4 w-4 rounded-full bg-primary opacity-75 ${activeBranch === 'danang' ? 'animate-ping' : ''}`}></span>
                 <span className={`relative inline-flex rounded-full h-4 w-4 bg-primary border-2 border-white shadow-sm transition-transform duration-300 ${activeBranch === 'danang' ? 'scale-125' : 'group-hover:scale-125'}`}></span>
               </div>
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -4, boxShadow: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)" }}
-                transition={{ duration: 0.3 }}
-                className="absolute hidden md:block top-[40%] left-[65%] w-[220px] lg:w-[240px] bg-white/95 backdrop-blur-sm p-4 rounded-sm shadow-xl border border-primary/10 transition-all duration-300"
+              <div 
+                className={`absolute top-[40%] left-[4%] md:left-[65%] w-[165px] md:w-[220px] lg:w-[240px] bg-white/95 backdrop-blur-sm p-2.5 md:p-4 rounded-sm shadow-xl border border-primary/10 transition-all duration-500 z-20 transform-gpu ${
+                  activeBranch === 'danang' ? 'block opacity-100 translate-y-0' : 'hidden md:block md:opacity-100 md:translate-y-0'
+                }`}
               >
-                <h4 className="text-xs font-sans tracking-[0.2em] font-medium uppercase text-primary mb-2">LUKLAK ĐÀ NẴNG</h4>
-                <p className="text-xs text-secondary/80 font-light mb-1 leading-relaxed">Số 79 Võ Chí Công, Hòa Xuân, Đà Nẵng</p>
-                <p className="text-xs text-secondary/60 font-medium">Hotline: 0934 965 988 - 0935 048 067</p>
-              </motion.div>
+                <h4 className="text-[10px] md:text-xs font-sans tracking-[0.2em] font-semibold uppercase text-primary mb-1 md:mb-2">LUKLAK ĐÀ NẴNG</h4>
+                <p className="text-[9px] md:text-xs text-secondary/80 font-light mb-1 md:mb-2 leading-relaxed">Số 79 Võ Chí Công, Hòa Xuân, Đà Nẵng</p>
+                <p className="text-[9px] md:text-xs text-secondary/60 font-semibold">Hotline: 0934 965 988 - 0935 048 067</p>
+              </div>
 
               {/* 3. HCMC */}
               <div 
@@ -372,24 +406,20 @@ function SystemDiagramSection() {
                 <span className={`absolute inline-flex h-4 w-4 rounded-full bg-primary opacity-75 ${activeBranch === 'hcmc' ? 'animate-ping' : ''}`}></span>
                 <span className={`relative inline-flex rounded-full h-4 w-4 bg-primary border-2 border-white shadow-sm transition-transform duration-300 ${activeBranch === 'hcmc' ? 'scale-125' : 'group-hover:scale-125'}`}></span>
               </div>
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -4, boxShadow: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)" }}
-                transition={{ duration: 0.3 }}
-                className="absolute hidden md:block top-[78%] left-[5%] w-[220px] lg:w-[240px] bg-white/95 backdrop-blur-sm p-4 rounded-sm shadow-xl border border-primary/10 transition-all duration-300"
+              <div 
+                className={`absolute top-[78%] left-[4%] md:left-[5%] w-[165px] md:w-[220px] lg:w-[240px] bg-white/95 backdrop-blur-sm p-2.5 md:p-4 rounded-sm shadow-xl border border-primary/10 transition-all duration-500 z-20 transform-gpu ${
+                  activeBranch === 'hcmc' ? 'block opacity-100 translate-y-0' : 'hidden md:block md:opacity-100 md:translate-y-0'
+                }`}
               >
-                <h4 className="text-xs font-sans tracking-[0.2em] font-medium uppercase text-primary mb-2">LUKLAK TP.HCM</h4>
-                <p className="text-xs text-secondary/80 font-light mb-1 leading-relaxed">43R/10, Hồ Văn Huê, Phường 9, Quận Phú Nhuận, Hồ Chí Minh</p>
-                <p className="text-xs text-secondary/60 font-medium">Hotline: 097 634 7664</p>
-              </motion.div>
+                <h4 className="text-[10px] md:text-xs font-sans tracking-[0.2em] font-semibold uppercase text-primary mb-1 md:mb-2">LUKLAK TP.HCM</h4>
+                <p className="text-[9px] md:text-xs text-secondary/80 font-light mb-1 md:mb-2 leading-relaxed">43R/10, Hồ Văn Huê, Phường 9, Quận Phú Nhuận, Hồ Chí Minh</p>
+                <p className="text-[9px] md:text-xs text-secondary/60 font-semibold">Hotline: 097 634 7664</p>
+              </div>
 
             </div>
 
-            {/* Mobile View: Branch Cards in an interactive tab list below the map */}
+            {/* Mobile View: Tab selector directly below the map */}
             <div className="w-full flex flex-col gap-4 mt-6 md:hidden px-4">
-              {/* Tab Selector */}
               <div className="flex justify-center border border-secondary/15 rounded-sm overflow-hidden bg-white/50 p-1">
                 {[
                   { id: 'hanoi', label: 'Hà Nội' },
@@ -411,54 +441,6 @@ function SystemDiagramSection() {
                     </button>
                   );
                 })}
-              </div>
-
-              {/* Detail Card with Animation */}
-              <div className="min-h-[110px]">
-                <AnimatePresence mode="wait">
-                  {activeBranch === 'hanoi' && (
-                    <motion.div
-                      key="hanoi"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.2 }}
-                      className="bg-white p-5 rounded-sm shadow-md border border-primary/10"
-                    >
-                      <h4 className="text-xs font-sans tracking-[0.2em] font-semibold uppercase text-primary mb-2">LUKLAK HÀ NỘI</h4>
-                      <p className="text-xs text-secondary/80 font-light mb-2 leading-relaxed">Số 1, Phạm Huy Thông, Ba Đình, Hà Nội</p>
-                      <p className="text-xs text-secondary/60 font-semibold">Hotline: 024 6687 6661</p>
-                    </motion.div>
-                  )}
-                  {activeBranch === 'danang' && (
-                    <motion.div
-                      key="danang"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.2 }}
-                      className="bg-white p-5 rounded-sm shadow-md border border-primary/10"
-                    >
-                      <h4 className="text-xs font-sans tracking-[0.2em] font-semibold uppercase text-primary mb-2">LUKLAK ĐÀ NẴNG</h4>
-                      <p className="text-xs text-secondary/80 font-light mb-2 leading-relaxed">Số 79 Võ Chí Công, Hòa Xuân, Đà Nẵng</p>
-                      <p className="text-xs text-secondary/60 font-semibold">Hotline: 0934 965 988 - 0935 048 067</p>
-                    </motion.div>
-                  )}
-                  {activeBranch === 'hcmc' && (
-                    <motion.div
-                      key="hcmc"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.2 }}
-                      className="bg-white p-5 rounded-sm shadow-md border border-primary/10"
-                    >
-                      <h4 className="text-xs font-sans tracking-[0.2em] font-semibold uppercase text-primary mb-2">LUKLAK TP.HCM</h4>
-                      <p className="text-xs text-secondary/80 font-light mb-2 leading-relaxed">43R/10, Hồ Văn Huê, Phường 9, Quận Phú Nhuận, Hồ Chí Minh</p>
-                      <p className="text-xs text-secondary/60 font-semibold">Hotline: 097 634 7664</p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
               </div>
             </div>
 
