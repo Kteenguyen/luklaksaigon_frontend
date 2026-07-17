@@ -33,7 +33,7 @@ function CustomSelect({ value, onChange, placeholder, options }) {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-full h-14 px-5 bg-[#201E1D] border border-white/10 rounded-[6px] text-left text-sm md:text-base outline-none focus:border-[#DED3B8]/60 focus:bg-white/[0.01] transition-all flex items-center justify-between cursor-pointer ${
+        className={`w-full h-11 md:h-14 px-5 bg-[#201E1D] border border-white/10 rounded-[6px] text-left text-sm md:text-base outline-none focus:border-[#DED3B8]/60 focus:bg-white/[0.01] transition-all flex items-center justify-between cursor-pointer ${
           value ? 'text-white' : 'text-white/30'
         }`}
       >
