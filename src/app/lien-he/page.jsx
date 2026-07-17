@@ -210,7 +210,7 @@ export default function ContactPage() {
       </AnimatePresence>
 
       {/* Main Contact Section */}
-      <section className="max-w-[90rem] mx-auto px-8 md:px-16 lg:px-24 pt-36 pb-24 relative z-20">
+      <section className="max-w-[90rem] mx-auto px-8 md:px-16 lg:px-24 pt-24 md:pt-36 pb-16 md:pb-24 relative z-20">
         
         {/* ROW 1: Hero & Office details side-by-side */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start mb-16">

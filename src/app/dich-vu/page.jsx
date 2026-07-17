@@ -100,7 +100,7 @@ export default function ServicesPage() {
     <main className="bg-alabaster min-h-screen flex flex-col justify-between overflow-x-hidden text-secondary" data-theme="light">
       
       {/* ── HEADER TITLE SECTION ─────────────────────────────────── */}
-      <section className="pt-44 pb-20 px-6 md:px-16 text-center max-w-4xl mx-auto">
+      <section className="pt-24 md:pt-44 pb-12 md:pb-20 px-6 md:px-16 text-center max-w-4xl mx-auto">
         <span className="text-primary text-[10px] tracking-[0.35em] uppercase border-b border-secondary/20 pb-2 mb-8 inline-block font-sans font-semibold">
           Dịch vụ toàn diện
         </span>
