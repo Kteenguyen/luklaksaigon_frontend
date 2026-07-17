@@ -7,6 +7,12 @@ export default function IntroLoader({ onComplete }) {
   const [phase, setPhase] = useState(1); // 1: Entrance, 2: Warp, 3: Portal, 4: Exit/Reveal
   const [isFinished, setIsFinished] = useState(false);
   const canvasRef = useRef(null);
+  const phaseRef = useRef(phase);
+
+  // Sync phase state to Ref so canvas loop does not re-trigger and reset stars position
+  useEffect(() => {
+    phaseRef.current = phase;
+  }, [phase]);
 
   useEffect(() => {
     // Prevent scrolling while loading
@@ -60,8 +66,12 @@ export default function IntroLoader({ onComplete }) {
     let animationFrameId;
     
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      // Cap the canvas resolution at max 1920x1080 for buttery smooth performance on 4K / Retina screens
+      const maxW = 1920;
+      const maxH = 1080;
+      const scale = Math.min(1, maxW / window.innerWidth, maxH / window.innerHeight);
+      canvas.width = Math.floor(window.innerWidth * scale);
+      canvas.height = Math.floor(window.innerHeight * scale);
     };
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
@@ -89,12 +99,13 @@ export default function IntroLoader({ onComplete }) {
     const render = () => {
       const cx = canvas.width / 2;
       const cy = canvas.height / 2;
+      const currentPhase = phaseRef.current;
 
       // During warp speed, clear canvas with slight opacity for trailing/motion blur effect
-      if (phase >= 2) {
+      if (currentPhase >= 2) {
         ctx.fillStyle = 'rgba(11, 10, 10, 0.18)'; // transparent dark charcoal base
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        targetSpeed = 120; // Hyperspace speed target
+        targetSpeed = 110; // Hyperspace speed target
       } else {
         ctx.fillStyle = '#0b0a0a';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -128,7 +139,7 @@ export default function IntroLoader({ onComplete }) {
         if (x3d >= 0 && x3d <= canvas.width && y3d >= 0 && y3d <= canvas.height) {
           const size = (1 - star.z / 2000) * 2.5;
 
-          if (phase >= 2 && star.px !== 0 && star.py !== 0) {
+          if (currentPhase >= 2 && star.px !== 0 && star.py !== 0) {
             if (star.color === '#C95928') {
               orangeLines.push({ x1: star.px, y1: star.py, x2: x3d, y2: y3d, size });
             } else {
@@ -163,7 +174,7 @@ export default function IntroLoader({ onComplete }) {
           ctx.moveTo(line.x1, line.y1);
           ctx.lineTo(line.x2, line.y2);
         });
-        ctx.strokeStyle = `rgba(201, 89, 40, ${phase === 2 ? 0.8 : 0.4})`;
+        ctx.strokeStyle = `rgba(201, 89, 40, ${currentPhase === 2 ? 0.8 : 0.4})`;
         ctx.lineWidth = 1.2;
         ctx.stroke();
       }
@@ -175,7 +186,7 @@ export default function IntroLoader({ onComplete }) {
           ctx.moveTo(line.x1, line.y1);
           ctx.lineTo(line.x2, line.y2);
         });
-        ctx.strokeStyle = `rgba(255, 255, 255, ${phase === 2 ? 0.65 : 0.3})`;
+        ctx.strokeStyle = `rgba(255, 255, 255, ${currentPhase === 2 ? 0.65 : 0.3})`;
         ctx.lineWidth = 1.0;
         ctx.stroke();
       }
@@ -189,7 +200,7 @@ export default function IntroLoader({ onComplete }) {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', resizeCanvas);
     };
-  }, [phase]);
+  }, []); // Run canvas logic once on mount
 
   return (
     <AnimatePresence>
@@ -214,7 +225,7 @@ export default function IntroLoader({ onComplete }) {
                   animate={
                     phase === 2
                       ? { 
-                          scale: 18, 
+                          scale: 7, 
                           opacity: [1, 0.8, 0], 
                           transition: { duration: 1.4, ease: [0.85, 0, 0.15, 1] } 
                         }
@@ -226,9 +237,6 @@ export default function IntroLoader({ onComplete }) {
                   }
                   className="flex flex-col items-center justify-center text-center select-none pointer-events-none"
                 >
-                  {/* Glowing halo behind logo */}
-                  <div className="absolute w-44 h-44 rounded-full bg-primary/20 blur-3xl" />
-
                   {/* Monogram L Logo */}
                   <img
                     src={monogramSrc.src || monogramSrc}
