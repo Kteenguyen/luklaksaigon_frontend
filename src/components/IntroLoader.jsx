@@ -66,10 +66,10 @@ export default function IntroLoader({ onComplete }) {
     let animationFrameId;
     
     const resizeCanvas = () => {
-      // Cap the canvas resolution at max 1920x1080 for buttery smooth performance on 4K / Retina screens
-      const maxW = 1920;
-      const maxH = 1080;
-      const scale = Math.min(1, maxW / window.innerWidth, maxH / window.innerHeight);
+      // Render the starfield background at a lower resolution (40% of screen size)
+      // This creates a natural, soft cinematic camera blur (depth of field) when CSS stretches it,
+      // while keeping rendering overhead virtually zero.
+      const scale = 0.4;
       canvas.width = Math.floor(window.innerWidth * scale);
       canvas.height = Math.floor(window.innerHeight * scale);
     };
