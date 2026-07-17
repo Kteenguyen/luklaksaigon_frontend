@@ -242,14 +242,14 @@ export default function IntroLoader({ onComplete }) {
                     src={monogramSrc.src || monogramSrc}
                     alt="Luklak Saigon Monogram Logo"
                     title="Luklak Saigon Monogram"
-                    className="w-20 h-20 object-contain relative z-10 drop-shadow-[0_0_20px_rgba(201,89,40,0.3)] mb-6"
+                    className="w-16 h-16 md:w-20 md:h-20 object-contain relative z-10 drop-shadow-[0_0_20px_rgba(201,89,40,0.3)] mb-4 md:mb-6"
                   />
 
                   {/* Brand Typography */}
-                  <h1 className="font-serif text-[13px] tracking-[0.6em] text-white font-light uppercase mr-[-0.6em] relative z-10">
+                  <h1 className="font-serif text-[11px] md:text-[13px] tracking-[0.5em] md:tracking-[0.6em] text-white font-light uppercase mr-[-0.5em] md:mr-[-0.6em] relative z-10">
                     LUKLAK
                   </h1>
-                  <p className="font-sans text-[8px] tracking-[0.4em] text-white/50 uppercase mt-2 mr-[-0.4em] relative z-10">
+                  <p className="font-sans text-[7px] md:text-[8px] tracking-[0.35em] md:tracking-[0.4em] text-white/50 uppercase mt-1.5 md:mt-2 mr-[-0.35em] md:mr-[-0.4em] relative z-10">
                     SAIGON
                   </p>
                 </motion.div>
