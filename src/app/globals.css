@@ -76,6 +76,24 @@ img {
     padding-left: 10px !important;
     padding-right: 10px !important;
   }
+
+  /* Compact button padding to prevent text wrapping */
+  button.px-10, 
+  a.px-10,
+  .px-10:is(button, a) {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    text-align: center !important;
+  }
+  button.py-4,
+  button.py-5,
+  a.py-4,
+  a.py-5,
+  .py-4:is(button, a),
+  .py-5:is(button, a) {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+  }
 }
 
 /* ── No Scrollbar Utility ─────────────────────────── */
