@@ -172,6 +172,7 @@ function GroupSection() {
    ===================================================================== */
 function SystemDiagramSection() {
   const [expandedIdx, setExpandedIdx] = useState(0);
+  const [activeBranch, setActiveBranch] = useState('hanoi');
 
   const accordionItems = [
     {
@@ -322,9 +323,12 @@ function SystemDiagramSection() {
 
               {/* Dots & Cards Overlay */}
               {/* 1. Hanoi */}
-              <div className="absolute top-[24%] left-[42%] w-4 h-4 -translate-x-1/2 -translate-y-1/2 group">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-75 animate-ping"></span>
-                <span className="relative inline-flex rounded-full h-4 w-4 bg-primary border-2 border-white shadow-sm"></span>
+              <div 
+                onClick={() => setActiveBranch('hanoi')}
+                className="absolute top-[24%] left-[42%] w-6 h-6 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center cursor-pointer z-30 group"
+              >
+                <span className={`absolute inline-flex h-4 w-4 rounded-full bg-primary opacity-75 ${activeBranch === 'hanoi' ? 'animate-ping' : ''}`}></span>
+                <span className={`relative inline-flex rounded-full h-4 w-4 bg-primary border-2 border-white shadow-sm transition-transform duration-300 ${activeBranch === 'hanoi' ? 'scale-125' : 'group-hover:scale-125'}`}></span>
               </div>
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
@@ -340,9 +344,12 @@ function SystemDiagramSection() {
               </motion.div>
 
               {/* 2. Danang */}
-              <div className="absolute top-[48%] left-[58%] w-4 h-4 -translate-x-1/2 -translate-y-1/2 group">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-75 animate-ping"></span>
-                <span className="relative inline-flex rounded-full h-4 w-4 bg-primary border-2 border-white shadow-sm"></span>
+              <div 
+                onClick={() => setActiveBranch('danang')}
+                className="absolute top-[48%] left-[58%] w-6 h-6 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center cursor-pointer z-30 group"
+              >
+                <span className={`absolute inline-flex h-4 w-4 rounded-full bg-primary opacity-75 ${activeBranch === 'danang' ? 'animate-ping' : ''}`}></span>
+                <span className={`relative inline-flex rounded-full h-4 w-4 bg-primary border-2 border-white shadow-sm transition-transform duration-300 ${activeBranch === 'danang' ? 'scale-125' : 'group-hover:scale-125'}`}></span>
               </div>
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
@@ -358,9 +365,12 @@ function SystemDiagramSection() {
               </motion.div>
 
               {/* 3. HCMC */}
-              <div className="absolute top-[75%] left-[50%] w-4 h-4 -translate-x-1/2 -translate-y-1/2 group">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-75 animate-ping"></span>
-                <span className="relative inline-flex rounded-full h-4 w-4 bg-primary border-2 border-white shadow-sm"></span>
+              <div 
+                onClick={() => setActiveBranch('hcmc')}
+                className="absolute top-[75%] left-[50%] w-6 h-6 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center cursor-pointer z-30 group"
+              >
+                <span className={`absolute inline-flex h-4 w-4 rounded-full bg-primary opacity-75 ${activeBranch === 'hcmc' ? 'animate-ping' : ''}`}></span>
+                <span className={`relative inline-flex rounded-full h-4 w-4 bg-primary border-2 border-white shadow-sm transition-transform duration-300 ${activeBranch === 'hcmc' ? 'scale-125' : 'group-hover:scale-125'}`}></span>
               </div>
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
@@ -377,22 +387,78 @@ function SystemDiagramSection() {
 
             </div>
 
-            {/* Mobile View: Branch Cards in a vertical list below the map */}
-            <div className="w-full grid grid-cols-1 gap-6 mt-8 md:hidden px-4">
-              <div className="bg-white p-5 rounded-sm shadow-md border border-primary/10">
-                <h4 className="text-sm font-sans tracking-[0.2em] font-medium uppercase text-primary mb-2">LUKLAK HÀ NỘI</h4>
-                <p className="text-sm text-secondary/80 font-light mb-2">Số 1, Phạm Huy Thông, Ba Đình, Hà Nội</p>
-                <p className="text-sm text-secondary/60 font-medium">Hotline: 024 6687 6661</p>
+            {/* Mobile View: Branch Cards in an interactive tab list below the map */}
+            <div className="w-full flex flex-col gap-4 mt-6 md:hidden px-4">
+              {/* Tab Selector */}
+              <div className="flex justify-center border border-secondary/15 rounded-sm overflow-hidden bg-white/50 p-1">
+                {[
+                  { id: 'hanoi', label: 'Hà Nội' },
+                  { id: 'danang', label: 'Đà Nẵng' },
+                  { id: 'hcmc', label: 'TP.HCM' }
+                ].map((tab) => {
+                  const isActive = activeBranch === tab.id;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveBranch(tab.id)}
+                      className={`flex-1 text-center py-2 text-[10px] tracking-[0.15em] uppercase transition-all duration-300 font-medium ${
+                        isActive 
+                          ? 'bg-secondary text-white rounded-sm font-semibold shadow-sm' 
+                          : 'text-secondary/60 hover:text-secondary'
+                      }`}
+                    >
+                      {tab.label}
+                    </button>
+                  );
+                })}
               </div>
-              <div className="bg-white p-5 rounded-sm shadow-md border border-primary/10">
-                <h4 className="text-sm font-sans tracking-[0.2em] font-medium uppercase text-primary mb-2">LUKLAK ĐÀ NẴNG</h4>
-                <p className="text-sm text-secondary/80 font-light mb-2">Số 79 Võ Chí Công, Hòa Xuân, Đà Nẵng</p>
-                <p className="text-sm text-secondary/60 font-medium">Hotline: 0934 965 988 - 0935 048 067</p>
-              </div>
-              <div className="bg-white p-5 rounded-sm shadow-md border border-primary/10">
-                <h4 className="text-sm font-sans tracking-[0.2em] font-medium uppercase text-primary mb-2">LUKLAK TP.HCM</h4>
-                <p className="text-sm text-secondary/80 font-light mb-2">43R/10, Hồ Văn Huê, Phường 9, Quận Phú Nhuận, Hồ Chí Minh</p>
-                <p className="text-sm text-secondary/60 font-medium">Hotline: 097 634 7664</p>
+
+              {/* Detail Card with Animation */}
+              <div className="min-h-[110px]">
+                <AnimatePresence mode="wait">
+                  {activeBranch === 'hanoi' && (
+                    <motion.div
+                      key="hanoi"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2 }}
+                      className="bg-white p-5 rounded-sm shadow-md border border-primary/10"
+                    >
+                      <h4 className="text-xs font-sans tracking-[0.2em] font-semibold uppercase text-primary mb-2">LUKLAK HÀ NỘI</h4>
+                      <p className="text-xs text-secondary/80 font-light mb-2 leading-relaxed">Số 1, Phạm Huy Thông, Ba Đình, Hà Nội</p>
+                      <p className="text-xs text-secondary/60 font-semibold">Hotline: 024 6687 6661</p>
+                    </motion.div>
+                  )}
+                  {activeBranch === 'danang' && (
+                    <motion.div
+                      key="danang"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2 }}
+                      className="bg-white p-5 rounded-sm shadow-md border border-primary/10"
+                    >
+                      <h4 className="text-xs font-sans tracking-[0.2em] font-semibold uppercase text-primary mb-2">LUKLAK ĐÀ NẴNG</h4>
+                      <p className="text-xs text-secondary/80 font-light mb-2 leading-relaxed">Số 79 Võ Chí Công, Hòa Xuân, Đà Nẵng</p>
+                      <p className="text-xs text-secondary/60 font-semibold">Hotline: 0934 965 988 - 0935 048 067</p>
+                    </motion.div>
+                  )}
+                  {activeBranch === 'hcmc' && (
+                    <motion.div
+                      key="hcmc"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2 }}
+                      className="bg-white p-5 rounded-sm shadow-md border border-primary/10"
+                    >
+                      <h4 className="text-xs font-sans tracking-[0.2em] font-semibold uppercase text-primary mb-2">LUKLAK TP.HCM</h4>
+                      <p className="text-xs text-secondary/80 font-light mb-2 leading-relaxed">43R/10, Hồ Văn Huê, Phường 9, Quận Phú Nhuận, Hồ Chí Minh</p>
+                      <p className="text-xs text-secondary/60 font-semibold">Hotline: 097 634 7664</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
 

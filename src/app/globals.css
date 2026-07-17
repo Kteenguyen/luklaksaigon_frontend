@@ -94,6 +94,17 @@ img {
     padding-top: 10px !important;
     padding-bottom: 10px !important;
   }
+
+  /* Compress section vertical paddings to prevent large empty spaces */
+  .py-16,
+  .py-20,
+  .py-24,
+  .py-28,
+  .py-32,
+  .py-40 {
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
+  }
 }
 
 /* ── No Scrollbar Utility ─────────────────────────── */
