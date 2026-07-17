@@ -365,6 +365,7 @@ export const hoatDongData = [
     id: 'h2',
     title: "Lễ cất nóc siêu dự án The Monolith tại Hà Nội",
     slug: "le-cat-noc-sieu-du-an-the-monolith-tai-ha-noi",
+    
     excerpt: "Vượt qua mọi khó khăn về thời tiết, đội ngũ kỹ sư Luklak đã đưa dự án cán đích phần thô đúng tiến độ cam kết.",
     content: "Dự án The Monolith - Khu đô thị sinh thái cao cấp tại ngoại ô Hà Nội đã chính thức cất nóc sau 6 tháng thi công liên tục.\n\nĐây là một trong những dự án có yêu cầu kỹ thuật kết cấu phức tạp nhất mà Luklak đảm nhận trong năm nay. Đội ngũ kỹ sư và công nhân đã làm việc không ngừng nghỉ, áp dụng các công nghệ thi công cốp pha trượt hiện đại để đẩy nhanh tiến độ mà vẫn đảm bảo độ chính xác tuyệt đối.",
     date: "15 Tháng 4, 2024",

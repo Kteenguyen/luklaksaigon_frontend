@@ -1,15 +1,15 @@
 "use client";
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import monogramSrc from '../assets/logo/PNG/Logo_Light_3 copy.png';
-import logoSrc from '../assets/logo/PNG/Logo_Light_1 copy.png';
 
 export default function IntroLoader({ onComplete }) {
-  const [phase, setPhase] = useState(1);
+  const [phase, setPhase] = useState(1); // 1: Entrance, 2: Warp, 3: Portal, 4: Exit/Reveal
   const [isFinished, setIsFinished] = useState(false);
+  const canvasRef = useRef(null);
 
   useEffect(() => {
-    // Disable scroll while loading
+    // Prevent scrolling while loading
     if (typeof window !== 'undefined') {
       document.body.style.overflow = 'hidden';
       if (window.__lenis) {
@@ -17,28 +17,32 @@ export default function IntroLoader({ onComplete }) {
       }
     }
 
-    // Phase 1 (Monogram) runs for 1.8s, then transition to Phase 2
-    const phase2Timer = setTimeout(() => {
+    // Phase transitions
+    const warpTimer = setTimeout(() => {
       setPhase(2);
-    }, 1800);
+    }, 2000); // 2s slow drift & logo reveal
+
+    const portalTimer = setTimeout(() => {
+      setPhase(3);
+    }, 3400); // 1.4s warp speed acceleration and logo fly-through
 
     let completionTimer;
-    // Total display duration: 3.6s (1.8s for Phase 1 + 1.8s for Phase 2)
-    const timer = setTimeout(() => {
-      setIsFinished(true);
-      // Re-enable scroll
+    const exitTimer = setTimeout(() => {
+      setIsFinished(true); // Triggers the Framer Motion exit animation
+      // Re-enable scrolling
       document.body.style.overflow = '';
       if (window.__lenis) {
         window.__lenis.start();
       }
       completionTimer = setTimeout(() => {
         if (onComplete) onComplete();
-      }, 1400); // Give exit animation 1.4s to slide open fully
-    }, 3600);
+      }, 1200); // Give the white portal fade-out 1.2s to fully clear
+    }, 4200);
 
     return () => {
-      clearTimeout(phase2Timer);
-      clearTimeout(timer);
+      clearTimeout(warpTimer);
+      clearTimeout(portalTimer);
+      clearTimeout(exitTimer);
       if (completionTimer) clearTimeout(completionTimer);
       document.body.style.overflow = '';
       if (window.__lenis) {
@@ -47,157 +51,180 @@ export default function IntroLoader({ onComplete }) {
     };
   }, [onComplete]);
 
-  // Framer Motion spring and transition settings for the luxury feel
-  const transitionProps = { duration: 1.2, ease: [0.16, 1, 0.3, 1] };
+  // Starfield Simulation on Canvas
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-  // Subtitle letter stagger animation settings
-  const subtitleText = "DESIGN & BUILD STUDIO";
-  
+    const ctx = canvas.getContext('2d');
+    let animationFrameId;
+    
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const numStars = 280;
+    const stars = [];
+    const colors = ['#FFFFFF', '#FAF7F2', '#DED3B8', '#C95928'];
+
+    // Initialize stars with 3D positions
+    for (let i = 0; i < numStars; i++) {
+      stars.push({
+        x: (Math.random() - 0.5) * 2000,
+        y: (Math.random() - 0.5) * 2000,
+        z: Math.random() * 2000,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        px: 0,
+        py: 0
+      });
+    }
+
+    const fov = 350;
+    let speed = 1.8;
+    let targetSpeed = 1.8;
+
+    const render = () => {
+      const cx = canvas.width / 2;
+      const cy = canvas.height / 2;
+
+      // During warp speed, clear canvas with slight opacity for trailing/motion blur effect
+      if (phase >= 2) {
+        ctx.fillStyle = 'rgba(11, 10, 10, 0.18)'; // transparent dark charcoal base
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        targetSpeed = 120; // Hyperspace speed target
+      } else {
+        ctx.fillStyle = '#0b0a0a';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+
+      // Smoothly transition speed
+      speed += (targetSpeed - speed) * 0.08;
+
+      for (let i = 0; i < numStars; i++) {
+        const star = stars[i];
+        star.z -= speed;
+
+        // Reset stars that fly past the camera view
+        if (star.z <= 0) {
+          star.z = 2000;
+          star.x = (Math.random() - 0.5) * 2000;
+          star.y = (Math.random() - 0.5) * 2000;
+          star.px = 0;
+          star.py = 0;
+        }
+
+        // Projection math
+        const x3d = (star.x / star.z) * fov + cx;
+        const y3d = (star.y / star.z) * fov + cy;
+
+        if (x3d >= 0 && x3d <= canvas.width && y3d >= 0 && y3d <= canvas.height) {
+          const size = (1 - star.z / 2000) * 2.5;
+
+          ctx.beginPath();
+          if (phase >= 2 && star.px !== 0 && star.py !== 0) {
+            // Draw warp lines
+            ctx.strokeStyle = star.color === '#C95928' 
+              ? `rgba(201, 89, 40, ${Math.min(1, (1 - star.z / 2000) * 1.5)})`
+              : `rgba(255, 255, 255, ${Math.min(0.8, (1 - star.z / 2000) * 1.2)})`;
+            ctx.lineWidth = size * 0.6;
+            ctx.moveTo(star.px, star.py);
+            ctx.lineTo(x3d, y3d);
+            ctx.stroke();
+          } else {
+            // Draw star point
+            ctx.fillStyle = star.color;
+            ctx.arc(x3d, y3d, size, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        star.px = x3d;
+        star.py = y3d;
+      }
+
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', resizeCanvas);
+    };
+  }, [phase]);
+
   return (
     <AnimatePresence>
       {!isFinished && (
         <motion.div
-          className="fixed inset-0 z-loader overflow-hidden flex items-center justify-center pointer-events-none"
+          className="fixed inset-0 z-loader overflow-hidden bg-[#0b0a0a] flex items-center justify-center pointer-events-auto"
+          exit={{ 
+            opacity: 0, 
+            transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } 
+          }}
         >
-          {/* ── LEFT DOOR PANEL ── */}
-          <motion.div
-            initial={{ x: 0 }}
-            exit={{ 
-              x: '-100%',
-              transition: transitionProps
-            }}
-            className="absolute left-0 top-0 w-1/2 h-full bg-secondary border-r border-white/5 pointer-events-auto"
-          />
+          {/* Starfield background */}
+          <canvas ref={canvasRef} className="absolute inset-0 w-full h-full block z-0" />
 
-          {/* ── RIGHT DOOR PANEL ── */}
-          <motion.div
-            initial={{ x: 0 }}
-            exit={{ 
-              x: '100%',
-              transition: transitionProps
-            }}
-            className="absolute right-0 top-0 w-1/2 h-full bg-secondary border-l border-white/5 pointer-events-auto"
-          />
-
-          {/* ── CENTER CONTENT OVERLAY ── */}
-          <motion.div
-            initial={{ opacity: 1 }}
-            exit={{ 
-              opacity: 0,
-              scale: 1.05,
-              transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
-            }}
-            className="relative z-10 flex flex-col items-center justify-center text-center px-4"
-          >
-            <AnimatePresence mode="wait">
-              {phase === 1 ? (
+          {/* Logo Content Layer */}
+          <div className="relative z-10 flex flex-col items-center justify-center">
+            <AnimatePresence>
+              {phase < 3 && (
                 <motion.div
-                  key="phase1"
-                  initial={{ opacity: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.4 }}
-                  className="relative w-40 h-40 flex items-center justify-center"
+                  key="logo-warp-group"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={
+                    phase === 2
+                      ? { 
+                          scale: 18, 
+                          opacity: [1, 0.8, 0], 
+                          filter: 'blur(12px)',
+                          transition: { duration: 1.4, ease: [0.85, 0, 0.15, 1] } 
+                        }
+                      : { 
+                          scale: 1, 
+                          opacity: 1,
+                          filter: 'blur(0px)',
+                          transition: { duration: 1.6, ease: [0.16, 1, 0.3, 1] } 
+                        }
+                  }
+                  className="flex flex-col items-center justify-center text-center select-none pointer-events-none"
                 >
-                  {/* Radial Golden Background Glow */}
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: [0, 0.25, 0.15], scale: [0.8, 1.2, 1.0] }}
-                    transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
-                    className="absolute w-48 h-48 rounded-full bg-gradient-to-r from-primary/30 to-transparent blur-2xl"
-                  />
+                  {/* Glowing halo behind logo */}
+                  <div className="absolute w-44 h-44 rounded-full bg-primary/20 blur-3xl" />
 
-                  {/* Monogram Symbol */}
-                  <motion.img
+                  {/* Monogram L Logo */}
+                  <img
                     src={monogramSrc.src || monogramSrc}
-                    alt="Biểu tượng Monogram chữ L cách điệu của Luklak"
-                    title="Biểu tượng Monogram Luklak"
-                    initial={{ opacity: 0, scale: 0.6, filter: 'blur(5px)' }}
-                    animate={{ 
-                      opacity: [0, 1, 1],
-                      scale: [0.6, 1.0, 1.0],
-                      filter: ['blur(5px)', 'blur(0px)', 'blur(0px)'],
-                    }}
-                    transition={{ 
-                      times: [0, 0.2, 1],
-                      duration: 1.8, 
-                      ease: [0.16, 1, 0.3, 1]
-                    }}
-                    className="w-16 h-16 object-contain z-10"
+                    alt="Luklak Saigon Monogram Logo"
+                    title="Luklak Saigon Monogram"
+                    className="w-20 h-20 object-contain relative z-10 drop-shadow-[0_0_20px_rgba(201,89,40,0.3)] mb-6"
                   />
 
-                  {/* Gold Outline Drawing Circle */}
-                  <svg className="absolute w-36 h-36 z-0" viewBox="0 0 100 100">
-                    <motion.circle
-                      cx="50"
-                      cy="50"
-                      r="45"
-                      stroke="#C95928"
-                      strokeWidth="0.75"
-                      fill="transparent"
-                      initial={{ opacity: 0 }}
-                      animate={{ 
-                        opacity: 1
-                      }}
-                      transition={{ 
-                        duration: 1.8, 
-                        ease: [0.16, 1, 0.3, 1]
-                      }}
-                    />
-                  </svg>
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="phase2"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1.0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                  className="flex flex-col items-center justify-center w-80"
-                >
-                  {/* Full Brand Logo Container */}
-                  <div className="relative overflow-hidden w-64 h-16 flex items-center justify-center mb-4">
-                    <img
-                      src={logoSrc.src || logoSrc}
-                      alt="Logo chính thức Luklak Saigon Kiến trúc & Xây dựng"
-                      title="Logo thương hiệu Luklak Saigon"
-                      className="h-10 w-auto object-contain"
-                    />
-
-                    {/* Golden Shine Sweep Effect overlay */}
-                    <motion.div
-                      initial={{ x: '-150%' }}
-                      animate={{ x: '150%' }}
-                      transition={{ 
-                        duration: 1.5,
-                        delay: 0.2,
-                        ease: [0.16, 1, 0.3, 1]
-                      }}
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/35 to-transparent skew-x-20 pointer-events-none"
-                    />
-                  </div>
-
-                  {/* Subtitle Slogan Reveal */}
-                  <div className="flex justify-center items-center gap-1 overflow-hidden h-6 mt-1">
-                    {subtitleText.split("").map((char, index) => (
-                      <motion.span
-                        key={index}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ 
-                          duration: 0.6, 
-                          delay: index * 0.03,
-                          ease: [0.16, 1, 0.3, 1]
-                        }}
-                        className="text-[9px] md:text-[10px] text-primary/75 tracking-[0.2em] font-light font-sans inline-block"
-                      >
-                        {char === " " ? "\u00A0" : char}
-                      </motion.span>
-                    ))}
-                  </div>
+                  {/* Brand Typography */}
+                  <h1 className="font-serif text-[13px] tracking-[0.6em] text-white font-light uppercase mr-[-0.6em] relative z-10">
+                    LUKLAK
+                  </h1>
+                  <p className="font-sans text-[8px] tracking-[0.4em] text-white/50 uppercase mt-2 mr-[-0.4em] relative z-10">
+                    SAIGON
+                  </p>
                 </motion.div>
               )}
             </AnimatePresence>
-          </motion.div>
+          </div>
+
+          {/* Portal of Light Transition Mask */}
+          {phase === 3 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute inset-0 bg-white z-40"
+            />
+          )}
         </motion.div>
       )}
     </AnimatePresence>
